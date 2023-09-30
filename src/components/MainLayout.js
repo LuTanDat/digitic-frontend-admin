@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -6,12 +6,13 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, Button, theme } from 'antd';
 const { Header, Sider, Content } = Layout;
-
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -69,7 +70,6 @@ const MainLayout = () => {
         </Content>
       </Layout>
     </Layout>
-  )
-}
-
-export default MainLayout
+  );
+};
+export default MainLayout;
