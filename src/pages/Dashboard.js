@@ -1,8 +1,34 @@
 import React from 'react';
 import { BsArrowDownRight, BsArrowUpRight } from 'react-icons/bs';
 import { Column } from '@ant-design/plots';
-
-
+import { Table } from "antd";
+const columns = [
+  {
+    title: "SNo",
+    dataIndex: "key",
+  },
+  {
+    title: "Name",
+    dataIndex: "name",
+  },
+  {
+    title: "Product",
+    dataIndex: "product",
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+  },
+];
+const data1 = [];
+for (let i = 0; i < 46; i++) {
+  data1.push({
+    key: i,
+    name: `Edward King ${i}`,
+    product: 32,
+    status: `London, Park Lane no. ${i}`,
+  });
+}
 const Dashboard = () => {
   const data = [
     {
@@ -121,6 +147,12 @@ const Dashboard = () => {
         <h3 className='mb-4'>Income Statics</h3>
         <div>
           <Column {...config} />;
+        </div>
+      </div>
+      <div className='mt-4'>
+        <h3 className='mb-4'>Income Statics</h3>
+        <div>
+          <Table columns={columns} dataSource={data1} />
         </div>
       </div>
     </div>
