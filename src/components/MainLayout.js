@@ -13,6 +13,7 @@ import {
   AiOutlineUser,
   AiOutlineBgColors,
 } from "react-icons/ai";
+import { Outlet } from 'react-router-dom';// noi dung thay doi theo URL cua con no
 import { RiCouponLine } from "react-icons/ri";
 import { ImBlog } from "react-icons/im";
 import { IoIosNotifications } from "react-icons/io";
@@ -149,6 +150,7 @@ const MainLayout = () => {
       </Sider>
       <Layout>
         <Header
+          className='d-flex justify-content-between ps-1 pe-5'
           style={{
             padding: 0,
             background: colorBgContainer,
@@ -164,6 +166,25 @@ const MainLayout = () => {
               height: 64,
             }}
           />
+          <div className='d-flex gap-4 align-items-center'>
+            <div className='position-relative'>
+              <IoIosNotifications className='fs-4' />
+              <span className='badge bg-warning rounded-circle p-1 position-absolute'>3</span>
+            </div>
+            <div className='d-flex gap-3 align-items-center'>
+              <div>
+                <img
+                  width={32}
+                  height={32}
+                  src='https://stroyka-admin.html.themeforest.scompiler.ru/variants/ltr/images/customers/customer-4-64x64.jpg' alt=''
+                />
+              </div>
+              <div>
+                <h5 className='mb-0'>Lu Tan Dat</h5>
+                <p className='mb-0'>ludathoc@gmail.com</p>
+              </div>
+            </div>
+          </div>
         </Header>
         <Content
           style={{
@@ -173,7 +194,7 @@ const MainLayout = () => {
             background: colorBgContainer,
           }}
         >
-          Content
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
