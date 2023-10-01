@@ -54,7 +54,7 @@ body{
 main {
   /* height: 85vh; */
   overflow-y: scroll;
-  /* background-color: transparent !important; */
+  background-color: transparent !important;
 }
 .ant-menu-title-content {
   font-size: 16px;
