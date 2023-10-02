@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import CustomInput from '../components/CustomInput';
-import ReactQuill from 'react-quill';
+
+import ReactQuill from 'react-quill'; // text editor
 import 'react-quill/dist/quill.snow.css';
-import { InboxOutlined } from '@ant-design/icons';
+
+import { InboxOutlined } from '@ant-design/icons'; // upload images + <Dragger />
 import { message, Upload } from 'antd';
 const { Dragger } = Upload;
 const props = {
@@ -25,16 +27,36 @@ const props = {
   },
 };
 
-const Addblog = () => {
+const Addproduct = () => {
   const [desc, setDesc] = useState();
   const handleDesc = (value) => {
     setDesc(value);
   };
   return (
     <div>
-      <h3 className='mb-4 title'>Add Blog</h3>
-      <div className=''>
+      <h3 className='mb-4 title'>Add Product</h3>
+      <div>
         <form action=''>
+          <CustomInput type='text' label='Enter Product Title' />
+          <div className='mb-3'>
+            <ReactQuill
+              theme="snow"
+              value={desc}
+              onChange={(evt) => {
+                handleDesc(evt);
+              }} />
+          </div>
+          <CustomInput type='number' label='Enter Product Price' />
+          <select name='' id='' className='form-control py-3 mb-3'>
+            <option value=''>Select Brand</option>
+          </select>
+          <select name='' id='' className='form-control py-3 mb-3'>
+            <option value=''>Select Category</option>
+          </select>
+          <select name='' id='' className='form-control py-3 mb-3'>
+            <option value=''>Select Color</option>
+          </select>
+          <CustomInput type='number' label='Enter Product Quantity' />
           <Dragger {...props}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
@@ -45,20 +67,9 @@ const Addblog = () => {
               banned files.
             </p>
           </Dragger>
-          <div className='mt-3'>
-            <CustomInput type='text' label='Enter Blog Title' />
-          </div>
-          <select name='' id='' className='form-control py-3 mb-3'>
-            <option value=''>Select Blog Category</option>
-          </select>
-          <ReactQuill
-            theme="snow"
-            value={desc}
-            onChange={(evt) => {
-              handleDesc(evt);
-            }} />
+
           <button className='btn btn-success border-0 rounded-3 my-5'>
-            Add Blog
+            Add Product
           </button>
         </form>
       </div>
@@ -66,4 +77,4 @@ const Addblog = () => {
   )
 }
 
-export default Addblog
+export default Addproduct

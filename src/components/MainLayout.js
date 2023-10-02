@@ -13,7 +13,7 @@ import {
   AiOutlineUser,
   AiOutlineBgColors,
 } from "react-icons/ai";
-import { Outlet } from 'react-router-dom';// noi dung thay doi theo URL cua con no
+import { Link, Outlet } from 'react-router-dom';// noi dung thay doi theo URL cua con no
 import { RiCouponLine } from "react-icons/ri";
 import { ImBlog } from "react-icons/im";
 import { IoIosNotifications } from "react-icons/io";
@@ -171,7 +171,7 @@ const MainLayout = () => {
               <IoIosNotifications className='fs-4' />
               <span className='badge bg-warning rounded-circle p-1 position-absolute'>3</span>
             </div>
-            <div className='d-flex gap-3 align-items-center'>
+            <div className='d-flex gap-3 align-items-center dropdown'>
               <div>
                 <img
                   width={32}
@@ -179,10 +179,34 @@ const MainLayout = () => {
                   src='https://stroyka-admin.html.themeforest.scompiler.ru/variants/ltr/images/customers/customer-4-64x64.jpg' alt=''
                 />
               </div>
-              <div>
+              <div
+                role="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <h5 className='mb-0'>Lu Tan Dat</h5>
                 <p className='mb-0'>ludathoc@gmail.com</p>
               </div>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <Link class="dropdown-item py-1 mb-1"
+                    to="/"
+                    style={{ "height": "auto", "lineHeight": "20px" }}
+                  >
+                    View Profile
+                  </Link>
+                </li>
+
+                <li>
+                  <Link class="dropdown-item py-1 mb-1"
+                    to="/"
+                    style={{ "height": "auto", "lineHeight": "20px" }}
+                  >
+                    SignOut
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
         </Header>
