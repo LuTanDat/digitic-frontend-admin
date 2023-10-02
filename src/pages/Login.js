@@ -16,13 +16,17 @@ const Login = () => {
         <form action="">
           <CustomInput
             type="text"
+            name='email'
             label="Email Address"
             id="email"
+            val='df'
           />
           <CustomInput
             type="password"
+            name='password'
             label="Password"
             id="pass"
+            val='df'
           />
           <div className="mt-3 text-end">
             <Link to='/forgot-password'>Forgot Password?</Link>
