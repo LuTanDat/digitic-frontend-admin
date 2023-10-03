@@ -31,9 +31,9 @@ const Login = () => {
     },
   });
 
-  const { user, isLoading, isSuccess, isError, message } = useSelector(
-    (state) => state.auth
-  );
+  const authState = useSelector((state) => state);// lay full state
+
+  const { user, isLoading, isSuccess, isError, message } = authState.auth;// cham name state muon lay
 
   useEffect(() => {
     if (!user == null || isSuccess) {
@@ -53,6 +53,9 @@ const Login = () => {
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
         <h3 className="text-center title">Login</h3>
         <p className="text-center">Login to your account to continue.</p>
+        <div className="error text-center">
+          {message.message === 'Rejected' ? 'You are not an Admin' : ''}
+        </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
