@@ -22,6 +22,7 @@ const initialState = {
 };
 
 // create a actions Redux
+// function login nhan vao bien userData, bien thunkAPI la đối tượng cung cấp các phương thức để xử lý các trạng thái yêu cầu
 export const login = createAsyncThunk(
   "auth/login",
   async (userData, thunkAPI) => {
@@ -33,7 +34,7 @@ export const login = createAsyncThunk(
   }
 );
 
-// create a actions Redux
+// create a Reducer Redux
 export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
