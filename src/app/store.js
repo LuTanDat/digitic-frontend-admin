@@ -1,7 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"; // create Redux Store
+
 import authReducer from "../features/auth/authSlice";
 import customerReducer from "../features/customers/customerSlice";
 import productReducer from "../features/product/productSlice";
+import brandReducer from "../features/brand/brandSlice";
+import colorReducer from "../features/color/colorSlice";
+import blogReducer from "../features/blog/blogSlice";
+import pCategoryReducer from "../features/pcategory/pcategorySlice";
+import bCategoryReducer from "../features/bcategory/bcategorySlice";
 
 export const store = configureStore({
   // list Reducer
@@ -9,5 +15,10 @@ export const store = configureStore({
     auth: authReducer,
     customer: customerReducer,
     product: productReducer,
+    brand: brandReducer,
+    pCategory: pCategoryReducer,
+    bCategory: bCategoryReducer,
+    color: colorReducer,
+    blog: blogReducer,
   },
 });
