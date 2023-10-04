@@ -9,7 +9,7 @@ const getUserfromLocalStorage = localStorage.getItem("user")
 
 const initialState = {
   user: getUserfromLocalStorage, // user
-  orders: [],
+  orders: [], // orders
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -28,6 +28,18 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const getOrders = createAsyncThunk(
+  "order/get-orders",
+  async (thunkAPI) => {
+    try {
+      return await authService.getOrders();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 // create a Reducer Redux
 // 1 actions co 3 reducers
@@ -48,6 +60,23 @@ export const authSlice = createSlice({
         state.message = "success";
       })
       .addCase(login.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+
+      .addCase(getOrders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrders.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.orders = action.payload;
+        state.message = "success";
+      })
+      .addCase(getOrders.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
