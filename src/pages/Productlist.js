@@ -50,26 +50,24 @@ const Productlist = () => {
   const productstate = useSelector((state) => state.product.products);
   const data1 = [];
   for (let i = 0; i < productstate.length; i++) {
-    if (productstate[i].role !== 'admin') {
-      data1.push({
-        key: i + 1,
-        title: productstate[i].title,
-        brand: productstate[i].brand,
-        category: productstate[i].category,
-        color: productstate[i].color,
-        price: `${productstate[i].price}`,
-        action: (
-          <>
-            <Link to='list-product' className='fs-3 text-danger'>
-              <BiEdit />
-            </Link>
-            <Link to='list-product' className='ms-3 fs-3 text-danger'>
-              <AiFillDelete />
-            </Link>
-          </>
-        )
-      });
-    }
+    data1.push({
+      key: i + 1,
+      title: productstate[i].title,
+      brand: productstate[i].brand,
+      category: productstate[i].category,
+      color: productstate[i].color,
+      price: `${productstate[i].price}`,
+      action: (
+        <>
+          <Link to='list-product' className='fs-3 text-danger'>
+            <BiEdit />
+          </Link>
+          <Link to='list-product' className='ms-3 fs-3 text-danger'>
+            <AiFillDelete />
+          </Link>
+        </>
+      )
+    });
   }
   return (
     <div>

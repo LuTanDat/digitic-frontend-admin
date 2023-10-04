@@ -30,22 +30,20 @@ const Brandlist = () => {
   const brandstate = useSelector((state) => state.brand.brands);
   const data1 = [];
   for (let i = 0; i < brandstate.length; i++) {
-    if (brandstate[i].role !== 'admin') {
-      data1.push({
-        key: i + 1,
-        name: brandstate[i].title,
-        action: (
-          <>
-            <Link to='list-brand' className='fs-3 text-danger'>
-              <BiEdit />
-            </Link>
-            <Link to='list-brand' className='ms-3 fs-3 text-danger'>
-              <AiFillDelete />
-            </Link>
-          </>
-        )
-      });
-    }
+    data1.push({
+      key: i + 1,
+      name: brandstate[i].title,
+      action: (
+        <>
+          <Link to='list-brand' className='fs-3 text-danger'>
+            <BiEdit />
+          </Link>
+          <Link to='list-brand' className='ms-3 fs-3 text-danger'>
+            <AiFillDelete />
+          </Link>
+        </>
+      )
+    });
   }
   return (
     <div>

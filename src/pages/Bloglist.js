@@ -35,23 +35,21 @@ const Bloglist = () => {
   const blogstate = useSelector((state) => state.blog.blogs);
   const data1 = [];
   for (let i = 0; i < blogstate.length; i++) {
-    if (blogstate[i].role !== 'admin') {
-      data1.push({
-        key: i + 1,
-        name: blogstate[i].title,
-        category: blogstate[i].category,
-        action: (
-          <>
-            <Link to='list-blog' className='fs-3 text-danger'>
-              <BiEdit />
-            </Link>
-            <Link to='list-blog' className='ms-3 fs-3 text-danger'>
-              <AiFillDelete />
-            </Link>
-          </>
-        )
-      });
-    }
+    data1.push({
+      key: i + 1,
+      name: blogstate[i].title,
+      category: blogstate[i].category,
+      action: (
+        <>
+          <Link to='list-blog' className='fs-3 text-danger'>
+            <BiEdit />
+          </Link>
+          <Link to='list-blog' className='ms-3 fs-3 text-danger'>
+            <AiFillDelete />
+          </Link>
+        </>
+      )
+    });
   }
   return (
     <div>
