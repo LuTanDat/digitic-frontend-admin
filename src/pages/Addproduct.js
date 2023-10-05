@@ -1,44 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import CustomInput from '../components/CustomInput';
+import ReactQuill from 'react-quill'; //////////////////////////////// text editor
+import 'react-quill/dist/quill.snow.css';
+import { useFormik } from 'formik'; ////////////////////////////////// xu ly su kien tren form
+import * as Yup from 'yup'; ////////////////////////////////////////// validate field on form
+import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 import { getBrands } from '../features/brand/brandSlice';
 import { getCategories } from '../features/pcategory/pcategorySlice';
 import { getColors } from '../features/color/colorSlice';
-import Multiselect from "react-widgets/Multiselect";
-import "react-widgets/styles.css";
-import Dropzone from 'react-dropzone'; // chon 1 or nhieu anh de upload
-
-import ReactQuill from 'react-quill'; // text editor
-import 'react-quill/dist/quill.snow.css';
-
-import { useFormik } from 'formik'; // xu ly su kien tren form
-import * as Yup from 'yup'; // validate field on form
-import { useDispatch, useSelector } from 'react-redux';
+import { Select } from 'antd';
+import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or nhieu anh de upload
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
 import { createProducts } from '../features/product/productSlice';
-
-// import { InboxOutlined } from '@ant-design/icons'; // upload images + <Dragger />
-// import { message, Upload } from 'antd';
-// import colorService from './../features/color/colorService';
-// const { Dragger } = Upload;
-// const props = {
-//   name: 'file',
-//   multiple: true,
-//   action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
-//   onChange(info) {
-//     const { status } = info.file;
-//     if (status !== 'uploading') {
-//       console.log(info.file, info.fileList);
-//     }
-//     if (status === 'done') {
-//       message.success(`${info.file.name} file uploaded successfully.`);
-//     } else if (status === 'error') {
-//       message.error(`${info.file.name} file upload failed.`);
-//     }
-//   },
-//   onDrop(e) {
-//     console.log('Dropped files', e.dataTransfer.files);
-//   },
-// };
+import { useNavigate } from 'react-router-dom';
 
 let schema = Yup.object().shape({
   title: Yup.string().required("Title is Required"),
@@ -46,12 +21,18 @@ let schema = Yup.object().shape({
   price: Yup.number().required("Price is Required"),
   brand: Yup.string().required("Brand is Required"),
   category: Yup.string().required("Category is Required"),
-  color: Yup.array().required("Color is Required"),
+  tags: Yup.string().required("Tag is Required"),
+  color: Yup
+    .array()
+    .min(1, "Pick at lease one color")
+    .required("Color is Required"),
   quantity: Yup.number().required("Quantity is Required"),
 });
 
 const Addproduct = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
 
@@ -59,20 +40,30 @@ const Addproduct = () => {
     dispatch(getBrands());
     dispatch(getCategories());
     dispatch(getColors());
-
   }, [])
-
 
   const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
   const imgState = useSelector((state) => state.upload.images);
+  const newProduct = useSelector((state) => state.product);
+  const { isSuccess, isError, isLoading, createdProduct } = newProduct;
 
-  const colors = [];
+  useEffect(() => {
+    if (isSuccess && createdProduct) {
+      toast.success("Product Added Successfully!")
+    }
+    else
+      if (isError) {
+        toast.error("Something went wrong!")
+      }
+  }, [isSuccess, isError, isLoading,])
+
+  const coloropt = [];
   colorState.forEach((i) => {
-    colors.push({
-      _id: i.id,
-      color: i.title,
+    coloropt.push({
+      label: i.title,
+      value: i._id,
     })
   })
   const img = [];
@@ -84,7 +75,7 @@ const Addproduct = () => {
   })
 
   useEffect(() => {
-    formik.values.color = color; // set value in formik = gia tri nao do
+    formik.values.color = color ? color : ""; // set value in formik = gia tri nao do
     formik.values.images = img;
   }, [color, img])
 
@@ -95,21 +86,25 @@ const Addproduct = () => {
       price: '',
       brand: '',
       category: '',
-      color: "",
+      tags: '',
+      color: '',
       quantity: '',
       images: ''
     },
     validationSchema: schema,
     onSubmit: values => {
       dispatch(createProducts(values));
-      // alert(JSON.stringify(values, null, 2));
+      formik.resetForm();
+      setColor(null);
+      setTimeout(() => {
+        navigate("/admin/list-product");
+      }, 3000)
     },
   });
 
-  const [desc, setDesc] = useState();
-  const handleDesc = (value) => {
-    setDesc(value);
-  };
+  const handleColors = (e) => {
+    setColor(e);
+  }
   return (
     <div>
       <h3 className='mb-4 title'>Add Product</h3>
@@ -193,12 +188,30 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.category && formik.errors.category}
           </div>
-          <Multiselect
-            name='color'
-            dataKey="id"
-            textField="color"
-            data={colors}
-            onChange={(e) => setColor(e)}
+          <select
+            name='tags'
+            onChange={formik.handleChange('tags')}
+            onBlur={formik.handleBlur('tags')}
+            val={formik.values.tags}
+            className='form-control py-3 mb-3'
+            id=''
+          >
+            <option value=''>Select Tags</option>
+            <option value='featured'>Featured</option>
+            <option value='popular'>Popular</option>
+            <option value='special'>Special</option>
+          </select>
+          <div className="error">
+            {formik.touched.tags && formik.errors.tags}
+          </div>
+          <Select
+            mode='multiple'
+            allowClear
+            className='w-100'
+            placeholder="Select Colors"
+            defaultValue={color}
+            onChange={(i) => handleColors(i)}
+            options={coloropt}
           />
           <div className="error">
             {formik.touched.color && formik.errors.color}
@@ -214,16 +227,6 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.quantity && formik.errors.quantity}
           </div>
-          {/* <Dragger {...props}>
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibited from uploading company data or other
-              banned files.
-            </p>
-          </Dragger> */}
           <div className='bg-white border-1 p-5 text-center'>
             <Dropzone onDrop={acceptedFiles => dispatch(uploadImg(acceptedFiles))}>
               {({ getRootProps, getInputProps }) => (

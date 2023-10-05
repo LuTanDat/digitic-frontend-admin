@@ -5,7 +5,6 @@ import productService from "./productService";
 
 const initialState = {
   products: [], // products
-  createdProduct: "",
   isError: false,
   isLoading: false,
   isSuccess: false,
