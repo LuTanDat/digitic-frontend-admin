@@ -1,11 +1,10 @@
 // Defined Actions, Reducer and Save State
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import productService from "./productService";
+import uploadService from "./uploadService";
 
 const initialState = {
-  products: [], // products
-  createdProduct: "",
+  images: [], // images
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -13,22 +12,25 @@ const initialState = {
 };
 
 // actions
-export const getProducts = createAsyncThunk(
-  "product/get-products",
-  async (thunkAPI) => {
+export const uploadImg = createAsyncThunk(
+  "upload/images",
+  async (data, thunkAPI) => {
     try {
-      return await productService.getProducts();
+      const formData = new FormData();// backend goi req.files
+      for (let i = 0; i < data.length; i++) {
+        formData.append("images", data[i]);
+      }
+      return await uploadService.uploadImg(formData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
-export const createProducts = createAsyncThunk(
-  "product/create-products",
-  async (productData, thunkAPI) => {
+export const delImg = createAsyncThunk(
+  "delete/images",
+  async (id, thunkAPI) => {
     try {
-      return await productService.createProduct(productData);
+      return await uploadService.deleteImg(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -36,46 +38,46 @@ export const createProducts = createAsyncThunk(
 );
 
 // reducers
-export const productSlice = createSlice({
-  name: "products",
+export const uploadSlice = createSlice({
+  name: "images",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.pending, (state) => {
+      .addCase(uploadImg.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getProducts.fulfilled, (state, action) => {
+      .addCase(uploadImg.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.products = action.payload;
+        state.images = action.payload;
         state.message = "success";
       })
-      .addCase(getProducts.rejected, (state, action) => {
+      .addCase(uploadImg.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
         state.isLoading = false;
       })
 
-      .addCase(createProducts.pending, (state) => {
+      .addCase(delImg.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createProducts.fulfilled, (state, action) => {
+      .addCase(delImg.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.createdProduct = action.payload;
+        state.images = [];
         state.message = "success";
       })
-      .addCase(createProducts.rejected, (state, action) => {
+      .addCase(delImg.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
+        state.message = action.payload;
         state.isLoading = false;
       })
   }
 })
 
-export default productSlice.reducer;
+export default uploadSlice.reducer;

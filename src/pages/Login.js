@@ -8,16 +8,16 @@ import * as Yup from 'yup'; // validate field on form
 import { useDispatch, useSelector } from "react-redux"; // push actions to Redux Store, get State from Redux Store
 import { login } from '../features/auth/authSlice';
 
+let schema = Yup.object().shape({
+  email: Yup.string()
+    .email("Email should be valid")
+    .required("Email is Required"),
+  password: Yup.string().required("Password is Required"),
+});
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  let schema = Yup.object().shape({
-    email: Yup.string()
-      .email("Email should be valid")
-      .required("Email is Required"),
-    password: Yup.string().required("Password is Required"),
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -27,11 +27,11 @@ const Login = () => {
     validationSchema: schema,
     onSubmit: values => {
       dispatch(login(values))
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
     },
   });
 
-  const authState = useSelector((state) => state);// lay full state
+  const authState = useSelector((state) => state);// lay full state cua Redux
 
   const { user, isLoading, isSuccess, isError, message } = authState.auth;// cham name state muon lay
 
