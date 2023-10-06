@@ -1,15 +1,7 @@
 // Defined Actions, Reducer and Save State
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import colorService from "./colorService";
-
-const initialState = {
-  colors: [], // colors
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
-  message: "",
-};
 
 // actions
 export const getColors = createAsyncThunk(
@@ -33,6 +25,16 @@ export const createColor = createAsyncThunk(
     }
   }
 );
+
+export const resetState = createAction("Reset_all");
+
+const initialState = {
+  colors: [], // colors
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+};
 
 // reducers
 export const colorSlice = createSlice({
@@ -74,6 +76,8 @@ export const colorSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
       })
+
+      .addCase(resetState, () => initialState);
   }
 })
 

@@ -1,15 +1,7 @@
 // Defined Actions, Reducer and Save State
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import pcategoryService from "./pcategoryService";
-
-const initialState = {
-  pCategories: [], // pCategories
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
-  message: "",
-};
 
 // actions
 export const getCategories = createAsyncThunk(
@@ -33,6 +25,16 @@ export const createCategory = createAsyncThunk(
     }
   }
 );
+
+export const resetState = createAction("RevertAll");
+
+const initialState = {
+  pCategories: [], // pCategories
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+};
 
 // reducers
 export const pCategorySlice = createSlice({
@@ -74,6 +76,8 @@ export const pCategorySlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
       })
+
+      .addCase(resetState, () => initialState);
   }
 })
 

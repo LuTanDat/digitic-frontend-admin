@@ -1,15 +1,7 @@
 // Defined Actions, Reducer and Save State
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import productService from "./productService";
-
-const initialState = {
-  products: [], // products
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
-  message: "",
-};
 
 // actions
 export const getProducts = createAsyncThunk(
@@ -33,6 +25,16 @@ export const createProducts = createAsyncThunk(
     }
   }
 );
+
+export const resetState = createAction("Reset_all");
+
+const initialState = {
+  products: [], // products
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+};
 
 // reducers
 export const productSlice = createSlice({
@@ -74,6 +76,8 @@ export const productSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
       })
+
+      .addCase(resetState, () => initialState);
   }
 })
 

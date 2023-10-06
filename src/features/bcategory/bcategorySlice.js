@@ -1,15 +1,7 @@
 // Defined Actions, Reducer and Save State
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import bcategoryService from "./bcategoryService";
-
-const initialState = {
-  bCategories: [], // bCategories
-  isError: false,
-  isLoading: false,
-  isSuccess: false,
-  message: "",
-};
 
 // actions
 export const getCategories = createAsyncThunk(
@@ -33,6 +25,16 @@ export const createBlogCategory = createAsyncThunk(
     }
   }
 );
+
+export const resetState = createAction("Reset_all");
+
+const initialState = {
+  bCategories: [], // bCategories
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+};
 
 // reducers
 export const bCategorySlice = createSlice({
@@ -74,6 +76,8 @@ export const bCategorySlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
       })
+
+      .addCase(resetState, () => initialState);
   }
 })
 

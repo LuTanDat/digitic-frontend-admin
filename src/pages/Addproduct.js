@@ -12,7 +12,7 @@ import { getColors } from '../features/color/colorSlice';
 import { Select } from 'antd';
 import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or nhieu anh de upload
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts } from '../features/product/productSlice';
+import { createProducts, resetState } from '../features/product/productSlice';
 import { useNavigate } from 'react-router-dom';
 
 let schema = Yup.object().shape({
@@ -97,7 +97,7 @@ const Addproduct = () => {
       formik.resetForm();
       setColor(null);
       setTimeout(() => {
-        navigate("/admin/list-product");
+        dispatch(resetState());
       }, 3000)
     },
   });

@@ -10,7 +10,7 @@ import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
 import { useNavigate } from 'react-router-dom';
 import { getCategories } from '../features/bcategory/bcategorySlice';
-import { createBlogs } from '../features/blog/blogSlice';
+import { createBlogs, resetState } from '../features/blog/blogSlice';
 
 let schema = Yup.object().shape({
   title: Yup.string().required("Title is Required"),
@@ -67,7 +67,7 @@ const Addblog = () => {
       dispatch(createBlogs(values));
       formik.resetForm();;
       setTimeout(() => {
-        navigate("/admin/blog-list");
+        dispatch(resetState());
       }, 3000)
     },
   });

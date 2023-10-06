@@ -1,25 +1,25 @@
 // Defined Actions, Reducer and Save State
 
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import blogService from "./blogService";
+import couponService from "./couponService";
 
 // actions
-export const getBlogs = createAsyncThunk(
-  "blog/get-blogs",
+export const getAllCoupons = createAsyncThunk(
+  "coupon/get-coupons",
   async (thunkAPI) => {
     try {
-      return await blogService.getBlogs();
+      return await couponService.getCoupons();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const createBlogs = createAsyncThunk(
-  "blog/create-blogs",
-  async (blogData, thunkAPI) => {
+export const createCoupon = createAsyncThunk(
+  "coupon/create-coupons",
+  async (couponData, thunkAPI) => {
     try {
-      return await blogService.createBlog(blogData);
+      return await couponService.createCoupon(couponData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -29,7 +29,7 @@ export const createBlogs = createAsyncThunk(
 export const resetState = createAction("Reset_all");
 
 const initialState = {
-  blogs: [], // blogs
+  coupons: [], // coupons
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -37,40 +37,40 @@ const initialState = {
 };
 
 // reducers
-export const blogSlice = createSlice({
-  name: "blogs",
+export const couponSlice = createSlice({
+  name: "coupons",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getBlogs.pending, (state) => {
+      .addCase(getAllCoupons.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getBlogs.fulfilled, (state, action) => {
+      .addCase(getAllCoupons.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.blogs = action.payload;
+        state.coupons = action.payload;
         state.message = "success";
       })
-      .addCase(getBlogs.rejected, (state, action) => {
+      .addCase(getAllCoupons.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
         state.isLoading = false;
       })
 
-      .addCase(createBlogs.pending, (state) => {
+      .addCase(createCoupon.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createBlogs.fulfilled, (state, action) => {
+      .addCase(createCoupon.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.createdBlog = action.payload;
+        state.createdCoupon = action.payload;
         state.message = "success";
       })
-      .addCase(createBlogs.rejected, (state, action) => {
+      .addCase(createCoupon.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
@@ -81,4 +81,4 @@ export const blogSlice = createSlice({
   }
 })
 
-export default blogSlice.reducer;
+export default couponSlice.reducer;
