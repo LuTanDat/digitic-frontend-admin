@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-import { getBrands } from '../features/brand/brandSlice';
+import { getBrands, resetState } from '../features/brand/brandSlice';
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
@@ -24,6 +24,7 @@ const columns = [
 const Brandlist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getBrands());
   }, [])
 
@@ -35,10 +36,12 @@ const Brandlist = () => {
       name: brandstate[i].title,
       action: (
         <>
-          <Link to='list-brand' className='fs-3 text-danger'>
+          <Link to={`/admin/brand/${brandstate[i]._id}`}
+            className='fs-3 text-danger'>
             <BiEdit />
           </Link>
-          <Link to='list-brand' className='ms-3 fs-3 text-danger'>
+          <Link to='list-brand'
+            className='ms-3 fs-3 text-danger'>
             <AiFillDelete />
           </Link>
         </>
