@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
 import CustomModal from '../components/CustomModal';
+
 const columns = [
   {
     title: "SNo",
@@ -79,7 +80,7 @@ const Brandlist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => deleteBrand(brandId)}
-        title="Are you sure you want to delete this brand ?"
+        title="Are you sure you want to delete this brand?"
       />
     </div>
   )
