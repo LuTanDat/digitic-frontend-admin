@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import CustomInput from '../components/CustomInput';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useFormik } from 'formik'; ////////////////////////////////// xu ly su kien tren form
-import * as Yup from 'yup'; ////////////////////////////////////////// validate field on form
-import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or nhieu anh de upload
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useFormik } from 'formik'; ////////////////////////////////// xu ly su kien tren form
+import * as Yup from 'yup'; ////////////////////////////////////////// validate field on form
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import { getCategories } from '../features/bcategory/bcategorySlice';
-import { createBlogs, resetState } from '../features/blog/blogSlice';
+import { createBlogs, getABlog, resetState, updateABlog } from '../features/blog/blogSlice';
 
 let schema = Yup.object().shape({
   title: Yup.string().required("Title is Required"),
@@ -21,21 +22,36 @@ let schema = Yup.object().shape({
 const Addblog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [images, setImages] = useState([]);
+  const location = useLocation();
+  const getBlogId = location.pathname.split("/")[3];
+  useEffect(() => {
+    if (getBlogId !== undefined) {
+      dispatch(getABlog(getBlogId));
+      img.push(blogImages);
+    } else {
+      dispatch(resetState());
+    }
+  }, [getBlogId]);
 
   useEffect(() => {
+    dispatch(resetState())
     dispatch(getCategories());
   }, [])
 
   const imgState = useSelector((state) => state.upload.images);
   const bCatState = useSelector((state) => state.bCategory.bCategories);
   const newBlog = useSelector((state) => state.blog);
-  const { isSuccess, isError, isLoading, createdBlog } = newBlog;
+  const { isSuccess, isError, isLoading, createdBlog,
+    blogName, blogDesc, blogCategory, blogImages, updatedBlog
+  } = newBlog;
 
   useEffect(() => {
     if (isSuccess && createdBlog) {
       toast.success("Blog Added Successfully!")
+    }
+    if (isSuccess && updatedBlog) {
+      toast.success("Blog Updated Successfully!");
+      navigate("/admin/blog-list");
     }
     else
       if (isError) {
@@ -50,31 +66,39 @@ const Addblog = () => {
       url: i.url,
     })
   })
-
+  console.log(img)
   useEffect(() => {
     formik.values.images = img;
-  }, [img])
+  }, [blogImages])
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: '',
-      description: '',
-      category: '',
-      images: ''
+      title: blogName || "",
+      description: blogDesc || "",
+      category: blogCategory || "",
+      images: ""
     },
     validationSchema: schema,
     onSubmit: values => {
-      dispatch(createBlogs(values));
-      formik.resetForm();;
-      setTimeout(() => {
+      if (getBlogId !== undefined) {
+        const data = { id: getBlogId, blogData: values };
+        dispatch(updateABlog(data));
         dispatch(resetState());
-      }, 3000)
+      } else {
+        dispatch(createBlogs(values));
+        formik.resetForm();
+        setTimeout(() => {
+          dispatch(resetState());
+        }, 300);
+      }
     },
   });
 
   return (
     <div>
-      <h3 className='mb-4 title'>Add Blog</h3>
+      <h3 className='mb-4 title'>
+        {getBlogId !== undefined ? "Edit" : "Add"} Blog</h3>
       <div className=''>
         <form action='' onSubmit={formik.handleSubmit} >
           <div className='mt-3'>
@@ -94,7 +118,7 @@ const Addblog = () => {
             name='category'
             onChange={formik.handleChange('category')}
             onBlur={formik.handleBlur('category')}
-            val={formik.values.category}
+            value={formik.values.category}
             className='form-control py-3 mt-3'
             id=''
           >
@@ -153,7 +177,7 @@ const Addblog = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type='submit'
           >
-            Add Blog
+            {getBlogId !== undefined ? "Edit" : "Add"} Blog
           </button>
         </form>
       </div>
