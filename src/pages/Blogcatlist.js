@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../features/bcategory/bcategorySlice';
+import { deleteABlogCat, getCategories, resetState } from '../features/bcategory/bcategorySlice';
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
+import CustomModal from '../components/CustomModal';
+
 const columns = [
   {
     title: "SNo",
@@ -22,28 +24,51 @@ const columns = [
 ];
 
 const Blogcatlist = () => {
+  const [open, setOpen] = useState(false);
+  const [bCatId, setBCatId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setBCatId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
+
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getCategories());
   }, [])
 
-  const bCatstate = useSelector((state) => state.bCategory.bCategories);
+  const bCatState = useSelector((state) => state.bCategory.bCategories);
   const data1 = [];
-  for (let i = 0; i < bCatstate.length; i++) {
+  for (let i = 0; i < bCatState.length; i++) {
     data1.push({
       key: i + 1,
-      name: bCatstate[i].title,
+      name: bCatState[i].title,
       action: (
         <>
-          <Link to='list-blogcategory' className='fs-3 text-danger'>
+          <Link to={`/admin/blog-category/${bCatState[i]._id}`}
+            className='fs-3 text-danger'>
             <BiEdit />
           </Link>
-          <Link to='list-blogcategory' className='ms-3 fs-3 text-danger'>
+          <button
+            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            onClick={() => showModal(bCatState[i]._id)}
+          >
             <AiFillDelete />
-          </Link>
+          </button>
         </>
       )
     });
+  }
+  const deleteBCat = (e) => {
+    dispatch(deleteABlogCat(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getCategories());
+    }, 100);
   }
   return (
     <div>
@@ -51,6 +76,12 @@ const Blogcatlist = () => {
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => deleteBCat(bCatId)}
+        title="Are you sure you want to delete this bCat?"
+      />
     </div>
   )
 }
