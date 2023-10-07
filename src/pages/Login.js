@@ -40,7 +40,7 @@ const Login = () => {
       navigate("admin");
     }
     else {
-      alert("Not Admin");
+      navigate("");
     }
   }, [user, isLoading, isSuccess, isError, message])
   return (
@@ -63,7 +63,7 @@ const Login = () => {
             label="Email Address"
             id="email"
             val={formik.values.email}
-            onCh={formik.handleChange("email")}
+            onChng={formik.handleChange("email")}
           />
           <div className="error">
             {formik.touched.email && formik.errors.email ? (
@@ -76,7 +76,7 @@ const Login = () => {
             label="Password"
             id="pass"
             val={formik.values.password}
-            onCh={formik.handleChange("password")}
+            onChng={formik.handleChange("password")}
           />
           <div className="error">
             {formik.touched.password && formik.errors.password ? (
