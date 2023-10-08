@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
-import { getOrders } from '../features/auth/authSlice';
+import { getOrderByUser, getOrders } from '../features/auth/authSlice';
 
 const columns = [
   {
@@ -12,12 +12,20 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Product Name",
     dataIndex: "name",
   },
   {
-    title: "Product",
-    dataIndex: "product",
+    title: "Brand",
+    dataIndex: "brand",
+  },
+  {
+    title: "Count",
+    dataIndex: "count",
+  },
+  {
+    title: "Color",
+    dataIndex: "color",
   },
   {
     title: "Amount",
@@ -33,25 +41,28 @@ const columns = [
   },
 ];
 
-const Orders = () => {
+const ViewOrder = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const userId = location.pathname.split("/")[3];
+
   useEffect(() => {
-    dispatch(getOrders());
+    dispatch(getOrderByUser(userId));
   }, [])
 
-  const orderState = useSelector((state) => state.auth.orders);
+  const orderState = useSelector((state) => state.auth.orderbyuser.products);
+  console.log(orderState);
+
   const data1 = [];
   for (let i = 0; i < orderState.length; i++) {
     data1.push({
       key: i + 1,
-      name: orderState[i].orderby.firstName,
-      product: (
-        <Link to={`/admin/order/${orderState[i].orderby._id}`}>
-          View Orders
-        </Link>
-      ),
-      amount: orderState[i].paymentIntent.amount,
-      date: new Date(orderState[i].createdAt).toLocaleString(),
+      name: orderState[i].product.title,
+      brand: orderState[i].product.brand,
+      count: orderState[i].count,
+      color: orderState[i].color,
+      amount: orderState[i].product.price,
+      date: orderState[i].product.createdAt,
       action: (
         <>
           <Link to='list-order' className='fs-3 text-danger'>
@@ -66,7 +77,7 @@ const Orders = () => {
   }
   return (
     <div>
-      <h3 className='mb-4 title'>Orders</h3>
+      <h3 className='mb-4 title'> View Order</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -74,4 +85,4 @@ const Orders = () => {
   )
 }
 
-export default Orders
+export default ViewOrder
