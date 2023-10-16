@@ -10,8 +10,8 @@ const login = async (user) => {
   return response.data;
 };
 
-const getOrders = async () => {
-  const response = await axios.get(`${base_url}user/getallorders`, config);
+const getOrders = async (data) => {
+  const response = await axios.get(`${base_url}user/getallorders`, data);
 
   return response.data;
 };
@@ -28,14 +28,14 @@ const updateOrder = async (data) => {
   return response.data;
 };
 
-const getMonthlyOrders = async () => {
-  const response = await axios.get(`${base_url}user/getMonthWiseOrderIncome`, config);
+const getMonthlyOrders = async (data) => {
+  const response = await axios.get(`${base_url}user/getMonthWiseOrderIncome`, data);
 
   return response.data;
 };
 
-const getYearlyStats = async () => {
-  const response = await axios.get(`${base_url}user/getYearlyTotalOrders`, config);
+const getYearlyStats = async (data) => {
+  const response = await axios.get(`${base_url}user/getYearlyTotalOrders`, data);
 
   return response.data;
 };
