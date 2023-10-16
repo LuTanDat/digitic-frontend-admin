@@ -5,6 +5,7 @@ import { Column } from '@ant-design/plots'; // chart column
 import { Table } from "antd"; // Table
 import { useDispatch, useSelector } from 'react-redux';
 import { getMonthlyData, getOrders, getYearlyData } from '../features/auth/authSlice';
+
 const columns = [
   {
     title: "SNo",
@@ -33,17 +34,6 @@ const columns = [
 ];
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-
-  const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
-  const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
-  const orderState = useSelector((state) => state?.auth?.orders?.orders);
-
-  const [dataMonthly, setDataMonthly] = useState([]);
-  const [dataMonthlySales, setDataMonthlySales] = useState([]);
-  const [orderData, setOrderData] = useState([]);
-
-
   const getTokenFromLocalStorage = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null;
@@ -56,11 +46,20 @@ const Dashboard = () => {
     },
   };
 
+  const dispatch = useDispatch();
+
+  const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
+  const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
+  const orderState = useSelector((state) => state?.auth?.orders?.orders);
+
+  const [dataMonthly, setDataMonthly] = useState([]);
+  const [dataMonthlySales, setDataMonthlySales] = useState([]);
+  const [orderData, setOrderData] = useState([]);
 
   useEffect(() => {
+    dispatch(getOrders(config3));
     dispatch(getMonthlyData(config3));
     dispatch(getYearlyData(config3));
-    dispatch(getOrders(config3));
   }, [])
 
   useEffect(() => {
@@ -72,8 +71,6 @@ const Dashboard = () => {
       data.push({ type: monthNames[element?._id?.month - 1], income: element?.amount })
       monthlyOrderCount.push({ type: monthNames[element?._id?.month - 1], sales: element?.count })
     }
-    setDataMonthly(data);
-    setDataMonthlySales(monthlyOrderCount);
 
     const data1 = [];
     for (let i = 0; i < orderState?.length; i++) {
@@ -88,8 +85,10 @@ const Dashboard = () => {
         });
       }
     }
-    console.log(data1);
     setOrderData(data1);
+    setDataMonthly(data);
+    setDataMonthlySales(monthlyOrderCount);
+
   }, [monthlyDataState])
 
   const config = {

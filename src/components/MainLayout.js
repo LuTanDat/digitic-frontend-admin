@@ -33,6 +33,7 @@ const MainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   return (
     <Layout /*onContextMenu={(e) => e.preventDefault()}*/>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -211,8 +212,8 @@ const MainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className='mb-0'>Lu Tan Dat</h5>
-                <p className='mb-0'>ludathoc@gmail.com</p>
+                <h5 className='mb-0'>{currentUser.lastName + " " + currentUser.firstName}</h5>
+                <p className='mb-0'>{currentUser.email}</p>
               </div>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
