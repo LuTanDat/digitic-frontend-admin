@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { BiEdit } from 'react-icons/bi';
-import { AiFillDelete } from 'react-icons/ai';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getOrder, getOrderByUser, getOrders } from '../features/auth/authSlice';
+import { BiArrowBack } from 'react-icons/bi';
 
 const columns = [
   {
@@ -35,6 +34,7 @@ const columns = [
 
 const ViewOrder = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const orderId = location.pathname.split("/")[3];
 
@@ -56,9 +56,17 @@ const ViewOrder = () => {
       amount: orderState[i].price,
     });
   }
+  const goBack = () => {
+    navigate(-1);
+  }
   return (
     <div>
-      <h3 className='mb-4 title'> View Order</h3>
+      <div className='d-flex justify-content-between align-items-center'>
+        <h3 className='mb-4 title'>View Order</h3>
+        <button className='bg-transparent border-0 fs-6 mb-0 d-flex align-items-center gap-1' onClick={goBack}>
+          <BiArrowBack className='fs-5' /> Go Back
+        </button>
+      </div>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
