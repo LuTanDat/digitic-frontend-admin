@@ -9,7 +9,6 @@ import { useFormik } from 'formik'; ////////////////////////////////// xu ly su 
 import * as Yup from 'yup'; ////////////////////////////////////////// validate field on form
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { getCategories } from '../features/bcategory/bcategorySlice';
 import { createBlogs, getABlog, resetState, updateABlog } from '../features/blog/blogSlice';
 
@@ -24,6 +23,7 @@ const Addblog = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const getBlogId = location.pathname.split("/")[3];
+
   useEffect(() => {
     if (getBlogId !== undefined) {
       dispatch(getABlog(getBlogId));

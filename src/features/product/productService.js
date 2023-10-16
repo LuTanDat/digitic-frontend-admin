@@ -12,6 +12,12 @@ const createProduct = async (product) => {
   return response.data;
 };
 
+const getProduct = async (id) => {
+  const response = await axios.get(`${base_url}product/${id}`, config);
+
+  return response.data;
+};
+
 const updateProduct = async (product) => {
   const response = await axios.put(
     `${base_url}product/${product.id}`,
@@ -23,11 +29,6 @@ const updateProduct = async (product) => {
     },
     config
   );
-
-  return response.data;
-};
-const getProduct = async (id) => {
-  const response = await axios.get(`${base_url}product/${id}`, config);
 
   return response.data;
 };

@@ -38,9 +38,9 @@ export const getAProduct = createAsyncThunk(
 );
 export const updateAProduct = createAsyncThunk(
   "product/update-product",
-  async (brand, thunkAPI) => {
+  async (product, thunkAPI) => {
     try {
-      return await productService.updateProduct(brand);
+      return await productService.updateProduct(product);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -116,10 +116,15 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        // state.productName = action.payload.title;
-        // state.productDesc = action.payload.description;
-        // state.productCategory = action.payload.category;
-        // state.productImages = action.payload.images;
+        state.productName = action.payload.title;
+        state.productDesc = action.payload.description;
+        state.productPrice = action.payload.price;
+        state.productBrand = action.payload.brand;
+        state.productCategory = action.payload.category;
+        state.productTags = action.payload.tags;
+        state.productColor = action.payload.color;
+        state.productQuantity = action.payload.quantity;
+        state.productImages = action.payload.images;
       })
       .addCase(getAProduct.rejected, (state, action) => {
         state.isLoading = false;

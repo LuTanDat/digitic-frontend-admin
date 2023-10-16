@@ -12,8 +12,8 @@ import { getColors } from '../features/color/colorSlice';
 import { Select } from 'antd';
 import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or nhieu anh de upload
 import { delImg, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts, resetState } from '../features/product/productSlice';
-import { useNavigate } from 'react-router-dom';
+import { createProducts, getAProduct, resetState } from '../features/product/productSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 let schema = Yup.object().shape({
   title: Yup.string().required("Title is Required"),
@@ -32,11 +32,23 @@ let schema = Yup.object().shape({
 const Addproduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const getProductId = location.pathname.split("/")[3];
+
+  useEffect(() => {
+    if (getProductId !== undefined) {
+      dispatch(getAProduct(getProductId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [getProductId]);
+
 
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
 
   useEffect(() => {
+    dispatch(resetState())
     dispatch(getBrands());
     dispatch(getCategories());
     dispatch(getColors());
@@ -47,11 +59,17 @@ const Addproduct = () => {
   const colorState = useSelector((state) => state.color.colors);
   const imgState = useSelector((state) => state.upload.images);
   const newProduct = useSelector((state) => state.product);
-  const { isSuccess, isError, isLoading, createdProduct } = newProduct;
+  const { isSuccess, isError, isLoading, createdProduct,
+    productName, productDesc, productPrice, productBrand, productCategory, productTags, productColor, productQuantity, productImages, updatedProduct
+  } = newProduct;
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
       toast.success("Product Added Successfully!")
+    }
+    if (isSuccess && updatedProduct) {
+      toast.success("Product Updated Successfully!");
+      navigate("/admin/list-product");
     }
     else
       if (isError) {
@@ -74,21 +92,17 @@ const Addproduct = () => {
     })
   })
 
-  useEffect(() => {
-    formik.values.color = color ? color : ""; // set value in formik = gia tri nao do
-    formik.values.images = img;
-  }, [color, img])
-
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: '',
-      description: '',
-      price: '',
-      brand: '',
-      category: '',
-      tags: '',
+      title: productName || '',
+      description: productDesc || '',
+      price: productPrice || '',
+      brand: productBrand || '',
+      category: productCategory || '',
+      tags: productTags || '',
       color: '',
-      quantity: '',
+      quantity: productQuantity || '',
       images: ''
     },
     validationSchema: schema,
@@ -101,6 +115,11 @@ const Addproduct = () => {
       }, 3000)
     },
   });
+
+  useEffect(() => {
+    formik.values.color = color ? color : ""; // set value in formik = gia tri nao do
+    formik.values.images = img;
+  }, [formik, color, img])
 
   const handleColors = (e) => {
     setColor(e);
@@ -148,7 +167,7 @@ const Addproduct = () => {
             name='brand'
             onChange={formik.handleChange('brand')}
             onBlur={formik.handleBlur('brand')}
-            val={formik.values.brand}
+            value={formik.values.brand}
             className='form-control py-3 mb-3'
             id=''
           >
@@ -170,7 +189,7 @@ const Addproduct = () => {
             name='category'
             onChange={formik.handleChange('category')}
             onBlur={formik.handleBlur('category')}
-            val={formik.values.category}
+            value={formik.values.category}
             className='form-control py-3 mb-3'
             id=''
           >
@@ -192,7 +211,7 @@ const Addproduct = () => {
             name='tags'
             onChange={formik.handleChange('tags')}
             onBlur={formik.handleBlur('tags')}
-            val={formik.values.tags}
+            value={formik.values.tags}
             className='form-control py-3 mb-3'
             id=''
           >
