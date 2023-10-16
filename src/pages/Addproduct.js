@@ -44,9 +44,6 @@ const Addproduct = () => {
   }, [getProductId]);
 
 
-  const [color, setColor] = useState([]);
-  const [images, setImages] = useState([]);
-
   useEffect(() => {
     dispatch(resetState())
     dispatch(getBrands());
@@ -62,6 +59,11 @@ const Addproduct = () => {
   const { isSuccess, isError, isLoading, createdProduct,
     productName, productDesc, productPrice, productBrand, productCategory, productTags, productColor, productQuantity, productImages, updatedProduct
   } = newProduct;
+
+  const selectedColor = productColor?.map(color => color._id);
+
+  const [color, setColor] = useState(selectedColor);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
