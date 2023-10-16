@@ -2,6 +2,7 @@
 
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import enquiryService from "./enquiryService";
+import { toast } from "react-toastify";
 
 // actions
 export const getEnquiries = createAsyncThunk(
@@ -91,6 +92,9 @@ export const enquirySlice = createSlice({
         state.isSuccess = true;
         state.deletedEnquiry = action.payload;
         state.message = "success";
+        if (state.isSuccess === true) {
+          toast.success("Deleted Enquiry Successfully");
+        }
       })
       .addCase(deleteAEnquiry.rejected, (state, action) => {
         state.isError = true;
@@ -127,6 +131,9 @@ export const enquirySlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.updatedEnquiry = action.payload;
+        if (state.isSuccess === true) {
+          toast.success("Updated Status Enquiry Successfully");
+        }
       })
       .addCase(updateAEnquiry.rejected, (state, action) => {
         state.isLoading = false;

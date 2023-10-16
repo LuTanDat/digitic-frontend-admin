@@ -77,15 +77,18 @@ const Dashboard = () => {
 
     const data1 = [];
     for (let i = 0; i < orderState?.length; i++) {
-      data1.push({
-        key: i + 1,
-        name: orderState[i]?.user?.firstName + orderState[i]?.user?.lastName,
-        product: orderState[i]?.orderItems?.length,
-        price: orderState[i]?.totalPrice,
-        dprice: orderState[i]?.totalPriceAfterDiscount,
-        status: orderState[i]?.orderStatus,
-      });
+      if (i < 10) {
+        data1.push({
+          key: i + 1,
+          name: orderState[i]?.user?.firstName + orderState[i]?.user?.lastName,
+          product: orderState[i]?.orderItems?.length,
+          price: orderState[i]?.totalPrice,
+          dprice: orderState[i]?.totalPriceAfterDiscount,
+          status: orderState[i]?.orderStatus,
+        });
+      }
     }
+    console.log(data1);
     setOrderData(data1);
   }, [monthlyDataState])
 
