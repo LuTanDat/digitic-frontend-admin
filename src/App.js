@@ -12,12 +12,16 @@ import Customer from './pages/Customer';
 import Colorlist from './pages/Colorlist';
 import Categorylist from './pages/Categorylist';
 import Brandlist from './pages/Brandlist';
+import Supplierlist from './pages/Supplierlist';
+import ImportNotelist from './pages/ImportNotelist';
 import Productlist from './pages/Productlist';
 import Addblog from './pages/Addblog';
 import Addblogcat from './pages/Addblogcat';
 import Addcolor from './pages/Addcolor';
 import Addcat from './pages/Addcat';
 import Addbrand from './pages/Addbrand';
+import Addsupplier from './pages/AddSupplier';
+import AddimportNote from './pages/AddImportNote';
 import Addproduct from './pages/Addproduct';
 import Couponlist from './pages/Couponlist';
 import AddCoupon from './pages/AddCoupon';
@@ -59,6 +63,12 @@ function App() {
           <Route path='list-product' element={<Productlist />} />
           <Route path='product' element={<Addproduct />} />
           <Route path='product/:id' element={<Addproduct />} />
+          <Route path='list-supplier' element={<Supplierlist />} />
+          <Route path='supplier' element={<Addsupplier />} />
+          <Route path='supplier/:id' element={<Addsupplier />} />
+          <Route path='list-importNote' element={<ImportNotelist />} />
+          <Route path='importNote' element={<AddimportNote />} />
+          <Route path='importNote/:id' element={<AddimportNote />} />
         </Route>
       </Routes>
     </Router>

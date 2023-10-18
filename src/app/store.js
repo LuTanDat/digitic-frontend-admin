@@ -5,6 +5,8 @@ import customerReducer from "../features/customers/customerSlice";
 import productReducer from "../features/product/productSlice";
 import brandReducer from "../features/brand/brandSlice";
 import colorReducer from "../features/color/colorSlice";
+import supplierReducer from "../features/supplier/supplierSlice";
+import importNoteReducer from "../features/importNote/importNoteSlice";
 import blogReducer from "../features/blog/blogSlice";
 import couponReducer from "../features/coupon/couponSlice";
 import enquiryReducer from "../features/enquiry/enquirySlice";
@@ -26,6 +28,7 @@ export const store = configureStore({
     enquiry: enquiryReducer,
     upload: uploadReducer,
     coupon: couponReducer,
-
+    supplier: supplierReducer,
+    importNote: importNoteReducer,
   },
 });

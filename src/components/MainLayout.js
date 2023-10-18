@@ -12,17 +12,19 @@ import {
   AiOutlineShoppingCart,
   AiOutlineUser,
   AiOutlineBgColors,
-  AiOutlineLogout
+  AiOutlineLogout,
+  AiOutlineUserAdd
 } from "react-icons/ai";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, Outlet } from 'react-router-dom';// noi dung thay doi theo URL cua con no
-import { RiCouponLine } from "react-icons/ri";
+import { RiCouponLine, RiMenuAddLine } from "react-icons/ri";
 import { ImBlog } from "react-icons/im";
 import { IoIosNotifications } from "react-icons/io";
 import { FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { SiBrandfolder } from "react-icons/si";
-import { BiCategoryAlt } from "react-icons/bi";
+import { BiCategoryAlt, BiUserPin } from "react-icons/bi";
+import { CgMenuGridO } from "react-icons/cg";
 
 import { Layout, Menu, Button, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -132,6 +134,40 @@ const MainLayout = () => {
                   key: 'coupon-list',
                   icon: <RiCouponLine className='fs-4' />,
                   label: 'Coupon List',
+                },
+              ]
+            },
+            {
+              key: 'suppliers',
+              icon: <BiUserPin className='fs-4' />,
+              label: 'Suppliers',
+              children: [
+                {
+                  key: 'supplier',
+                  icon: <AiOutlineUserAdd className='fs-4' />,
+                  label: 'Add Supplier',
+                },
+                {
+                  key: 'list-supplier',
+                  icon: <BiUserPin className='fs-4' />,
+                  label: 'Supplier List',
+                },
+              ]
+            },
+            {
+              key: 'importNotes',
+              icon: <CgMenuGridO className='fs-4' />,
+              label: 'ImportNotes',
+              children: [
+                {
+                  key: 'importNote',
+                  icon: <RiMenuAddLine className='fs-4' />,
+                  label: 'Add ImportNote',
+                },
+                {
+                  key: 'list-importNote',
+                  icon: <CgMenuGridO className='fs-4' />,
+                  label: 'ImportNote List',
                 },
               ]
             },
