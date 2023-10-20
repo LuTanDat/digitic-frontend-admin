@@ -6,6 +6,7 @@ const CustomInput = (props) => {
   return (
     <div className="form-floating mt-3">
       <input
+        style={{ borderColor: "#777777" }}
         type={type}
         className={`form-control ${i_class}`}
         id={i_id}
