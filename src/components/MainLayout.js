@@ -66,147 +66,133 @@ const MainLayout = () => {
             {
               key: 'customer',
               icon: <AiOutlineUser className='fs-4' />,
-              label: 'Customer',
+              label: 'Khách hàng',
             },
             {
-              key: 'catalog',
+              key: 'products',
               icon: <AiOutlineShoppingCart className='fs-4' />,
-              label: 'Catalog',
+              label: 'Sản phẩm',
               children: [
                 {
                   key: 'product',
                   icon: <AiOutlineUser className='fs-4' />,
-                  label: 'Add Product',
+                  label: 'Thêm Sản phẩm',
                 },
                 {
                   key: 'list-product',
                   icon: <AiOutlineUser className='fs-4' />,
-                  label: 'Product List',
+                  label: 'Sản Phẩm',
                 },
                 {
                   key: 'brand',
                   icon: <SiBrandfolder className='fs-4' />,
-                  label: 'Brand',
+                  label: 'Thêm Thương hiệu',
                 },
                 {
                   key: 'list-brand',
                   icon: <SiBrandfolder className='fs-4' />,
-                  label: 'Brand List',
+                  label: 'Thương hiệu',
                 },
                 {
                   key: 'category',
                   icon: <BiCategoryAlt className='fs-4' />,
-                  label: 'Category',
+                  label: 'Thêm Danh mục',
                 },
                 {
                   key: 'list-category',
                   icon: <BiCategoryAlt className='fs-4' />,
-                  label: 'Category List',
+                  label: 'Danh mục',
                 },
                 {
                   key: 'color',
                   icon: <AiOutlineBgColors className='fs-4' />,
-                  label: 'Color',
+                  label: 'Thêm Màu sắc',
                 },
                 {
                   key: 'list-color',
                   icon: <AiOutlineBgColors className='fs-4' />,
-                  label: 'Color List',
+                  label: 'Màu sắc',
+                },
+                {
+                  key: 'coupon',
+                  icon: <ImBlog className='fs-4' />,
+                  label: 'Thêm Mã giảm giá',
+                },
+                {
+                  key: 'coupon-list',
+                  icon: <RiCouponLine className='fs-4' />,
+                  label: 'Mã giảm giá',
                 },
               ]
             },
             {
               key: 'orders',
               icon: <FaClipboardList className='fs-4' />,
-              label: 'Orders',
-            },
-            {
-              key: 'marketing',
-              icon: <RiCouponLine className='fs-4' />,
-              label: 'Marketings',
-              children: [
-                {
-                  key: 'coupon',
-                  icon: <ImBlog className='fs-4' />,
-                  label: 'Add Coupon',
-                },
-                {
-                  key: 'coupon-list',
-                  icon: <RiCouponLine className='fs-4' />,
-                  label: 'Coupon List',
-                },
-              ]
-            },
-            {
-              key: 'suppliers',
-              icon: <BiUserPin className='fs-4' />,
-              label: 'Suppliers',
-              children: [
-                {
-                  key: 'supplier',
-                  icon: <AiOutlineUserAdd className='fs-4' />,
-                  label: 'Add Supplier',
-                },
-                {
-                  key: 'list-supplier',
-                  icon: <BiUserPin className='fs-4' />,
-                  label: 'Supplier List',
-                },
-              ]
+              label: 'Đơn Hàng',
             },
             {
               key: 'importNotes',
               icon: <CgMenuGridO className='fs-4' />,
-              label: 'ImportNotes',
+              label: 'Phiếu Nhập',
               children: [
+                {
+                  key: 'supplier',
+                  icon: <AiOutlineUserAdd className='fs-4' />,
+                  label: 'Thêm Nhà cung cấp',
+                },
+                {
+                  key: 'list-supplier',
+                  icon: <BiUserPin className='fs-4' />,
+                  label: 'Nhà cung cấp',
+                },
                 {
                   key: 'importNote',
                   icon: <RiMenuAddLine className='fs-4' />,
-                  label: 'Add ImportNote',
+                  label: 'Thêm Phiếu nhập',
                 },
                 {
                   key: 'list-importNote',
                   icon: <CgMenuGridO className='fs-4' />,
-                  label: 'ImportNote List',
+                  label: 'Phiếu nhập',
                 },
               ]
             },
             {
               key: 'blogs',
               icon: <FaBloggerB className='fs-4' />,
-              label: 'Blogs',
+              label: 'Bài viết',
               children: [
                 {
                   key: 'blog',
                   icon: <ImBlog className='fs-4' />,
-                  label: 'Add Blog',
+                  label: 'Thêm Bài viết',
                 },
                 {
                   key: 'blog-list',
                   icon: <FaBloggerB className='fs-4' />,
-                  label: 'Blog List',
+                  label: 'Bài viết',
                 },
                 {
                   key: 'blog-category',
                   icon: <ImBlog className='fs-4' />,
-                  label: 'Add Blog Category',
+                  label: 'Thêm Danh mục',
                 },
                 {
                   key: 'blog-category-list',
                   icon: <FaBloggerB className='fs-4' />,
-                  label: 'Blog Category List',
+                  label: 'Danh mục',
                 },
               ]
             },
             {
               key: 'enquiries',
               icon: <FaClipboardList className='fs-4' />,
-              label: 'Enquiries',
+              label: 'Thắc mắc',
             },
             {
               key: 'signout',
               icon: <AiOutlineLogout className='fs-4' />,
-              label: 'Sign Out',
+              label: 'Đăng Xuất',
             },
           ]}
         />
