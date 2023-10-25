@@ -1,12 +1,14 @@
 // Defined Actions, Reducer and Save State
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import authService from "./authServices";
 import { toast } from "react-toastify";
 
 const getUserfromLocalStorage = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
+
+export const resetState = createAction("Reset_all");
 
 const initialState = {
   user: getUserfromLocalStorage, // user
@@ -79,6 +81,16 @@ export const updateAOrder = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       return await authService.updateOrder(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const deleteAOrder = createAsyncThunk(
+  "order/delete-order",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.deleteOrder(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -197,6 +209,24 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
       })
+
+      .addCase(deleteAOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedOrder = action.payload;
+      })
+      .addCase(deleteAOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+
+      .addCase(resetState, () => initialState);
   },
 })
 

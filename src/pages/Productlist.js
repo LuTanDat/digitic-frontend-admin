@@ -146,7 +146,7 @@ const Productlist = () => {
   }
   return (
     <div>
-      <h3 className="mb-4 title">Products</h3>
+      <h3 className="mb-4 title">Sản phẩm</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -154,7 +154,7 @@ const Productlist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => deleteProduct(productId)}
-        title="Are you sure you want to delete this product?"
+        title="Bạn chắc chắn muốn xóa sản phẩm này?"
       />
     </div>
   );

@@ -28,6 +28,12 @@ const updateOrder = async (data) => {
   return response.data;
 };
 
+const deleteOrder = async (id) => {
+  const response = await axios.delete(`${base_url}user/deleteOrder/${id}`, config);
+
+  return response.data;
+};
+
 const getMonthlyOrders = async (data) => {
   const response = await axios.get(`${base_url}user/getMonthWiseOrderIncome`, data);
 
@@ -47,6 +53,6 @@ const authService = {
   getMonthlyOrders,
   getYearlyStats,
   updateOrder,
-
+  deleteOrder
 }
 export default authService;

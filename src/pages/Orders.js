@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
-import { AiFillDelete } from 'react-icons/ai';
-import { getOrders, updateAOrder } from '../features/auth/authSlice';
+import { AiFillDelete, AiFillPrinter } from 'react-icons/ai';
+import { deleteAOrder, getOrders, resetState, updateAOrder } from '../features/auth/authSlice';
+import CustomModal from '../components/CustomModal';
 
 const columns = [
   {
@@ -12,28 +13,47 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên người nhận",
     dataIndex: "name",
   },
   {
-    title: "Product",
+    title: "Sản phẩm",
     dataIndex: "product",
   },
   {
-    title: "Amount",
+    title: "Phương thức thanh toán",
+    dataIndex: "payment",
+  },
+  {
+    title: "Tổng tiền",
     dataIndex: "amount",
   },
   {
-    title: "Date",
+    title: "Ngày đặt hàng",
     dataIndex: "date",
   },
   {
-    title: "Action",
+    title: "Trạng thái đơn hàng",
+    dataIndex: "status",
+  },
+  {
+    title: "Thao tác",
     dataIndex: "action",
   },
 ];
 
 const Orders = () => {
+  const [open, setOpen] = useState(false);
+  const [orderId, setOrderId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setOrderId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
+
   const getTokenFromLocalStorage = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null;
@@ -48,6 +68,7 @@ const Orders = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getOrders(config3));
   }, [])
 
@@ -62,24 +83,38 @@ const Orders = () => {
           View Orders
         </Link>
       ),
+      payment: "",
       amount: orderState[i]?.totalPrice,
       date: new Date(orderState[i]?.createdAt).toLocaleString(),
-      action: (
+      status: (
         <>
           <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
-            <option value="Ordered" disabled selected>Ordered</option>
+            <option value="Ordered" disabled>Ordered</option>
             <option value="Processed">Processed</option>
             <option value="Shipped">Shipped</option>
             <option value="Out For Delivery">Out For Delivery</option>
             <option value="Delivered">Delivered</option>
           </select>
-
-          {/* <Link to='list-order' className='fs-3 text-danger'>
+        </>
+      ),
+      action: (
+        <>
+          <button
+            className='me-3 fs-3 text-danger bg-transparent border-0'
+            onClick={() => { }}
+          >
+            <AiFillPrinter />
+          </button>
+          {/* <Link to={`/admin/order/${orderState[i]._id}`}
+            className='fs-3 text-danger'>
             <BiEdit />
-          </Link>
-          <Link to='list-order' className='ms-3 fs-3 text-danger'>
-            <AiFillDelete />
           </Link> */}
+          <button
+            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            onClick={() => showModal(orderState[i]._id)}
+          >
+            <AiFillDelete />
+          </button>
         </>
       )
     });
@@ -87,12 +122,25 @@ const Orders = () => {
   const updateOrderStatus = (a, b) => {
     dispatch(updateAOrder({ id: a, status: b }))
   }
+  const deleteOrder = (e) => {
+    dispatch(deleteAOrder(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getOrders(config3));
+    }, 100);
+  }
   return (
     <div>
-      <h3 className='mb-4 title'>Orders</h3>
+      <h3 className='mb-4 title'>Đơn hàng</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => deleteOrder(orderId)}
+        title="Bạn chắc chắn muốn xóa đơn hàng này?"
+      />
     </div>
   )
 }

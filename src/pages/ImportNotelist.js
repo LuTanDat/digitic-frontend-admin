@@ -13,28 +13,28 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name Supplier",
+    title: "Tên nhà cung cấp",
     dataIndex: "nameSupplier",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: "Brand",
+    title: "Thương hiệu",
     dataIndex: "brand",
   },
   {
-    title: "Quantity",
+    title: "Số lượng",
     dataIndex: "quantity",
   },
   {
-    title: "Price",
+    title: "Giá",
     dataIndex: "price",
   },
   {
-    title: "Date",
+    title: "Ngày nhập",
     dataIndex: "date",
   },
   {
-    title: "Action",
+    title: "Thao tác",
     dataIndex: "action",
   },
 ];
@@ -69,6 +69,12 @@ const ImportNotelist = () => {
       date: new Date(importNoteState[i].createdAt).toLocaleString(),
       action: (
         <>
+          <button
+            className='me-3 fs-3 text-danger bg-transparent border-0'
+            onClick={() => showModal(importNoteState[i]._id)}
+          >
+            <AiFillPrinter />
+          </button>
           <Link to={`/admin/importNote/${importNoteState[i]._id}`}
             className='fs-3 text-danger'>
             <BiEdit />
@@ -78,12 +84,6 @@ const ImportNotelist = () => {
             onClick={() => showModal(importNoteState[i]._id)}
           >
             <AiFillDelete />
-          </button>
-          <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
-            onClick={() => showModal(importNoteState[i]._id)}
-          >
-            <AiFillPrinter />
           </button>
         </>
       )
@@ -98,7 +98,7 @@ const ImportNotelist = () => {
   }
   return (
     <div>
-      <h3 className='mb-4 title'>ImportNotes</h3>
+      <h3 className='mb-4 title'>Phiếu nhập</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -106,7 +106,7 @@ const ImportNotelist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => deleteImportNote(importNoteId)}
-        title="Are you sure you want to delete this importNote?"
+        title="Bạn chắc chắn muốn xóa phiếu nhập này?"
       />
     </div>
   )
