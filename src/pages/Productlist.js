@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
@@ -7,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteAProduct, getProducts, resetState } from '../features/product/productSlice';
 import CustomModal from '../components/CustomModal';
+import { getAllCoupons } from "../features/coupon/couponSlice";
 
 const columns = [
   {
@@ -73,19 +75,40 @@ const Productlist = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProducts());
+    dispatch(getAllCoupons());
+
   }, []);
-  const productState = useSelector((state) => state.product.products);
+  const productState = useSelector((state) => state.product?.products);
+  const couponState = useSelector((state) => state.coupon?.coupons);
   const data1 = [];
+
   for (let i = 0; i < productState.length; i++) {
+    let discountPercent = 0;
+    for (let j = 0; j < couponState.length; j++) {
+      if (productState[i]._id === couponState[j].product?._id) {
+        discountPercent = couponState[j].discount;
+        break;
+      }
+    }
+
     data1.push({
       key: i + 1,
-      image: productState[i].image,
+      image: (
+        <div className='product-image'>
+          <img
+            src={productState[i]?.images[0]?.url}
+            className='img-fluid mx-auto'
+            alt='product image'
+            width={160}
+          />
+        </div>
+      ),
       title: productState[i].title,
       brand: productState[i].brand,
       category: productState[i].category,
       quantity: productState[i].quantity,
       price: `${productState[i].price} đ`,
-      coupons: `${productState[i].coupons !== undefined ? productState[i].coupons : 0} %`,
+      coupons: `${discountPercent} %`,
       warranty: `${productState[i].warranty} tháng`,
       action: (
         <>
