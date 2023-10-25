@@ -83,13 +83,20 @@ const Productlist = () => {
   const data1 = [];
 
   for (let i = 0; i < productState.length; i++) {
+    let price = productState[i].price;
     let discountPercent = 0;
     for (let j = 0; j < couponState.length; j++) {
       if (productState[i]._id === couponState[j].product?._id) {
         discountPercent = couponState[j].discount;
+        price *= (100 - discountPercent) / 100;
         break;
       }
     }
+
+    const formattedPrice = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(price);
 
     data1.push({
       key: i + 1,
@@ -107,7 +114,7 @@ const Productlist = () => {
       brand: productState[i].brand,
       category: productState[i].category,
       quantity: productState[i].quantity,
-      price: `${productState[i].price} đ`,
+      price: formattedPrice,
       coupons: `${discountPercent} %`,
       warranty: `${productState[i].warranty} tháng`,
       action: (
