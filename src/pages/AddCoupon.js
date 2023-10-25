@@ -5,22 +5,23 @@ import * as Yup from 'yup'; ////////////////////////////////////////// validate 
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCoupon, getACoupon, resetState, updateACoupon } from '../features/coupon/couponSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { json, useLocation, useNavigate } from 'react-router-dom';
+import { getAProduct } from './../features/product/productSlice';
 
 let schema = Yup.object().shape({
-  name: Yup.string().required("Coupon name is Required"),
-  expiry: Yup.date().required("Expiry Date is Required"),
-  discount: Yup.number().required("Discount Percentage is Required"),
+  start: Yup.date().required("Ngày bắt đầu không được trống"),
+  expiry: Yup.date().required("Ngày kết thúc không được trống"),
+  discount: Yup.number().required("Phần trăm giảm không để trống"),
 });
 
 const AddCoupon = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const getCouponId = location.pathname.split("/")[3];
+  const getProductId = location.pathname.split("/")[3];
   const newCoupon = useSelector((state) => state.coupon);
-  const { isSuccess, isError, isLoading, createdCoupon, couponName, couponDiscount, couponExpiry, updatedCoupon } = newCoupon;
-
+  const { isSuccess, isError, isLoading, createdCoupon, productName, couponDiscount, couponStart, couponExpiry, updatedCoupon } = newCoupon;
+  const productName1 = useSelector((state) => state.product.productName);
   // CONVERT DAY
   const changeDateFormet = (date) => {
     const newDate = new Date(date).toLocaleDateString(); // convert to  format beatiful day
@@ -29,12 +30,14 @@ const AddCoupon = () => {
   }
 
   useEffect(() => {
-    if (getCouponId !== undefined) {
-      dispatch(getACoupon(getCouponId));
-    } else {
+    if (getProductId !== undefined) {
       dispatch(resetState());
+      dispatch(getACoupon(getProductId));
+      if (productName === undefined) {
+        dispatch(getAProduct(getProductId));
+      }
     }
-  }, [getCouponId]);
+  }, [getProductId]);
 
   useEffect(() => {
     if (isSuccess && createdCoupon) {
@@ -45,7 +48,7 @@ const AddCoupon = () => {
       navigate("/admin/coupon-list");
     }
     else
-      if (isError && couponName && couponDiscount && couponExpiry) {
+      if (isError && productName && couponDiscount && couponExpiry) {
         toast.error("Something went wrong!")
       }
   }, [isSuccess, isError, isLoading,])
@@ -53,17 +56,22 @@ const AddCoupon = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: couponName || "",
-      expiry: changeDateFormet(couponExpiry) || "",
+      name: productName || productName1 || "",
+      product: getProductId || "",
       discount: couponDiscount || "",
+      start: changeDateFormet(couponStart) || "",
+      expiry: changeDateFormet(couponExpiry) || "",
+
     },
     validationSchema: schema,
     onSubmit: values => {
-      if (getCouponId !== undefined) {
-        const data = { id: getCouponId, couponData: values };
+      delete values.name;
+      if (productName !== undefined) {
+        const data = { id: getProductId, couponData: values };
         dispatch(updateACoupon(data));
         dispatch(resetState());
-      } else {
+      }
+      else if (productName === undefined) {
         dispatch(createCoupon(values));
         formik.resetForm();
         setTimeout(() => {
@@ -75,7 +83,7 @@ const AddCoupon = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getCouponId !== undefined ? "Edit" : "Add"} Coupon
+        {getProductId !== undefined ? "Sửa" : "Thêm"} Mã giảm giá
       </h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
@@ -85,11 +93,33 @@ const AddCoupon = () => {
             onChng={formik.handleChange("name")}
             onBlr={formik.handleBlur("name")}
             val={formik.values.name}
-            label="Enter Coupon Name"
+            label="Tên Sản phẩm"
             id="name"
+            disabled
+          />
+          <CustomInput
+            type="number"
+            name="discount"
+            onChng={formik.handleChange("discount")}
+            onBlr={formik.handleBlur("discount")}
+            val={formik.values.discount}
+            label="Phần trăm khuyến mãi"
+            id="discount"
           />
           <div className="error">
-            {formik.touched.name && formik.errors.name}
+            {formik.touched.discount && formik.errors.discount}
+          </div>
+          <CustomInput
+            type="date"
+            name="start"
+            onChng={formik.handleChange("start")}
+            onBlr={formik.handleBlur("start")}
+            val={formik.values.start}
+            label="Nhập ngày bắt đầu"
+            id="date"
+          />
+          <div className="error">
+            {formik.touched.start && formik.errors.start}
           </div>
           <CustomInput
             type="date"
@@ -97,29 +127,17 @@ const AddCoupon = () => {
             onChng={formik.handleChange("expiry")}
             onBlr={formik.handleBlur("expiry")}
             val={formik.values.expiry}
-            label="Enter Expiry Date"
+            label="Nhập ngày kết thúc"
             id="date"
           />
           <div className="error">
             {formik.touched.expiry && formik.errors.expiry}
           </div>
-          <CustomInput
-            type="number"
-            name="discount"
-            onChng={formik.handleChange("discount")}
-            onBlr={formik.handleBlur("discount")}
-            val={formik.values.discount}
-            label="Enter Discount"
-            id="discount"
-          />
-          <div className="error">
-            {formik.touched.discount && formik.errors.discount}
-          </div>
           <button
             className='btn btn-success border-0 rounded-3 my-5'
             type='submit'
           >
-            {getCouponId !== undefined ? "Edit" : "Add"} Coupon
+            {getProductId !== undefined ? "Sửa" : "Thêm"} Mã giảm giá
           </button>
         </form>
       </div>

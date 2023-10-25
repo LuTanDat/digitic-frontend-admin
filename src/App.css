@@ -46,3 +46,10 @@
   color: red;
   font-size: 12px;
 }
+
+/*Coupons*/
+.coupons .ant-table-wrapper .ant-table .ant-table-container .ant-table-content .ant-table-thead th:nth-child(2){
+  width: 40%;
+}
+
+/*Coupons End here*/

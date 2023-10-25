@@ -13,22 +13,27 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên sản phẩm",
     dataIndex: "name",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: "Discount",
+    title: "% Khuyến mãi",
     dataIndex: "discount",
     sorter: (a, b) => a.discount - b.discount,
   },
   {
-    title: "Expiry",
+    title: "Ngày bắt đầu",
+    dataIndex: "start",
+    sorter: (a, b) => a.name.length - b.name.length,
+  },
+  {
+    title: "Ngày kết thúc",
     dataIndex: "expiry",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: "Action",
+    title: "Hành động",
     dataIndex: "action",
   },
 ];
@@ -56,12 +61,13 @@ const Couponlist = () => {
   for (let i = 0; i < couponState.length; i++) {
     data1.push({
       key: i + 1,
-      name: couponState[i].name,
+      name: couponState[i].product.title,
       discount: couponState[i].discount,
+      start: new Date(couponState[i].start).toLocaleString(),
       expiry: new Date(couponState[i].expiry).toLocaleString(),
       action: (
         <>
-          <Link to={`/admin/coupon/${couponState[i]._id}`}
+          <Link to={`/admin/coupon/${couponState[i].product._id}`}
             className='fs-3 text-danger'>
             <BiEdit />
           </Link>
@@ -84,15 +90,15 @@ const Couponlist = () => {
   }
   return (
     <div>
-      <h3 className='mb-4 title'>Coupons</h3>
-      <div>
+      <h3 className='mb-4 title'>Mã giảm giá</h3>
+      <div className='coupons'>
         <Table columns={columns} dataSource={data1} />
       </div>
       <CustomModal
         hideModal={hideModal}
         open={open}
         performAction={() => deleteCoupon(couponId)}
-        title="Are you sure you want to delete this coupon?"
+        title="Bạn chắc chắn muốn xóa Mã giảm giá này?"
       />
     </div>
   )

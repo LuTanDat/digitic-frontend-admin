@@ -131,9 +131,10 @@ export const couponSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.couponName = action.payload.name;
-        state.couponDiscount = action.payload.discount;
-        state.couponExpiry = action.payload.expiry;
+        state.productName = action.payload?.product?.title;
+        state.couponDiscount = action.payload?.discount;
+        state.couponStart = action.payload?.start;
+        state.couponExpiry = action.payload?.expiry;
       })
       .addCase(getACoupon.rejected, (state, action) => {
         state.isLoading = false;
