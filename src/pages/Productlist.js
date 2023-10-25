@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
+import { RiCoupon5Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteAProduct, getProducts, resetState } from '../features/product/productSlice';
@@ -13,28 +14,42 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Title",
+    title: "Ảnh",
+    dataIndex: "image",
+  },
+  {
+    title: "Tên",
     dataIndex: "title",
     sorter: (a, b) => a.title.length - b.title.length,
   },
   {
-    title: "Brand",
+    title: "Thương hiệu",
     dataIndex: "brand",
     sorter: (a, b) => a.brand.length - b.brand.length,
   },
   {
-    title: "Category",
+    title: "Danh mục",
     dataIndex: "category",
     sorter: (a, b) => a.category.length - b.category.length,
   },
   {
-    title: "Color",
-    dataIndex: "color",
+    title: "Số lượng",
+    dataIndex: "quantity",
   },
   {
-    title: "Price",
+    title: "Giá",
     dataIndex: "price",
     sorter: (a, b) => a.price - b.price,
+  },
+  {
+    title: "Giảm giá",
+    dataIndex: "coupons",
+    sorter: (a, b) => a.coupons - b.coupons,
+  },
+  {
+    title: "Bảo hành",
+    dataIndex: "warranty",
+    sorter: (a, b) => a.warranty - b.warranty,
   },
   {
     title: "Action",
@@ -64,13 +79,20 @@ const Productlist = () => {
   for (let i = 0; i < productState.length; i++) {
     data1.push({
       key: i + 1,
+      image: productState[i].image,
       title: productState[i].title,
       brand: productState[i].brand,
       category: productState[i].category,
-      color: productState[i].color,
-      price: `${productState[i].price}`,
+      quantity: productState[i].quantity,
+      price: `${productState[i].price} đ`,
+      coupons: `${productState[i].coupons !== undefined ? productState[i].coupons : 0} %`,
+      warranty: `${productState[i].warranty} tháng`,
       action: (
         <>
+          <Link to={`/admin/coupon/${productState[i]._id}`}
+            className='fs-3 text-danger'>
+            <RiCoupon5Line />
+          </Link>
           <Link to={`/admin/product/${productState[i]._id}`}
             className='fs-3 text-danger'>
             <BiEdit />

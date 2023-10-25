@@ -42,6 +42,7 @@ const AddCoupon = () => {
   useEffect(() => {
     if (isSuccess && createdCoupon) {
       toast.success("Coupon Added Successfully!")
+      navigate("/admin/list-product")
     }
     if (isSuccess && updatedCoupon) {
       toast.success("Coupon Updated Successfully!");
@@ -69,14 +70,10 @@ const AddCoupon = () => {
       if (productName !== undefined) {
         const data = { id: getProductId, couponData: values };
         dispatch(updateACoupon(data));
-        dispatch(resetState());
       }
       else if (productName === undefined) {
         dispatch(createCoupon(values));
         formik.resetForm();
-        setTimeout(() => {
-          dispatch(resetState());
-        }, 300);
       }
     },
   });
