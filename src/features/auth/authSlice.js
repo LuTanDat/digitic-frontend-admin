@@ -97,6 +97,28 @@ export const deleteAOrder = createAsyncThunk(
   }
 );
 
+export const blockUser = createAsyncThunk(
+  "customer/block-customer",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.blockUser(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const unBlockUser = createAsyncThunk(
+  "customer/unBlock-customer",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.unBlockUser(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // create a Reducer Redux
 // 1 actions co 3 reducers
 export const authSlice = createSlice({
@@ -220,6 +242,44 @@ export const authSlice = createSlice({
         state.deletedOrder = action.payload;
       })
       .addCase(deleteAOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+
+      .addCase(blockUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(blockUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.blockedUser = action?.payload?.message;
+        if (state.isSuccess === true) {
+          toast.success("Khách hàng đã bị Khóa")
+        }
+      })
+      .addCase(blockUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+
+      .addCase(unBlockUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(unBlockUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.unBlockedUser = action?.payload?.message;
+        if (state.isSuccess === true) {
+          toast.success("Khách hàng đã Hoạt động")
+        }
+      })
+      .addCase(unBlockUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

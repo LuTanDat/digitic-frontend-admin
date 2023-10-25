@@ -46,6 +46,20 @@ const getYearlyStats = async (data) => {
   return response.data;
 };
 
+const blockUser = async (data) => {
+  // console.log(data.config2);
+  const response = await axios.put(`${base_url}user/block-user/${data.id}`, data.config2);
+
+  return response.data;
+};
+
+const unBlockUser = async (data) => {
+  // console.log(data.config2);
+  const response = await axios.put(`${base_url}user/unblock-user/${data.id}`, data.config2);
+
+  return response.data;
+};
+
 const authService = {
   login,
   getOrders,
@@ -53,6 +67,8 @@ const authService = {
   getMonthlyOrders,
   getYearlyStats,
   updateOrder,
-  deleteOrder
+  deleteOrder,
+  blockUser,
+  unBlockUser
 }
 export default authService;
