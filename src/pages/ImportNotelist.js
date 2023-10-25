@@ -66,7 +66,7 @@ const ImportNotelist = () => {
       brand: importNoteState[i].brand,
       quantity: importNoteState[i].quantity,
       price: importNoteState[i].price,
-      date: importNoteState[i].createdAt,
+      date: new Date(importNoteState[i].createdAt).toLocaleString(),
       action: (
         <>
           <Link to={`/admin/importNote/${importNoteState[i]._id}`}
