@@ -321,13 +321,13 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.warranty && formik.errors.warranty}
           </div>
-          <div className='bg-white border-1 p-5 text-center'>
+          <div className='bg-white border-1 p-1 text-center'>
             <Dropzone onDrop={acceptedFiles => dispatch(uploadImg(acceptedFiles))}>
               {({ getRootProps, getInputProps }) => (
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <p className='mb-0 p-4'>Chọn 1 hoặc nhiều ảnh muốn tải lên</p>
                   </div>
                 </section>
               )}
