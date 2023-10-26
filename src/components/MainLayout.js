@@ -221,13 +221,13 @@ const MainLayout = () => {
               <span className='badge bg-warning rounded-circle p-1 position-absolute'>3</span>
             </div>
             <div className='d-flex gap-3 align-items-center dropdown'>
-              <div>
+              {/* <div>
                 <img
                   width={32}
                   height={32}
                   src='https://stroyka-admin.html.themeforest.scompiler.ru/variants/ltr/images/customers/customer-4-64x64.jpg' alt=''
                 />
-              </div>
+              </div> */}
               <div
                 role="button"
                 id="dropdownMenuButton1"
