@@ -112,13 +112,13 @@ const Addproduct = () => {
       power: '',
       lifespan: '',
       warranty: '',
-      images: ''
+      // images: ''
     },
     validationSchema: schema,
     onSubmit: values => {
       alert(JSON.stringify(values));
-      // dispatch(createProducts(values));
-      // formik.resetForm();
+      dispatch(createProducts(values));
+      formik.resetForm();
       // // setColor(null);
       // setTimeout(() => {
       //   dispatch(resetState());
@@ -268,7 +268,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='text'
-            label='Kích thước'
+            label='Kích thước (Cm)'
             name='size'
             onChng={formik.handleChange('size')}
             onBlr={formik.handleBlur('size')}
@@ -279,7 +279,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='text'
-            label='Trọng lượng'
+            label='Trọng lượng (Kg)'
             name='weight'
             onChng={formik.handleChange('weight')}
             onBlr={formik.handleBlur('weight')}
@@ -290,7 +290,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='text'
-            label='Công suất'
+            label='Công suất (W)'
             name='power'
             onChng={formik.handleChange('power')}
             onBlr={formik.handleBlur('power')}
@@ -301,7 +301,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='text'
-            label='Tuổi thọ'
+            label='Tuổi thọ (H)'
             name='lifespan'
             onChng={formik.handleChange('lifespan')}
             onBlr={formik.handleBlur('lifespan')}
@@ -312,7 +312,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='text'
-            label='Bảo hành'
+            label='Bảo hành (Tháng)'
             name='warranty'
             onChng={formik.handleChange('warranty')}
             onBlr={formik.handleBlur('warranty')}
