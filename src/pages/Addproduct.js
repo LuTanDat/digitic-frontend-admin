@@ -26,7 +26,7 @@ let schema = Yup.object().shape({
   quantity: Yup.number().required("Số lượng không được để trống"),
   size: Yup.string().required("Kích thước không được để trống"),
   weight: Yup.string().required("Trọng lượng không được để trống"),
-  power: Yup.string().required("Công suất không được để trống"),
+  // power: Yup.string().required("Công suất không được để trống"),
   lifespan: Yup.string().required("Tổi thọ không được để trống"),
   warranty: Yup.string().required("Bảo hành không được để trống"),
 });
