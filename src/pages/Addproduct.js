@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useMemo, useState } from 'react';
 import CustomInput from '../components/CustomInput';
 import ReactQuill from 'react-quill'; //////////////////////////////// text editor
 import 'react-quill/dist/quill.snow.css';
@@ -11,22 +12,24 @@ import { getCategories } from '../features/pcategory/pcategorySlice';
 import { getColors } from '../features/color/colorSlice';
 import { Select } from 'antd';
 import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or nhieu anh de upload
-import { delImg, uploadImg } from '../features/upload/uploadSlice';
+import { delImg, resetStateUpload, uploadImg } from '../features/upload/uploadSlice';
 import { createProducts, getAProduct, resetState } from '../features/product/productSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 let schema = Yup.object().shape({
-  title: Yup.string().required("Title is Required"),
-  description: Yup.string().required("Description is Required"),
-  price: Yup.number().required("Price is Required"),
-  brand: Yup.string().required("Brand is Required"),
-  category: Yup.string().required("Category is Required"),
-  tags: Yup.string().required("Tag is Required"),
-  color: Yup
-    .array()
-    .min(1, "Pick at lease one color")
-    .required("Color is Required"),
-  quantity: Yup.number().required("Quantity is Required"),
+  title: Yup.string().required("Tên không được để trống"),
+  description: Yup.string().required("Mô tả không được để trống"),
+  price: Yup.number().required("Giá không được để trống"),
+  brand: Yup.string().required("Thương hiệu không được để trống"),
+  category: Yup.string().required("Danh mục không được để trống"),
+  tags: Yup.string().required("Tag không được để trống"),
+  color: Yup.string().required("Màu không được để trống"),
+  quantity: Yup.number().required("Số lượng không được để trống"),
+  size: Yup.string().required("Kích thước không được để trống"),
+  weight: Yup.string().required("Trọng lượng không được để trống"),
+  power: Yup.string(),
+  lifespan: Yup.string().required("Tổi thọ không được để trống"),
+  warranty: Yup.string().required("Bảo hành không được để trống"),
 });
 
 const Addproduct = () => {
@@ -60,11 +63,6 @@ const Addproduct = () => {
     productName, productDesc, productPrice, productBrand, productCategory, productTags, productColor, productQuantity, productImages, updatedProduct
   } = newProduct;
 
-  const selectedColor = productColor?.map(color => color._id);
-
-  const [color, setColor] = useState(selectedColor);
-  const [images, setImages] = useState([]);
-
   useEffect(() => {
     if (isSuccess && createdProduct) {
       toast.success("Product Added Successfully!")
@@ -79,13 +77,6 @@ const Addproduct = () => {
       }
   }, [isSuccess, isError, isLoading,])
 
-  const coloropt = [];
-  colorState.forEach((i) => {
-    coloropt.push({
-      label: i.title,
-      value: i._id,
-    })
-  })
   const img = [];
   imgState.forEach((i) => {
     img.push({
@@ -93,6 +84,7 @@ const Addproduct = () => {
       url: i.url,
     })
   })
+  // console.log(img);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -105,36 +97,33 @@ const Addproduct = () => {
       tags: productTags || '',
       color: '',
       quantity: productQuantity || '',
-      images: ''
+      size: '',
+      weight: '',
+      power: '',
+      lifespan: '',
+      warranty: '',
+      // images: img || ''
     },
     validationSchema: schema,
     onSubmit: values => {
-      alert(JSON.stringify(values))
-      // dispatch(createProducts(values));
-      // formik.resetForm();
-      // setColor(null);
-      // setTimeout(() => {
-      //   dispatch(resetState());
-      // }, 3000)
+      values.images = img;
+      dispatch(createProducts(values));
+      formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetState());
+        dispatch(resetStateUpload())
+      }, 3000)
     },
   });
 
-  useEffect(() => {
-    formik.values.color = color ? color : ""; // set value in formik = gia tri nao do
-    formik.values.images = img;
-  }, [formik, color, img])
-
-  const handleColors = (e) => {
-    setColor(e);
-  }
   return (
     <div>
-      <h3 className='mb-4 title'>Add Product</h3>
+      <h3 className='mb-2 title'>Thêm sản phẩm</h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit} className='d-flex flex-column gap-3'>
           <CustomInput
             type='text'
-            label='Enter Product Title'
+            label='Tên sản phẩm'
             name='title'
             onChng={formik.handleChange('title')}
             onBlr={formik.handleBlur('title')}
@@ -156,7 +145,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='number'
-            label='Enter Product Price'
+            label='Giá'
             name='price'
             onChng={formik.handleChange('price')}
             onBlr={formik.handleBlur('price')}
@@ -171,10 +160,10 @@ const Addproduct = () => {
             onChange={formik.handleChange('brand')}
             onBlur={formik.handleBlur('brand')}
             value={formik.values.brand}
-            className='form-control py-3 mb-3'
+            className='form-control py-3'
             id=''
           >
-            <option value=''>Select Brand</option>
+            <option value=''>Chọn Thương hiệu</option>
             {
               brandState.map((i, j) => {
                 return (
@@ -193,10 +182,10 @@ const Addproduct = () => {
             onChange={formik.handleChange('category')}
             onBlur={formik.handleBlur('category')}
             value={formik.values.category}
-            className='form-control py-3 mb-3'
+            className='form-control py-3'
             id=''
           >
-            <option value=''>Select Category</option>
+            <option value=''>Chọn Danh mục</option>
             {
               catState.map((i, j) => {
                 return (
@@ -215,32 +204,42 @@ const Addproduct = () => {
             onChange={formik.handleChange('tags')}
             onBlur={formik.handleBlur('tags')}
             value={formik.values.tags}
-            className='form-control py-3 mb-3'
+            className='form-control py-3'
             id=''
           >
-            <option value=''>Select Tags</option>
-            <option value='featured'>Featured</option>
-            <option value='popular'>Popular</option>
-            <option value='special'>Special</option>
+            <option value=''>Chọn Tags</option>
+            <option value='featured'>Nổi bật</option>
+            <option value='popular'>Phổ biến</option>
+            <option value='special'>Đặc biệt</option>
           </select>
           <div className="error">
             {formik.touched.tags && formik.errors.tags}
           </div>
-          <Select
-            mode='multiple'
-            allowClear
-            className='w-100'
-            placeholder="Select Colors"
-            defaultValue={color}
-            onChange={(i) => handleColors(i)}
-            options={coloropt}
-          />
+          <select
+            name='color'
+            onChange={formik.handleChange('color')}
+            onBlur={formik.handleBlur('color')}
+            value={formik.values.color}
+            className='form-control py-3'
+            id=''
+          >
+            <option value=''>Chọn Màu</option>
+            {
+              colorState.map((i, j) => {
+                return (
+                  <option key={j} value={i.title}>
+                    {i.title}
+                  </option>
+                )
+              })
+            }
+          </select>
           <div className="error">
             {formik.touched.color && formik.errors.color}
           </div>
           <CustomInput
             type='number'
-            label='Enter Product Quantity'
+            label='Số lượng'
             name='quantity'
             onChng={formik.handleChange('quantity')}
             onBlr={formik.handleBlur('quantity')}
@@ -249,13 +248,68 @@ const Addproduct = () => {
           <div className="error">
             {formik.touched.quantity && formik.errors.quantity}
           </div>
-          <div className='bg-white border-1 p-5 text-center'>
+          <CustomInput
+            type='text'
+            label='Kích thước (Cm)'
+            name='size'
+            onChng={formik.handleChange('size')}
+            onBlr={formik.handleBlur('size')}
+            val={formik.values.size}
+          />
+          <div className="error">
+            {formik.touched.size && formik.errors.size}
+          </div>
+          <CustomInput
+            type='text'
+            label='Trọng lượng (Kg)'
+            name='weight'
+            onChng={formik.handleChange('weight')}
+            onBlr={formik.handleBlur('weight')}
+            val={formik.values.weight}
+          />
+          <div className="error">
+            {formik.touched.weight && formik.errors.weight}
+          </div>
+          <CustomInput
+            type='text'
+            label='Công suất (W)'
+            name='power'
+            onChng={formik.handleChange('power')}
+            onBlr={formik.handleBlur('power')}
+            val={formik.values.power}
+          />
+          <div className="error">
+            {formik.touched.power && formik.errors.power}
+          </div>
+          <CustomInput
+            type='text'
+            label='Tuổi thọ (H)'
+            name='lifespan'
+            onChng={formik.handleChange('lifespan')}
+            onBlr={formik.handleBlur('lifespan')}
+            val={formik.values.lifespan}
+          />
+          <div className="error">
+            {formik.touched.lifespan && formik.errors.lifespan}
+          </div>
+          <CustomInput
+            type='text'
+            label='Bảo hành (Tháng)'
+            name='warranty'
+            onChng={formik.handleChange('warranty')}
+            onBlr={formik.handleBlur('warranty')}
+            val={formik.values.warranty}
+          />
+          <div className="error">
+            {formik.touched.warranty && formik.errors.warranty}
+          </div>
+          <div className='bg-white border-1 p-1 text-center'>
             <Dropzone onDrop={acceptedFiles => dispatch(uploadImg(acceptedFiles))}>
               {({ getRootProps, getInputProps }) => (
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <p className='mb-0 p-4'>Chọn 1 hoặc nhiều ảnh muốn tải lên</p>
                   </div>
                 </section>
               )}
@@ -282,7 +336,7 @@ const Addproduct = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type="submit"
           >
-            Add Product
+            Thêm Sản phẩm
           </button>
         </form>
       </div>
