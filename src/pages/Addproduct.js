@@ -102,7 +102,7 @@ const Addproduct = () => {
       power: '',
       lifespan: '',
       warranty: '',
-      // images: img || ''
+      images: ""
     },
     validationSchema: schema,
     onSubmit: values => {

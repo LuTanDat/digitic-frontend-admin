@@ -34,6 +34,7 @@ const Addblog = () => {
 
   useEffect(() => {
     dispatch(resetState())
+    dispatch(resetStateUpload())
     dispatch(getCategories());
   }, [])
 
