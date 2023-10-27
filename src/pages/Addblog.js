@@ -13,9 +13,9 @@ import { getCategories } from '../features/bcategory/bcategorySlice';
 import { createBlogs, getABlog, resetState, updateABlog } from '../features/blog/blogSlice';
 
 let schema = Yup.object().shape({
-  title: Yup.string().required("Title is Required"),
-  description: Yup.string().required("Description is Required"),
-  category: Yup.string().required("Category is Required"),
+  title: Yup.string().required("Tên không được để trống"),
+  description: Yup.string().required("Mô tả không được để trống"),
+  category: Yup.string().required("Danh mục không được để trống"),
 });
 
 const Addblog = () => {
@@ -27,7 +27,6 @@ const Addblog = () => {
   useEffect(() => {
     if (getBlogId !== undefined) {
       dispatch(getABlog(getBlogId));
-      img.push(blogImages);
     } else {
       dispatch(resetState());
     }
@@ -42,8 +41,9 @@ const Addblog = () => {
   const bCatState = useSelector((state) => state.bCategory.bCategories);
   const newBlog = useSelector((state) => state.blog);
   const { isSuccess, isError, isLoading, createdBlog,
-    blogName, blogDesc, blogCategory, blogImages, updatedBlog
+    blogName, blogDesc, blogCategory, updatedBlog
   } = newBlog;
+  let { blogImages } = newBlog;
 
   useEffect(() => {
     if (isSuccess && createdBlog) {
@@ -66,10 +66,13 @@ const Addblog = () => {
       url: i.url,
     })
   })
-  // console.log(img)
-  // useEffect(() => {
-  //   formik.values.images = img;
-  // }, [blogImages])
+
+  console.log("blogImages", blogImages);
+
+  const deleteImg = (id) => {
+    blogImages = [];
+    console.log("Da xoa anh: ", id);
+  }
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -92,7 +95,8 @@ const Addblog = () => {
         setTimeout(() => {
           dispatch(resetState());
           dispatch(resetStateUpload())
-        }, 300);
+          dispatch(getCategories());
+        }, 500);
       }
     },
   });
@@ -100,13 +104,13 @@ const Addblog = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getBlogId !== undefined ? "Edit" : "Add"} Blog</h3>
+        {getBlogId !== undefined ? "Sửa" : "Thêm"} Bài viết</h3>
       <div className=''>
         <form action='' onSubmit={formik.handleSubmit} >
           <div className='mt-3'>
             <CustomInput
               type='text'
-              label='Enter Blog Title'
+              label='Tên bài viết'
               name='title'
               onChng={formik.handleChange('title')}
               onBlr={formik.handleBlur('title')}
@@ -124,7 +128,7 @@ const Addblog = () => {
             className='form-control py-3 mt-3'
             id=''
           >
-            <option value=''>Select Blog Category</option>
+            <option value=''>Chọn danh mục</option>
             {
               bCatState.map((i, j) => {
                 return (
@@ -153,14 +157,14 @@ const Addblog = () => {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p className='mb-0 p-4'>Drag 'n' drop some files here, or click to select files</p>
+                    <p className='mb-0 p-4'>Chọn 1 hoặc nhiều ảnh muốn tải lên</p>
                   </div>
                 </section>
               )}
             </Dropzone>
           </div>
           <div className='showImages d-flex flex-wrap gap-4'>
-            {imgState?.map((i, j) => {
+            {imgState.length !== 0 && imgState?.map((i, j) => {
               return (
                 <div className='position-relative' key={j}>
                   <button
@@ -174,12 +178,26 @@ const Addblog = () => {
                 </div>
               )
             })}
+            {imgState.length === 0 && blogImages?.length !== 0 && blogImages?.map((i, j) => {
+              return (
+                <div className='position-relative' key={j}>
+                  <button
+                    type='button'
+                    onClick={() => deleteImg(i.public_id)}
+                    className='btn-close position-absolute'
+                    style={{ top: "10px", right: "10px" }}
+                  >
+                  </button>
+                  <img src={i.url} alt='' width={200} height={200} />
+                </div>
+              )
+            })}
           </div>
           <button
             className='btn btn-success border-0 rounded-3 my-5'
             type='submit'
           >
-            {getBlogId !== undefined ? "Edit" : "Add"} Blog
+            {getBlogId !== undefined ? "Sửa" : "Thêm"} Bài viết
           </button>
         </form>
       </div>
