@@ -1,7 +1,9 @@
 // Defined Actions, Reducer and Save State
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import uploadService from "./uploadService";
+
+export const resetStateUpload = createAction("Reset_all-upload-img");
 
 const initialState = {
   images: [], // images
@@ -77,6 +79,8 @@ export const uploadSlice = createSlice({
         state.message = action.payload;
         state.isLoading = false;
       })
+
+      .addCase(resetStateUpload, () => initialState);
   }
 })
 

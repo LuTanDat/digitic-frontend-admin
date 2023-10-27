@@ -116,7 +116,7 @@ const Productlist = () => {
       quantity: productState[i].quantity,
       price: formattedPrice,
       coupons: `${discountPercent} %`,
-      warranty: `${productState[i].warranty} tháng`,
+      warranty: `${productState[i].warranty}`,
       action: (
         <>
           <Link to={`/admin/coupon/${productState[i]._id}`}
