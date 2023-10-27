@@ -3,7 +3,7 @@ import CustomInput from '../components/CustomInput';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or nhieu anh de upload
-import { delImg, uploadImg } from '../features/upload/uploadSlice';
+import { delImg, resetStateUpload, uploadImg } from '../features/upload/uploadSlice';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik'; ////////////////////////////////// xu ly su kien tren form
 import * as Yup from 'yup'; ////////////////////////////////////////// validate field on form
@@ -66,10 +66,10 @@ const Addblog = () => {
       url: i.url,
     })
   })
-  console.log(img)
-  useEffect(() => {
-    formik.values.images = img;
-  }, [blogImages])
+  // console.log(img)
+  // useEffect(() => {
+  //   formik.values.images = img;
+  // }, [blogImages])
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -81,6 +81,7 @@ const Addblog = () => {
     },
     validationSchema: schema,
     onSubmit: values => {
+      values.images = img;
       if (getBlogId !== undefined) {
         const data = { id: getBlogId, blogData: values };
         dispatch(updateABlog(data));
@@ -90,6 +91,7 @@ const Addblog = () => {
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());
+          dispatch(resetStateUpload())
         }, 300);
       }
     },
@@ -145,13 +147,13 @@ const Addblog = () => {
           <div className="error">
             {formik.touched.description && formik.errors.description}
           </div>
-          <div className='bg-white border-1 p-5 text-center mt-3'>
+          <div className='bg-white border-1 p-1 text-center mt-3'>
             <Dropzone onDrop={acceptedFiles => dispatch(uploadImg(acceptedFiles))}>
               {({ getRootProps, getInputProps }) => (
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <p className='mb-0 p-4'>Drag 'n' drop some files here, or click to select files</p>
                   </div>
                 </section>
               )}
