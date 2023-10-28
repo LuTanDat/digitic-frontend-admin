@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../features/customers/customerSlice';
-import { blockUser, unBlockUser } from '../features/auth/authSlice'
+import { blockUser, unBlockUser } from '../features/auth/authSlice';
+
+
 const columns = [
   {
     title: "SNo",
