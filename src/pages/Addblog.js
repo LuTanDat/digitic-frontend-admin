@@ -89,7 +89,6 @@ const Addblog = () => {
       if (getBlogId !== undefined) {
         const data = { id: getBlogId, blogData: values };
         dispatch(updateABlog(data));
-        dispatch(resetState());
       } else {
         dispatch(createBlogs(values));
         formik.resetForm();
