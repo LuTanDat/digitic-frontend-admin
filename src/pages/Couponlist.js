@@ -61,19 +61,19 @@ const Couponlist = () => {
   for (let i = 0; i < couponState.length; i++) {
     data1.push({
       key: i + 1,
-      name: couponState[i].product.title,
+      name: couponState[i].product?.title,
       discount: couponState[i].discount,
       start: new Date(couponState[i].start).toLocaleString(),
       expiry: new Date(couponState[i].expiry).toLocaleString(),
       action: (
         <>
-          <Link to={`/admin/coupon/${couponState[i].product._id}`}
+          <Link to={`/admin/coupon/${couponState[i].product?._id}`}
             className='fs-3 text-danger'>
             <BiEdit />
           </Link>
           <button
             className='ms-3 fs-3 text-danger bg-transparent border-0'
-            onClick={() => showModal(couponState[i]._id)}
+            onClick={() => showModal(couponState[i]?._id)}
           >
             <AiFillDelete />
           </button>
