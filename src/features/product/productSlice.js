@@ -124,6 +124,11 @@ export const productSlice = createSlice({
         state.productTags = action.payload.tags;
         state.productColor = action.payload.color;
         state.productQuantity = action.payload.quantity;
+        state.productSize = action.payload.size;
+        state.productWeight = action.payload.weight;
+        state.productPower = action.payload.power;
+        state.productLifespan = action.payload.lifespan;
+        state.productWarranty = action.payload.warranty;
         state.productImages = action.payload.images;
       })
       .addCase(getAProduct.rejected, (state, action) => {

@@ -13,7 +13,7 @@ import { getColors } from '../features/color/colorSlice';
 import { Select } from 'antd';
 import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or nhieu anh de upload
 import { delImg, resetStateUpload, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts, getAProduct, resetState } from '../features/product/productSlice';
+import { createProducts, getAProduct, resetState, updateAProduct } from '../features/product/productSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 let schema = Yup.object().shape({
@@ -49,19 +49,23 @@ const Addproduct = () => {
 
   useEffect(() => {
     dispatch(resetState())
+    dispatch(resetStateUpload())
     dispatch(getBrands());
     dispatch(getCategories());
     dispatch(getColors());
   }, [])
 
+  const imgState = useSelector((state) => state.upload.images);
   const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
-  const imgState = useSelector((state) => state.upload.images);
   const newProduct = useSelector((state) => state.product);
-  const { isSuccess, isError, isLoading, createdProduct,
-    productName, productDesc, productPrice, productBrand, productCategory, productTags, productColor, productQuantity, productImages, updatedProduct
+  const { isSuccess, isError, isLoading, createdProduct, updatedProduct,
+    productName, productDesc, productPrice, productBrand, productCategory,
+    productTags, productColor, productQuantity, productSize, productWeight,
+    productPower, productLifespan, productWarranty
   } = newProduct;
+  let { productImages } = newProduct;
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
@@ -84,7 +88,12 @@ const Addproduct = () => {
       url: i.url,
     })
   })
-  // console.log(img);
+  console.log("productImages", productImages);
+
+  const deleteImg = (id) => {
+    productImages = [];
+    console.log("Da xoa anh: ", id);
+  }
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -95,30 +104,39 @@ const Addproduct = () => {
       brand: productBrand || '',
       category: productCategory || '',
       tags: productTags || '',
-      color: '',
+      color: productColor || '',
       quantity: productQuantity || '',
-      size: '',
-      weight: '',
-      power: '',
-      lifespan: '',
-      warranty: '',
+      size: productSize || '',
+      weight: productWeight || '',
+      power: productPower || '',
+      lifespan: productLifespan || '',
+      warranty: productWarranty || '',
       images: ""
     },
     validationSchema: schema,
     onSubmit: values => {
       values.images = img;
-      dispatch(createProducts(values));
-      formik.resetForm();
-      setTimeout(() => {
-        dispatch(resetState());
-        dispatch(resetStateUpload())
-      }, 3000)
+      if (getProductId !== undefined) {
+        const data = { id: getProductId, productData: values };
+        dispatch(updateAProduct(data));
+      } else {
+        dispatch(createProducts(values));
+        formik.resetForm();
+        setTimeout(() => {
+          dispatch(resetState());
+          dispatch(resetStateUpload())
+          dispatch(getBrands());
+          dispatch(getCategories());
+          dispatch(getColors());
+        }, 2000);
+      }
     },
   });
 
   return (
     <div>
-      <h3 className='mb-2 title'>Thêm sản phẩm</h3>
+      <h3 className='mb-2 title'>
+        {getProductId !== undefined ? "Sửa" : "Thêm"} Sản phẩm</h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit} className='d-flex flex-column gap-3'>
           <CustomInput
@@ -316,12 +334,26 @@ const Addproduct = () => {
             </Dropzone>
           </div>
           <div className='showImages d-flex flex-wrap gap-4'>
-            {imgState?.map((i, j) => {
+            {imgState.length !== 0 && imgState?.map((i, j) => {
               return (
                 <div className='position-relative' key={j}>
                   <button
                     type='button'
                     onClick={() => dispatch(delImg(i.public_id))}
+                    className='btn-close position-absolute'
+                    style={{ top: "10px", right: "10px" }}
+                  >
+                  </button>
+                  <img src={i.url} alt='' width={200} height={200} />
+                </div>
+              )
+            })}
+            {imgState.length === 0 && productImages?.length !== 0 && productImages?.map((i, j) => {
+              return (
+                <div className='position-relative' key={j}>
+                  <button
+                    type='button'
+                    onClick={() => deleteImg(i.public_id)}
                     className='btn-close position-absolute'
                     style={{ top: "10px", right: "10px" }}
                   >
@@ -336,7 +368,7 @@ const Addproduct = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type="submit"
           >
-            Thêm Sản phẩm
+            {getProductId !== undefined ? "Sửa" : "Thêm"} Sản phẩm
           </button>
         </form>
       </div>

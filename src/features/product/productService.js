@@ -20,13 +20,13 @@ const getProduct = async (id) => {
 
 const updateProduct = async (product) => {
   const response = await axios.put(
-    `${base_url}product/${product.id}`,
-    {
-      // title: product.productData.title,
-      // description: product.productData.description,
-      // category: product.productData.category,
-      // images: product.productData.images,
-    },
+    `${base_url}product/${product.id}`, product.productData,
+    // {
+    //   title: product.productData.title,
+    //   description: product.productData.description,
+    //   category: product.productData.category,
+    //   images: product.productData.images,
+    // },
     config
   );
 
