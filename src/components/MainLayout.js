@@ -113,11 +113,11 @@ const MainLayout = () => {
                   icon: <AiOutlineBgColors className='fs-4' />,
                   label: 'Màu sắc',
                 },
-                {
-                  key: 'coupon',
-                  icon: <ImBlog className='fs-4' />,
-                  label: 'Thêm Mã giảm giá',
-                },
+                // {
+                //   key: 'coupon',
+                //   icon: <ImBlog className='fs-4' />,
+                //   label: 'Thêm Mã giảm giá',
+                // },
                 {
                   key: 'coupon-list',
                   icon: <RiCouponLine className='fs-4' />,
@@ -187,7 +187,7 @@ const MainLayout = () => {
             {
               key: 'enquiries',
               icon: <FaClipboardList className='fs-4' />,
-              label: 'Thắc mắc',
+              label: 'Góp ý',
             },
             {
               key: 'signout',
