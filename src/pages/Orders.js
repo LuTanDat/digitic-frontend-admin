@@ -89,11 +89,11 @@ const Orders = () => {
       status: (
         <>
           <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
-            <option value="Ordered" disabled>Ordered</option>
-            <option value="Processed">Processed</option>
-            <option value="Shipped">Shipped</option>
-            <option value="Out For Delivery">Out For Delivery</option>
-            <option value="Delivered">Delivered</option>
+            <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
+            <option value="Đang xử lý">Đang xử lý</option>
+            <option value="Đang giao">Đang giao</option>
+            <option value="Giao thành công">Giao thành công</option>
+            <option value="Đã Hủy">Hủy</option>
           </select>
         </>
       ),
