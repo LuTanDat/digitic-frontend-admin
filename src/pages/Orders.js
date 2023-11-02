@@ -6,6 +6,7 @@ import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete, AiFillPrinter } from 'react-icons/ai';
 import { deleteAOrder, getOrders, resetState, updateAOrder } from '../features/auth/authSlice';
 import CustomModal from '../components/CustomModal';
+import PieChartComponent from '../components/PieChartComponent';
 
 const columns = [
   {
@@ -83,7 +84,7 @@ const Orders = () => {
           View Orders
         </Link>
       ),
-      payment: "",
+      payment: orderState[i]?.paymentMethod,
       amount: orderState[i]?.totalPrice,
       date: new Date(orderState[i]?.createdAt).toLocaleString(),
       status: (
@@ -131,7 +132,10 @@ const Orders = () => {
   }
   return (
     <div>
-      <h3 className='mb-4 title'>Đơn hàng</h3>
+      <h3 className='mb-3 title'>Đơn hàng</h3>
+      <div className='mb-4' style={{ height: 200, width: 200 }}>
+        <PieChartComponent data={orderState} /> {/*truyen vao danh sach don hang */}
+      </div>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
