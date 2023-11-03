@@ -96,7 +96,7 @@ const AddimportNote = () => {
             {
               supplierState.map((i, j) => {
                 return (
-                  <option key={j} value={i.name}>
+                  <option key={j} value={i._id}>
                     {i.name}
                   </option>
                 )
