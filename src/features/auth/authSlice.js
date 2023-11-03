@@ -99,9 +99,9 @@ export const deleteAOrder = createAsyncThunk(
 
 export const blockUser = createAsyncThunk(
   "customer/block-customer",
-  async (data, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      return await authService.blockUser(data);
+      return await authService.blockUser(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -110,9 +110,9 @@ export const blockUser = createAsyncThunk(
 
 export const unBlockUser = createAsyncThunk(
   "customer/unBlock-customer",
-  async (data, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      return await authService.unBlockUser(data);
+      return await authService.unBlockUser(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

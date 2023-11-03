@@ -46,16 +46,14 @@ const getYearlyStats = async (data) => {
   return response.data;
 };
 
-const blockUser = async (data) => {
-  // console.log(data.config2);
-  const response = await axios.put(`${base_url}user/block-user/${data.id}`, data.config2);
+const blockUser = async (id) => {
+  const response = await axios.put(`${base_url}user/block-user/${id}`, null, config);
 
   return response.data;
 };
 
-const unBlockUser = async (data) => {
-  // console.log(data.config2);
-  const response = await axios.put(`${base_url}user/unblock-user/${data.id}`, data.config2);
+const unBlockUser = async (id) => {
+  const response = await axios.put(`${base_url}user/unblock-user/${id}`, null, config);
 
   return response.data;
 };

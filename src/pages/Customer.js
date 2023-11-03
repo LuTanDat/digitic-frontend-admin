@@ -73,14 +73,11 @@ const Customer = () => {
     }
   }
   const updateUserStatus = (id, status) => {
-    // console.log(id, status);
     if (status === "true") {
-      // console.log("Block a user");
-      dispatch(blockUser({ id: id, config2: config2 }));
+      dispatch(blockUser(id));
     }
     else {
-      // console.log("Unblock a user");
-      dispatch(unBlockUser({ id: id, config2: config2 }));
+      dispatch(unBlockUser(id));
     }
   }
   return (
