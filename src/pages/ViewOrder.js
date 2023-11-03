@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,23 +12,27 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Product Name",
+    title: "Ảnh",
+    dataIndex: "image",
+  },
+  {
+    title: "Tên Sản phẩm",
     dataIndex: "name",
   },
   {
-    title: "Brand",
+    title: "Thương hiệu",
     dataIndex: "brand",
   },
   {
-    title: "Count",
+    title: "Số lượng",
     dataIndex: "count",
   },
   {
-    title: "Color",
+    title: "Màu",
     dataIndex: "color",
   },
   {
-    title: "Amount",
+    title: "Tổng tiền",
     dataIndex: "amount",
   }
 ];
@@ -49,11 +54,22 @@ const ViewOrder = () => {
   for (let i = 0; i < orderState?.length; i++) {
     data1.push({
       key: i + 1,
+      image: (
+        <div className='product-image'>
+          <img
+            src={orderState[i]?.product?.images[0]?.url}
+            className='img-fluid mx-auto'
+            alt='product image'
+            width={160}
+            style={{ width: 96, height: 96 }}
+          />
+        </div>
+      ),
       name: orderState[i].product?.title,
       brand: orderState[i].product?.brand,
       count: orderState[i].quantity,
-      color: orderState[i].color?.title,
-      amount: orderState[i].price,
+      color: orderState[i].color,
+      amount: (orderState[i].priceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
     });
   }
   const goBack = () => {

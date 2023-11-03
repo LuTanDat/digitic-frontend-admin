@@ -8,15 +8,12 @@ export const convertDataChart = (data, type) => {
         object[opt[type]] += 1
       }
     })
-    console.log("object", object);
-    console.log("Object.keys(object)", Object.keys(object));
     const results = Array.isArray(Object.keys(object)) && Object.keys(object).map((item) => {
       return {
         name: item,
         value: object[item]
       }
     })
-    console.log("results", results);
 
     return results
 
