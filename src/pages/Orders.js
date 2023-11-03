@@ -207,7 +207,7 @@ const Orders = () => {
             ${orderItemsHtmlString}
         </table>
         <div style="margin-top: 20px; text-align: right;">
-            <b>Tổng cộng: 425,000 VND</b>
+            <b>Tổng cộng: ${(order?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</b>
         </div>
         <div>Cảm ơn quý khách đã tin tưởng và ủng hộ. Xin cảm ơn!</div>
     </div>

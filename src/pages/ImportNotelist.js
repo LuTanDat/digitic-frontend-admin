@@ -62,7 +62,7 @@ const ImportNotelist = () => {
   for (let i = 0; i < importNoteState.length; i++) {
     data1.push({
       key: i + 1,
-      nameSupplier: importNoteState[i].nameSupplier,
+      nameSupplier: importNoteState[i].nameSupplier?.name,
       brand: importNoteState[i].brand,
       quantity: importNoteState[i].quantity,
       price: importNoteState[i].price,
@@ -118,65 +118,50 @@ const ImportNotelist = () => {
     popupWin.onafterprint = () => popupWin.close();
   };
   const getOrderDetails = (note) => {
-    // Tạo mảng chuỗi HTML cho các hàng trong bảng
-    const noteItemsHtml = note?.noteItems?.map((item) => `
-          <tr key="${item._id}">
-            <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-              ${item.product?.title}
-            </td>
-            <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-              ${(item.priceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}
-            </td>
-            <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-              ${item.quantity}
-            </td>
-            <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">
-              ${(item.priceAfterDiscount * item.quantity).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}
-            </td>
-          </tr>
-        `);
-
-    // Kết hợp các chuỗi HTML để tạo thành chuỗi HTML chính
-    const noteItemsHtmlString = noteItemsHtml.join('');
 
     // Tạo chuỗi HTML dựa trên thông tin đơn hàng
     const noteHtml = `
       <div style="max-width: 680px; margin: 0 auto; padding: 15px; border: 1px solid #ccc;">
         <div style="text-align: center; margin-bottom: 20px;">
-            <h1>SMARTDEVI HOMES</h1>
-        </div>
-        <div>
-          <i>Địa chỉ shop: Đường 3/2, phường Xuân khánh, quận Ninh Kiều, tp.Cần Thơ</i> <br />
-          <i>Phone: 0919590861</i> <br />
-          <i>Email: ludathoc@gmail.com</i>
+            <h1>PHIẾU NHẬP HÀNG</h1>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
             <div style="flex: 1;">
-                <h4>Thông tin khách hàng:</h4>
-                <p>Tên: ${note?.shippingInfo?.lastName} ${note?.shippingInfo?.firstName}</p>
-                <p>Địa chỉ: ${note?.shippingInfo?.address}</p>
-                <p>Email: ${note?.user?.email}</p>
+                <h4>Thông tin cửa hàng nhận:</h4>
+                <div>
+                  <p>Địa chỉ shop: </p>
+                  <p>Đường 3/2, phường Xuân khánh </p>
+                  <p>Quận Ninh Kiều, tp.Cần Thơ</p>
+                  <p>Phone: 0919590861</p>
+                  <p>Email: ludathoc@gmail.com</p>
+                </div>
             </div>
             <div style="flex: 1;">
-                <h4>Thông tin hóa đơn:</h4>
-                <p>Số hóa đơn: ${note?._id}</p>
-                <p>Thời gian đặt hàng:  ${new Date(note?.createdAt).toLocaleString()}</p>
-                <p>Phương thức thanh toán:  ${note?.paymentMethod}</p>
+                <h4>Thông Tin Nhà Cung Cấp</h4>
+                <p>Tên: ${note.nameSupplier?.name}</p>
+                <p>Email:  ${note.nameSupplier?.email}</p>
+                <p>Điện Thoại:  ${note.nameSupplier?.mobile}</p>
+                <p>Địa Chỉ:  ${note.nameSupplier?.address}</p>
             </div>
         </div>
         <table style=" border-collapse: collapse; width: 100%;">
             <tr>
-                <th style="border: 1px solid #ccc; padding: 8px; text-align: center;">Sản phẩm</th>
-                <th style="border: 1px solid #ccc; padding: 8px; text-align: center;">Giá</th>
+                <th style="border: 1px solid #ccc; padding: 8px; text-align: center;">Thương hiệu</th>
                 <th style="border: 1px solid #ccc; padding: 8px; text-align: center;">Số lượng</th>
-                <th style="border: 1px solid #ccc; padding: 8px; text-align: center;">Thành tiền</th>
+                <th style="border: 1px solid #ccc; padding: 8px; text-align: center;">Giá</th>
+                <th style="border: 1px solid #ccc; padding: 8px; text-align: center;">Ngày nhậpn</th>
             </tr>
-            ${noteItemsHtmlString}
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 8px; text-align: center;"> ${note.brand}</td>
+                <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">${note.quantity}</td>
+                <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">${(note.price).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</td>
+                <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">${new Date(note.createdAt).toLocaleString()}</td>
+            </tr>
         </table>
         <div style="margin-top: 20px; text-align: right;">
-            <b>Tổng cộng: 425,000 VND</b>
+        <b>Tổng cộng: ${(note?.price).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</b>
         </div>
-        <div>Cảm ơn quý khách đã tin tưởng và ủng hộ. Xin cảm ơn!</div>
+        <div>Cảm ơn Nhà cung cấp đã tin tưởng và Tạo cơ hội cùng phát triển. Xin cảm ơn!</div>
     </div>
     `;
     return noteHtml;
