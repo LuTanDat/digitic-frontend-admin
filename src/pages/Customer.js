@@ -24,6 +24,10 @@ const columns = [
     dataIndex: "mobile",
   },
   {
+    title: "Địa chỉ",
+    dataIndex: "address",
+  },
+  {
     title: "Trạng thái",
     dataIndex: "status",
   },
@@ -56,6 +60,7 @@ const Customer = () => {
         name: customerstate[i].firstName + " " + customerstate[i].lastName,
         email: customerstate[i].email,
         mobile: customerstate[i].mobile,
+        address: customerstate[i].address,
         status: (
           <>
             <select name='' defaultValue={customerstate[i]?.isBlocked} onChange={(e) => updateUserStatus(customerstate[i]?._id, e.target.value)} id='' className='form-control form-select'>

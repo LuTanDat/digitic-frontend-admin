@@ -42,7 +42,7 @@ const MainLayout = () => {
         <div className="logo">
           <h2 className='text-white text-center fs-5 py-3 mb-0'>
             <span className='sm-logo'>Smart</span>
-            <span className='lg-logo'>SmartTech</span>
+            <span className='lg-logo'>SmartDevi Homes</span>
           </h2>
         </div>
         <Menu
@@ -184,11 +184,11 @@ const MainLayout = () => {
                 },
               ]
             },
-            {
-              key: 'enquiries',
-              icon: <FaClipboardList className='fs-4' />,
-              label: 'Góp ý',
-            },
+            // {
+            //   key: 'enquiries',
+            //   icon: <FaClipboardList className='fs-4' />,
+            //   label: 'Góp ý',
+            // },
             {
               key: 'signout',
               icon: <AiOutlineLogout className='fs-4' />,
@@ -216,10 +216,10 @@ const MainLayout = () => {
             }}
           />
           <div className='d-flex gap-4 align-items-center'>
-            <div className='position-relative'>
+            {/* <div className='position-relative'>
               <IoIosNotifications className='fs-4' />
               <span className='badge bg-warning rounded-circle p-1 position-absolute'>3</span>
-            </div>
+            </div> */}
             <div className='d-flex gap-3 align-items-center dropdown'>
               {/* <div>
                 <img
