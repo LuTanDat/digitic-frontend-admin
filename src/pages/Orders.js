@@ -85,7 +85,7 @@ const Orders = () => {
         </Link>
       ),
       payment: orderState[i]?.paymentMethod,
-      amount: orderState[i]?.totalPrice,
+      amount: (orderState[i]?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
       date: new Date(orderState[i]?.createdAt).toLocaleString(),
       status: (
         <>
@@ -94,7 +94,7 @@ const Orders = () => {
             <option value="Đang xử lý">Đang xử lý</option>
             <option value="Đang giao">Đang giao</option>
             <option value="Giao thành công">Giao thành công</option>
-            <option value="Đã Hủy">Hủy</option>
+            <option value="Đã Hủy" disabled>Hủy</option>
           </select>
         </>
       ),

@@ -28,12 +28,12 @@ const columns = [
     dataIndex: "count",
   },
   {
-    title: "Màu",
-    dataIndex: "color",
+    title: "Giá",
+    dataIndex: "amount",
   },
   {
     title: "Tổng tiền",
-    dataIndex: "amount",
+    dataIndex: "totalAmount",
   }
 ];
 
@@ -68,8 +68,8 @@ const ViewOrder = () => {
       name: orderState[i].product?.title,
       brand: orderState[i].product?.brand,
       count: orderState[i].quantity,
-      color: orderState[i].color,
       amount: (orderState[i].priceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+      totalAmount: (orderState[i].priceAfterDiscount * orderState[i].quantity).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
     });
   }
   const goBack = () => {
