@@ -246,7 +246,7 @@ const Addproduct = () => {
               colorState.map((i, j) => {
                 return (
                   <option key={j} value={i.title}>
-                    {i.title}
+                    {i.title === "#ffffff" ? "Trắng" : i.title === "#000000" ? "Đen" : i.title}
                   </option>
                 )
               })
