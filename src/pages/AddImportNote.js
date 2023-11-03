@@ -10,10 +10,10 @@ import { getBrands } from '../features/brand/brandSlice';
 import { getSuppliers } from '../features/supplier/supplierSlice'
 
 let schema = Yup.object().shape({
-  nameSupplier: Yup.string().required("ImportNote name is Required"),
-  brand: Yup.string().required("Brand is Required"),
-  quantity: Yup.number().required("Quantity is Required"),
-  price: Yup.number().required("Price is Required"),
+  nameSupplier: Yup.string().required("Tên không được để trống"),
+  brand: Yup.string().required("Thương hiệu không được để trống"),
+  quantity: Yup.number().required("Số lượng không được để trống"),
+  price: Yup.number().required("Giá không được để trống"),
 });
 
 const AddimportNote = () => {
@@ -41,15 +41,15 @@ const AddimportNote = () => {
 
   useEffect(() => {
     if (isSuccess && createdImportNote) {
-      toast.success("ImportNote Added Successfully!")
+      toast.success("Thêm phiếu nhập thành công!")
     }
     if (isSuccess && updatedImportNote) {
-      toast.success("ImportNote Updated Successfully!");
+      toast.success("Cập nhật thành công phiếu nhập!");
       navigate("/admin/list-importNote");
     }
     else
       if (isError) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 
@@ -80,7 +80,7 @@ const AddimportNote = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getImportNoteId !== undefined ? "Edit" : "Add"} ImportNote
+        {getImportNoteId !== undefined ? "Sửa" : "Thêm"} Phiếu nhập
       </h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
@@ -92,7 +92,7 @@ const AddimportNote = () => {
             className='form-control py-3 mt-3 form-select'
             id=''
           >
-            <option value=''>Select nameSupplier</option>
+            <option value=''>Chọn tên Nhà cung cấp</option>
             {
               supplierState.map((i, j) => {
                 return (
@@ -114,7 +114,7 @@ const AddimportNote = () => {
             className='form-control py-3 mt-3 form-select'
             id=''
           >
-            <option value=''>Select Brand</option>
+            <option value=''>Chọn Thương hiệu</option>
             {
               brandState.map((i, j) => {
                 return (
@@ -134,7 +134,7 @@ const AddimportNote = () => {
             onChng={formik.handleChange("quantity")}
             onBlr={formik.handleBlur("quantity")}
             val={formik.values.quantity}
-            label="Enter Quantity"
+            label="Số lượng"
             id="importNote"
           />
           <div className="error">
@@ -146,7 +146,7 @@ const AddimportNote = () => {
             onChng={formik.handleChange("price")}
             onBlr={formik.handleBlur("price")}
             val={formik.values.price}
-            label="Enter Total Price"
+            label="Tổng tiền"
             id="importNote"
           />
           <div className="error">
@@ -156,7 +156,7 @@ const AddimportNote = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type="submit"
           >
-            {getImportNoteId !== undefined ? "Edit" : "Add"} ImportNote
+            {getImportNoteId !== undefined ? "Sửa" : "Thêm"} Phiếu nhập
           </button>
         </form>
       </div>

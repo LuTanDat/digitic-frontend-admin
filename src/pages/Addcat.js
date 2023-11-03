@@ -29,15 +29,15 @@ const Addcat = () => {
 
   useEffect(() => {
     if (isSuccess && createdCategory) {
-      toast.success("Category Added Successfully!")
+      toast.success("Thêm danh mục thành công!")
     }
     if (isSuccess && updatedCategory) {
-      toast.success("Category Updated Successfully!");
+      toast.success("Cập nhật thành công danh mục!");
       navigate("/admin/list-category");
     }
     else
       if (isError) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 
@@ -64,7 +64,7 @@ const Addcat = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getPCatId !== undefined ? "Edit" : "Add"} Category
+        {getPCatId !== undefined ? "Sửa" : "Thêm"} Danh mục
       </h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
@@ -74,7 +74,7 @@ const Addcat = () => {
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Enter Category"
+            label="Nhập tên danh mục"
             id="category"
           />
           <div className="error">
@@ -84,7 +84,7 @@ const Addcat = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type='submit'
           >
-            {getPCatId !== undefined ? "Edit" : "Add"} Category
+            {getPCatId !== undefined ? "Sửa" : "Thêm"} Danh mục
           </button>
         </form>
       </div>

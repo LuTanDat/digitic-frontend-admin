@@ -48,15 +48,15 @@ const Addblog = () => {
 
   useEffect(() => {
     if (isSuccess && createdBlog) {
-      toast.success("Blog Added Successfully!")
+      toast.success("Thêm Bài viết thành công!")
     }
     if (isSuccess && updatedBlog) {
-      toast.success("Blog Updated Successfully!");
+      toast.success("Cập nhật thành công Bài viết!");
       navigate("/admin/blog-list");
     }
     else
       if (isError) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 

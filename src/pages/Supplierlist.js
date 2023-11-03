@@ -13,7 +13,7 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên",
     dataIndex: "name",
     sorter: (a, b) => a.name.length - b.name.length,
   },
@@ -22,15 +22,15 @@ const columns = [
     dataIndex: "email",
   },
   {
-    title: "Mobile",
+    title: "Số điện thoại",
     dataIndex: "mobile",
   },
   {
-    title: "Address",
+    title: "Địa chỉ",
     dataIndex: "address",
   },
   {
-    title: "Action",
+    title: "Hành động",
     dataIndex: "action",
   },
 ];
@@ -87,7 +87,7 @@ const Supplierlist = () => {
   }
   return (
     <div>
-      <h3 className='mb-4 title'>Suppliers</h3>
+      <h3 className='mb-4 title'>Nhà cung cấp</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -95,7 +95,7 @@ const Supplierlist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => deleteSupplier(supplierId)}
-        title="Are you sure you want to delete this supplier?"
+        title="Bạn chắc chắn muốn xóa Nhà cung cấp này??"
       />
     </div>
   )

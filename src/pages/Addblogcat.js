@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createBlogCategory, getABlogCat, resetState, updateABlogCat } from '../features/bcategory/bcategorySlice';
 
 let schema = Yup.object().shape({
-  title: Yup.string().required("Category name is Required")
+  title: Yup.string().required("Tên không được để trống")
 });
 
 const Addblogcat = () => {
@@ -29,15 +29,15 @@ const Addblogcat = () => {
 
   useEffect(() => {
     if (isSuccess && createdBlogCategory) {
-      toast.success("Blog Category Added Successfully!")
+      toast.success("Thêm Danh mục Bài viết thành công!")
     }
     if (isSuccess && updatedBlogCategory) {
-      toast.success("Blog Category Updated Successfully!");
+      toast.success("Cập nhật thành công Danh mục Bài viết!");
       navigate("/admin/blog-category-list");
     }
     else
       if (isError) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 
@@ -65,7 +65,7 @@ const Addblogcat = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getBCatId !== undefined ? "Edit" : "Add"} Blog Category
+        {getBCatId !== undefined ? "Sửa" : "Thêm"} Danh mục Bài viết
       </h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
@@ -75,7 +75,7 @@ const Addblogcat = () => {
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Enter Blog Category"
+            label="Nhập tên Danh mục Bài viết"
             id="blogcat"
           />
           <div className="error">
@@ -85,7 +85,7 @@ const Addblogcat = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type='submit'
           >
-            {getBCatId !== undefined ? "Edit" : "Add"} Blog Category
+            {getBCatId !== undefined ? "Sửa" : "Thêm"} Danh mục Bài viết
           </button>
         </form>
       </div>

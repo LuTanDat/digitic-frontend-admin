@@ -12,23 +12,23 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên",
     dataIndex: "name",
   },
   {
-    title: "Product Count",
+    title: "Số lượng",
     dataIndex: "product",
   },
   {
-    title: "Total Price",
+    title: "Tổng giá",
     dataIndex: "price",
   },
   {
-    title: "Total Price After Discount",
+    title: "Tổng giá sau khuyến mãi",
     dataIndex: "dprice",
   },
   {
-    title: "Status",
+    title: "Trạng thái",
     dataIndex: "status",
   },
 ];
@@ -79,8 +79,8 @@ const Dashboard = () => {
           key: i + 1,
           name: orderState[i]?.user?.firstName + orderState[i]?.user?.lastName,
           product: orderState[i]?.orderItems?.length,
-          price: orderState[i]?.totalPrice,
-          dprice: orderState[i]?.totalPriceAfterDiscount,
+          price: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+          dprice: (orderState[i]?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
           status: orderState[i]?.orderStatus,
         });
       }
@@ -159,39 +159,39 @@ const Dashboard = () => {
       <div className='d-flex justify-content-between align-items-center gap-3'>
         <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3'>
           <div>
-            <p className='desc'>Total Income</p>
-            <h4 className='mb-0 sub-title'>${yearlyDataState && yearlyDataState[0]?.amount}</h4>
+            <p className='desc'>Tổng thu nhập</p>
+            <h4 className='mb-0 sub-title'>{yearlyDataState && (yearlyDataState[0]?.amount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</h4>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <p className='mb-0 desc'>Income in last year from today</p>
+            <p className='mb-0 desc'>Thu nhập trong 1 năm qua</p>
           </div>
         </div>
         <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3'>
           <div>
-            <p className='desc'>Total Sales</p>
+            <p className='desc'>Tổng đơn hàng</p>
             <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState[0]?.count}</h4>
           </div>
           <div className='d-flex flex-column align-items-end'>
-            <p className='mb-0 desc'>Sales in last year from today</p>
+            <p className='mb-0 desc'>Đơn hàng trong 1 năm qua</p>
           </div>
         </div>
       </div>
       <div className='d-flex justify-content-between gap-3'>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-5 title'>Income Statics</h3>
+          <h3 className='mb-5 title'>Thống kê thu nhập</h3>
           <div>
             <Column {...config} />
           </div>
         </div>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-5 title'>Sales Statics</h3>
+          <h3 className='mb-5 title'>Thống kê đơn hàng</h3>
           <div>
             <Column {...config2} />
           </div>
         </div>
       </div>
       <div className='mt-4'>
-        <h3 className='mb-5 title'>Recent Orders</h3>
+        <h3 className='mb-5 title'>Đơn hàng gần đây</h3>
         <div>
           <Table columns={columns} dataSource={orderData} />
         </div>

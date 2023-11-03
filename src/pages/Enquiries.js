@@ -12,7 +12,7 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên",
     dataIndex: "name",
     sorter: (a, b) => a.name.length - b.name.length,
   },
@@ -21,15 +21,15 @@ const columns = [
     dataIndex: "email",
   },
   {
-    title: "Mobile",
+    title: "Số điện thoại",
     dataIndex: "mobile",
   },
   {
-    title: "Status",
+    title: "Trạng thái",
     dataIndex: "status",
   },
   {
-    title: "Action",
+    title: "Hành động",
     dataIndex: "action",
   },
 ];
@@ -105,7 +105,7 @@ const Enquiries = () => {
   }
   return (
     <div>
-      <h3 className='mb-4 title'>Enquiries</h3>
+      <h3 className='mb-4 title'>Góp ý</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -113,7 +113,7 @@ const Enquiries = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => deleteEnq(enqId)}
-        title="Are you sure you want to delete this enquiry?"
+        title="Bạn chắc chắn muốn xóa góp ý này??"
       />
     </div>
   )

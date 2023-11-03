@@ -41,16 +41,16 @@ const AddCoupon = () => {
 
   useEffect(() => {
     if (isSuccess && createdCoupon) {
-      toast.success("Coupon Added Successfully!")
+      toast.success("Thêm Mã giảm giá thành công!")
       navigate("/admin/list-product")
     }
     if (isSuccess && updatedCoupon) {
-      toast.success("Coupon Updated Successfully!");
+      toast.success("Cập nhật thành công Mã giảm giá!");
       navigate("/admin/coupon-list");
     }
     else
       if (isError && productName && couponDiscount && couponExpiry) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 

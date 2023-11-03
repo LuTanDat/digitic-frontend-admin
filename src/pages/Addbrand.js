@@ -29,15 +29,15 @@ const Addbrand = () => {
 
   useEffect(() => {
     if (isSuccess && createdBrand) {
-      toast.success("Brand Added Successfully!")
+      toast.success("Thêm thương hiệu thành công!")
     }
     if (isSuccess && updatedBrand) {
-      toast.success("Brand Updated Successfully!");
+      toast.success("Cập nhật thành công thương hiệu!");
       navigate("/admin/list-brand");
     }
     else
       if (isError) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 
@@ -64,7 +64,7 @@ const Addbrand = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getBrandId !== undefined ? "Edit" : "Add"} Brand
+        {getBrandId !== undefined ? "Sửa" : "Thêm"} Thương hiệu
       </h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
@@ -74,7 +74,7 @@ const Addbrand = () => {
             onChng={formik.handleChange("title")}
             onBlr={formik.handleBlur("title")}
             val={formik.values.title}
-            label="Enter Brand"
+            label="Nhập tên thương hiệu"
             id="brand"
           />
           <div className="error">
@@ -84,7 +84,7 @@ const Addbrand = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type='submit'
           >
-            {getBrandId !== undefined ? "Edit" : "Add"} Brand
+            {getBrandId !== undefined ? "Sửa" : "Thêm"} Thương hiệu
           </button>
         </form>
       </div>

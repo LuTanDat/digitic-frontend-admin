@@ -8,12 +8,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createSupplier, getASupplier, resetState, updateASupplier } from '../features/supplier/supplierSlice';
 
 let schema = Yup.object().shape({
-  name: Yup.string().required("Supplier name is Required"),
+  name: Yup.string().required("Tên nhà cung cấp không được để trống"),
   email: Yup.string()
-    .email("Email should be valid")
-    .required("Email is Required"),
-  mobile: Yup.string().required("Supplier mobile is Required"),
-  address: Yup.string().required("Supplier address is Required")
+    .email("Email không hợp lệ")
+    .required("Email không được để trống"),
+  mobile: Yup.string().required("Số điện thoại không được để trống"),
+  address: Yup.string().required("Địa chỉ không được để trống")
 });
 
 const Addsupplier = () => {
@@ -34,15 +34,15 @@ const Addsupplier = () => {
 
   useEffect(() => {
     if (isSuccess && createdSupplier) {
-      toast.success("Supplier Added Successfully!")
+      toast.success("Thêm Nhà cung cấp thành công!")
     }
     if (isSuccess && updatedSupplier) {
-      toast.success("Supplier Updated Successfully!");
+      toast.success("Cập nhật thành công Nhà cung cấp!");
       navigate("/admin/list-supplier");
     }
     else
       if (isError) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 
@@ -71,7 +71,7 @@ const Addsupplier = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getSupplierId !== undefined ? "Edit" : "Add"} Supplier
+        {getSupplierId !== undefined ? "Sửa" : "Thêm"} Nhà cung cấp
       </h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
@@ -81,7 +81,7 @@ const Addsupplier = () => {
             onChng={formik.handleChange("name")}
             onBlr={formik.handleBlur("name")}
             val={formik.values.name}
-            label="Enter Name"
+            label="Nhập tên Nhà cung cấp"
             id="supplier"
           />
           <div className="error">
@@ -93,7 +93,7 @@ const Addsupplier = () => {
             onChng={formik.handleChange("email")}
             onBlr={formik.handleBlur("email")}
             val={formik.values.email}
-            label="Enter Email"
+            label="Email"
             id="supplier"
           />
           <div className="error">
@@ -105,7 +105,7 @@ const Addsupplier = () => {
             onChng={formik.handleChange("mobile")}
             onBlr={formik.handleBlur("mobile")}
             val={formik.values.mobile}
-            label="Enter Mobile"
+            label="Số điện thoại"
             id="supplier"
           />
           <div className="error">
@@ -117,7 +117,7 @@ const Addsupplier = () => {
             onChng={formik.handleChange("address")}
             onBlr={formik.handleBlur("address")}
             val={formik.values.address}
-            label="Enter Address"
+            label="Địa chỉ"
             id="supplier"
           />
           <div className="error">
@@ -127,7 +127,7 @@ const Addsupplier = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type='submit'
           >
-            {getSupplierId !== undefined ? "Edit" : "Add"} Supplier
+            {getSupplierId !== undefined ? "Sửa" : "Thêm"} Nhà cung cấp
           </button>
         </form>
       </div>

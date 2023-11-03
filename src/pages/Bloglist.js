@@ -13,17 +13,17 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Name",
+    title: "Tên",
     dataIndex: "name",
     sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: "Category",
+    title: "Danh mục",
     dataIndex: "category",
     sorter: (a, b) => a.category.length - b.category.length,
   },
   {
-    title: "Action",
+    title: "Hành động",
     dataIndex: "action",
   },
 ];
@@ -78,7 +78,7 @@ const Bloglist = () => {
   }
   return (
     <div>
-      <h3 className='mb-4 title'>Blog List</h3>
+      <h3 className='mb-4 title'>Bài viết</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -86,7 +86,7 @@ const Bloglist = () => {
         hideModal={hideModal}
         open={open}
         performAction={() => deleteBlog(blogId)}
-        title="Are you sure you want to delete this blog?"
+        title="Bạn chắc chắn muốn xóa Bài viết này??"
       />
     </div>
   )

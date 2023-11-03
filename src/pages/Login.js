@@ -10,9 +10,9 @@ import { login } from '../features/auth/authSlice';
 
 let schema = Yup.object().shape({
   email: Yup.string()
-    .email("Email should be valid")
-    .required("Email is Required"),
-  password: Yup.string().required("Password is Required"),
+    .email("Email không khả dụng")
+    .required("Email không được để trống"),
+  password: Yup.string().required("Mật khẩu không được để trống"),
 });
 
 const Login = () => {
@@ -45,16 +45,16 @@ const Login = () => {
   return (
     <div className="py-5" style={{ background: "#7985c9", minHeight: "100vh" }}>
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
-        <h3 className="text-center title">Login</h3>
-        <p className="text-center">Login to your account to continue.</p>
+        <h3 className="text-center title">Đăng nhập</h3>
+        <p className="text-center">Đăng nhập để tiếp tục.</p>
         <div className="error text-center">
-          {message.message === 'Rejected' ? 'You are not an Admin' : ''}
+          {message.message === 'Rejected' ? 'Bạn không phải Admin' : ''}
         </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
             name='email'
-            label="Email Address"
+            label="Nhập email"
             id="email"
             val={formik.values.email}
             onChng={formik.handleChange("email")}
@@ -67,7 +67,7 @@ const Login = () => {
           <CustomInput
             type="password"
             name='password'
-            label="Password"
+            label="Nhập mật khẩu"
             id="pass"
             val={formik.values.password}
             onChng={formik.handleChange("password")}
@@ -82,7 +82,7 @@ const Login = () => {
             style={{ background: "#ffd333" }}
             type="submit"
           >
-            Login
+            Đăng nhập
           </button>
         </form>
       </div>
