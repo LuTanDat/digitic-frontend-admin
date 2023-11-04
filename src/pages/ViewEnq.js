@@ -65,15 +65,15 @@ const ViewEnq = () => {
           <div>
             <select
               name=""
-              defaultValue={enqStatus ? enqStatus : "Submitted"}
+              defaultValue={enqStatus ? enqStatus : "Đã gửi"}
               className="form-control form-select"
               id=""
               onChange={(e) => setEnquiryStatus(e.target.value, getEnqId)}
             >
-              <option value="Submitted">Đã gửi</option>
-              <option value="Is considering">Đang xem xét</option>
-              <option value="Processing">Đang xử lý</option>
-              <option value="Resolved">Đã xử lý</option>
+              <option value="Đã gửi">Đã gửi</option>
+              <option value="Đang xem xét">Đang xem xét</option>
+              <option value="Đang xử lý">Đang xử lý</option>
+              <option value="Đã xử lý">Đã xử lý</option>
             </select>
           </div>
         </div>
