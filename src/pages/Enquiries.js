@@ -68,10 +68,10 @@ const Enquiries = () => {
             id=''
             onChange={(e) => setEnquiryStatus(e.target.value, enqState[i]._id)}
           >
-            <option value="Submitted">Submitted</option>
-            <option value="Contacted">Contacted</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Resolved">Resolved</option>
+            <option value="Submitted">Đã gửi</option>
+            <option value="Is considering">Đang xem xét</option>
+            <option value="Processing">Đang xử lý</option>
+            <option value="Resolved">Đã xử lý</option>
           </select>
         </>
       ),

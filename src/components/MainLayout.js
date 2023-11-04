@@ -184,11 +184,11 @@ const MainLayout = () => {
                 },
               ]
             },
-            // {
-            //   key: 'enquiries',
-            //   icon: <FaClipboardList className='fs-4' />,
-            //   label: 'Góp ý',
-            // },
+            {
+              key: 'enquiries',
+              icon: <FaClipboardList className='fs-4' />,
+              label: 'Góp ý',
+            },
             {
               key: 'signout',
               icon: <AiOutlineLogout className='fs-4' />,
