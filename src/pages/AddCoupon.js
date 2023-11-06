@@ -26,7 +26,8 @@ const AddCoupon = () => {
   const changeDateFormet = (date) => {
     const newDate = new Date(date).toLocaleDateString(); // convert to  format beatiful day
     const [month, day, year] = newDate.split('/');
-    return [year, month, day].join('-');
+    return `${year}-${month?.padStart(2, "0")}-${day?.padStart(2, "0")}`
+    // return [year, month, day].join('-');
   }
 
   useEffect(() => {
