@@ -119,6 +119,17 @@ export const unBlockUser = createAsyncThunk(
   }
 );
 
+export const refreshToken = createAsyncThunk(
+  "auth/refreshToken",
+  async (refreshToken, thunkAPI) => {
+    try {
+      return await authService.refreshToken(refreshToken);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // create a Reducer Redux
 // 1 actions co 3 reducers
 export const authSlice = createSlice({
@@ -284,6 +295,23 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+      })
+
+      .addCase(refreshToken.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.refreshToken = action.payload.accessToken;
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        console.log(action.error);
       })
 
       .addCase(resetState, () => initialState);

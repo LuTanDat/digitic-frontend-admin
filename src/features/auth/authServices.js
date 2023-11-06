@@ -58,6 +58,13 @@ const unBlockUser = async (id) => {
   return response.data;
 };
 
+const refreshToken = async (refreshToken) => {
+  const response = await axios.post(`${base_url}user/refresh`, { refreshToken: refreshToken });
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const authService = {
   login,
   getOrders,
@@ -67,6 +74,7 @@ const authService = {
   updateOrder,
   deleteOrder,
   blockUser,
-  unBlockUser
+  unBlockUser,
+  refreshToken
 }
 export default authService;

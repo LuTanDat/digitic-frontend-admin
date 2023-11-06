@@ -31,9 +31,58 @@ import { OpenRoutes } from './routing/OpenRoutes';
 import { PrivateRoutes } from './routing/PrivateRoutes';
 
 import { jwtDecode } from 'jwt-decode';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { refreshToken, resetState } from './features/auth/authSlice';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 function App() {
-  console.log(jwtDecode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmIyYTczMzNmMzk5MmYwZjNkYzY2MSIsImlhdCI6MTY5OTEwNjQyMywiZXhwIjoxNjk5MTkyODIzfQ.uKIsTjXUqsPO5-Ur6iWDxh2yBDHOUFi3AWC3r0Q2u8c"));
+  // console.log(jwtDecode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmIyYTczMzNmMzk5MmYwZjNkYzY2MSIsImlhdCI6MTY5OTEwNjQyMywiZXhwIjoxNjk5MTkyODIzfQ.uKIsTjXUqsPO5-Ur6iWDxh2yBDHOUFi3AWC3r0Q2u8c"));
+
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state?.auth?.user);
+
+  useEffect(() => {
+    const refresh = async () => {
+      const refreshedToken = await dispatch(refreshToken(userState?.refreshToken));
+      // refreshedToken là refreshToken mới được trả về sau khi dispatch refreshToken action in Redux
+    };
+    refresh();
+  }, [])
+
+  const handleDecoded = () => {
+    let storageData = userState?.token || (JSON.parse(localStorage.getItem('user')))?.token;
+    let decoded = {};
+    let refreshToken = "";
+    let decodedRefreshToken = {};
+    if (storageData) {
+      decoded = jwtDecode(storageData)
+      refreshToken = userState?.refreshToken || (JSON.parse(localStorage.getItem('user')))?.refreshToken;
+      decodedRefreshToken = jwtDecode(refreshToken)
+    }
+    return { decoded, storageData, decodedRefreshToken, refreshToken }
+  }
+  axios.interceptors.request.use(async (config) => {
+    // Do something before request is sent HTTP
+    const currentTime = new Date()
+    const { decoded, storageData, decodedRefreshToken, refreshToken } = handleDecoded()
+
+    if (decoded?.exp < currentTime.getTime() / 1000) {
+      if (decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
+        const data = refreshToken; // Sử dụng refreshToken từ Redux
+        config.headers['Authorization'] = `Bearer ${data}`// dinh kem moi khi gui yeu cau http
+        console.log("refreshToken Successfully");
+      } else {
+        toast.warning("Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại để tiếp tục sử dụng!");
+        localStorage.clear();
+        window.location.reload();
+      }
+    }
+    return config;
+  }, (err) => {
+    return Promise.reject(err)
+  })
 
   return (
     <Router>
