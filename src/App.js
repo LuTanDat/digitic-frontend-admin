@@ -38,7 +38,6 @@ import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
 function App() {
-  // console.log(jwtDecode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmIyYTczMzNmMzk5MmYwZjNkYzY2MSIsImlhdCI6MTY5OTEwNjQyMywiZXhwIjoxNjk5MTkyODIzfQ.uKIsTjXUqsPO5-Ur6iWDxh2yBDHOUFi3AWC3r0Q2u8c"));
 
   const dispatch = useDispatch();
   const userState = useSelector((state) => state?.auth?.user);
