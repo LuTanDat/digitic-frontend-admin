@@ -55,7 +55,8 @@ const Addproduct = () => {
     dispatch(getColors());
   }, [])
 
-  const imgState = useSelector((state) => state.upload.images);
+  let imgState = useSelector((state) => state.upload.images);
+  // const deletedImageState = useSelector((state) => state.upload.deletedImage);
   const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
@@ -88,11 +89,29 @@ const Addproduct = () => {
       url: i.url,
     })
   })
-  console.log("productImages", productImages);
+  // console.log("Mang hinh trong Redux a Product", productImages);
+
+
+  // let imagesArr = imgState?.length !== 0 ? imgState : (imgState?.length === 0 && productImages?.length !== 0) ? productImages : [];
+  // console.log("Mang hinh truoc khi xoa: ", imagesArr);
 
   const deleteImg = (id) => {
-    productImages = [];
     console.log("Da xoa anh: ", id);
+    // dispatch(delImg(id));
+
+    // setTimeout(() => {
+    //   console.log("deletedImageState", deletedImageState);
+    //   if (deletedImageState === "Deleted") {
+    //     imagesArr = imagesArr.filter(item => item?.public_id !== id);
+    //     console.log("Mang hinh sau khi xoa: ", imagesArr);
+    //     if (imgState?.length !== 0) {
+    //       imgState = imagesArr;
+    //     }
+    //     else if (imgState?.length === 0 && productImages?.length !== 0) {
+    //       productImages = imagesArr;
+    //     }
+    //   }
+    // }, 10000)
   }
 
   const formik = useFormik({
@@ -334,12 +353,12 @@ const Addproduct = () => {
             </Dropzone>
           </div>
           <div className='showImages d-flex flex-wrap gap-4'>
-            {imgState.length !== 0 && imgState?.map((i, j) => {
+            {imgState?.length !== 0 && imgState?.map((i, j) => {
               return (
                 <div className='position-relative' key={j}>
                   <button
                     type='button'
-                    onClick={() => dispatch(delImg(i.public_id))}
+                    onClick={() => deleteImg(i.public_id)}
                     className='btn-close position-absolute'
                     style={{ top: "10px", right: "10px" }}
                   >
@@ -348,7 +367,7 @@ const Addproduct = () => {
                 </div>
               )
             })}
-            {imgState.length === 0 && productImages?.length !== 0 && productImages?.map((i, j) => {
+            {imgState?.length === 0 && productImages?.length !== 0 && productImages?.map((i, j) => {
               return (
                 <div className='position-relative' key={j}>
                   <button
