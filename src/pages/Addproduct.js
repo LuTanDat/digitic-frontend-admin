@@ -55,8 +55,6 @@ const Addproduct = () => {
     dispatch(getColors());
   }, [])
 
-  let imgState = useSelector((state) => state.upload.images);
-  // const deletedImageState = useSelector((state) => state.upload.deletedImage);
   const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
@@ -66,7 +64,9 @@ const Addproduct = () => {
     productTags, productColor, productQuantity, productSize, productWeight,
     productPower, productLifespan, productWarranty
   } = newProduct;
-  let { productImages } = newProduct;
+  const { productImages } = newProduct; // anh minh load trong db ra neu có getProductId, ko co thi undefined
+  const imgState = useSelector((state) => state.upload.images); // anh minh up len, ko co thi []
+  // const deletedImageState = useSelector((state) => state.upload.deletedImage); // anh da xoa tren dam may
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
@@ -89,7 +89,8 @@ const Addproduct = () => {
       url: i.url,
     })
   })
-  // console.log("Mang hinh trong Redux a Product", productImages);
+  console.log("Mang hinh load trong DB ra khi co getProductId: ", productImages);
+  console.log("Mang hinh minh up len: ", imgState);
 
 
   // let imagesArr = imgState?.length !== 0 ? imgState : (imgState?.length === 0 && productImages?.length !== 0) ? productImages : [];
@@ -384,7 +385,7 @@ const Addproduct = () => {
           </div>
 
           <button
-            className='btn btn-success border-0 rounded-3 my-5'
+            className='btn btn-success border-0 rounded-3 my-3'
             type="submit"
           >
             {getProductId !== undefined ? "Sửa" : "Thêm"} Sản phẩm
