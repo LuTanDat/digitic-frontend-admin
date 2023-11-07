@@ -2,6 +2,7 @@
 
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import uploadService from "./uploadService";
+import { toast } from "react-toastify";
 
 export const resetStateUpload = createAction("Reset_all-upload-img");
 
@@ -70,8 +71,11 @@ export const uploadSlice = createSlice({
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.images = [];
+        state.deletedImage = action.payload?.message;
         state.message = "success";
+        if (state.isSuccess === true) {
+          toast.success("Xóa ảnh thành công")
+        }
       })
       .addCase(delImg.rejected, (state, action) => {
         state.isError = true;
