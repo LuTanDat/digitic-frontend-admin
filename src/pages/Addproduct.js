@@ -64,8 +64,8 @@ const Addproduct = () => {
     productTags, productColor, productQuantity, productSize, productWeight,
     productPower, productLifespan, productWarranty
   } = newProduct;
-  const { productImages } = newProduct; // anh minh load trong db ra neu có getProductId, ko co thi undefined
-  const imgState = useSelector((state) => state.upload.images); // anh minh up len, ko co thi []
+  const { productImages } = newProduct; // mang anh minh load trong db ra neu có getProductId, ko co thi []
+  const imgState = useSelector((state) => state.upload.images); //mang anh minh up len, ko co thi []
   // const deletedImageState = useSelector((state) => state.upload.deletedImage); // anh da xoa tren dam may
 
   useEffect(() => {
@@ -82,8 +82,8 @@ const Addproduct = () => {
       }
   }, [isSuccess, isError, isLoading,])
 
-  const [currentImages, setCurrentImages] = useState([]);
 
+  const [imagesUploaded, setImagesUploaded] = useState([]);
   useEffect(() => {
     const img = [];
     imgState.forEach((i) => {
@@ -92,12 +92,26 @@ const Addproduct = () => {
         url: i.url,
       })
     })
-    console.log("Sau khi da xu ly anh minh up len: ", img);
-    setCurrentImages(img);
+    setImagesUploaded(img);
   }, [imgState])
+
+  const [imagesProducted, setImagesProducted] = useState([]);
+  useEffect(() => {
+    const img = [];
+    productImages.forEach((i) => {
+      img.push({
+        public_id: i.public_id,
+        url: i.url,
+      })
+    })
+    setImagesProducted(img);
+  }, [imgState])
+
   console.log("Mang hinh load trong DB ra khi co getProductId: ", productImages);
+  console.log("Sau khi da xu ly hinh load trong DB ra khi co getProductId: ", imagesProducted);
   console.log("Mang hinh minh up len: ", imgState);
-  console.log("Tong hinh de luu vao db: ", currentImages);
+  console.log("Sau khi da xu ly anh minh up len: ", imagesUploaded);
+  console.log("Tong hinh de luu vao db: ", [...imagesUploaded, ...imagesProducted]);
 
 
   // let imagesArr = imgState?.length !== 0 ? imgState : (imgState?.length === 0 && productImages?.length !== 0) ? productImages : [];

@@ -61,7 +61,8 @@ export const deleteAProduct = createAsyncThunk(
 export const resetState = createAction("Reset_all");
 
 const initialState = {
-  products: [], // products
+  products: [], // products list
+  productImages: [], // images list of a product
   isError: false,
   isLoading: false,
   isSuccess: false,
