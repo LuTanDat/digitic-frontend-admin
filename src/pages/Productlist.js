@@ -120,19 +120,21 @@ const Productlist = () => {
       action: (
         <>
           <Link to={`/admin/coupon/${productState[i]._id}`}
-            className='fs-3 text-danger'>
+            className='fs-4'>
             <RiCoupon5Line />
           </Link>
-          <Link to={`/admin/product/${productState[i]._id}`}
-            className='fs-3 text-danger'>
-            <BiEdit />
-          </Link>
-          <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
-            onClick={() => showModal(productState[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
+          <div className="d-flex gap-1 align-items-center">
+            <Link to={`/admin/product/${productState[i]._id}`}
+              className='fs-4' style={{ color: "#2f2222" }}>
+              <BiEdit />
+            </Link>
+            <button
+              className='fs-4 text-danger bg-transparent border-0'
+              onClick={() => showModal(productState[i]._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </div>
         </>
       ),
     });
