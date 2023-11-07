@@ -82,15 +82,22 @@ const Addproduct = () => {
       }
   }, [isSuccess, isError, isLoading,])
 
-  const img = [];
-  imgState.forEach((i) => {
-    img.push({
-      public_id: i.public_id,
-      url: i.url,
+  const [currentImages, setCurrentImages] = useState([]);
+
+  useEffect(() => {
+    const img = [];
+    imgState.forEach((i) => {
+      img.push({
+        public_id: i.public_id,
+        url: i.url,
+      })
     })
-  })
+    console.log("Sau khi da xu ly anh minh up len: ", img);
+    setCurrentImages(img);
+  }, [imgState])
   console.log("Mang hinh load trong DB ra khi co getProductId: ", productImages);
   console.log("Mang hinh minh up len: ", imgState);
+  console.log("Tong hinh de luu vao db: ", currentImages);
 
 
   // let imagesArr = imgState?.length !== 0 ? imgState : (imgState?.length === 0 && productImages?.length !== 0) ? productImages : [];
@@ -135,7 +142,7 @@ const Addproduct = () => {
     },
     validationSchema: schema,
     onSubmit: values => {
-      values.images = img;
+      // values.images = currentImages;
       if (getProductId !== undefined) {
         const data = { id: getProductId, productData: values };
         dispatch(updateAProduct(data));
