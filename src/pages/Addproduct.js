@@ -105,13 +105,15 @@ const Addproduct = () => {
       })
     })
     setImagesProducted(img);
-  }, [imgState])
+  }, [productImages])
+
+  let totalImagesSaveDB = [...imagesProducted, ...imagesUploaded];
 
   console.log("Mang hinh load trong DB ra khi co getProductId: ", productImages);
   console.log("Sau khi da xu ly hinh load trong DB ra khi co getProductId: ", imagesProducted);
   console.log("Mang hinh minh up len: ", imgState);
   console.log("Sau khi da xu ly anh minh up len: ", imagesUploaded);
-  console.log("Tong hinh de luu vao db: ", [...imagesUploaded, ...imagesProducted]);
+  console.log("Tong hinh de luu vao db: ", totalImagesSaveDB);
 
 
   // let imagesArr = imgState?.length !== 0 ? imgState : (imgState?.length === 0 && productImages?.length !== 0) ? productImages : [];
@@ -156,7 +158,7 @@ const Addproduct = () => {
     },
     validationSchema: schema,
     onSubmit: values => {
-      // values.images = currentImages;
+      values.images = totalImagesSaveDB;
       if (getProductId !== undefined) {
         const data = { id: getProductId, productData: values };
         dispatch(updateAProduct(data));
@@ -375,7 +377,7 @@ const Addproduct = () => {
             </Dropzone>
           </div>
           <div className='showImages d-flex flex-wrap gap-4'>
-            {imgState?.length !== 0 && imgState?.map((i, j) => {
+            {totalImagesSaveDB?.length !== 0 && totalImagesSaveDB?.map((i, j) => {
               return (
                 <div className='position-relative' key={j}>
                   <button
@@ -389,7 +391,7 @@ const Addproduct = () => {
                 </div>
               )
             })}
-            {imgState?.length === 0 && productImages?.length !== 0 && productImages?.map((i, j) => {
+            {/* {imgState?.length === 0 && productImages?.length !== 0 && productImages?.map((i, j) => {
               return (
                 <div className='position-relative' key={j}>
                   <button
@@ -402,7 +404,7 @@ const Addproduct = () => {
                   <img src={i.url} alt='' width={200} height={200} />
                 </div>
               )
-            })}
+            })} */}
           </div>
 
           <button
