@@ -83,6 +83,9 @@ const Addproduct = () => {
   }, [isSuccess, isError, isLoading,])
 
 
+  // XU LY UPLOAD ANH
+  const [totalImagesSaveDB, setTotalImagesSaveDBd] = useState([]);
+
   const [imagesUploaded, setImagesUploaded] = useState([]);
   useEffect(() => {
     const img = [];
@@ -93,6 +96,7 @@ const Addproduct = () => {
       })
     })
     setImagesUploaded(img);
+    setTotalImagesSaveDBd([...totalImagesSaveDB, ...img])
   }, [imgState])
 
   const [imagesProducted, setImagesProducted] = useState([]);
@@ -105,9 +109,8 @@ const Addproduct = () => {
       })
     })
     setImagesProducted(img);
+    setTotalImagesSaveDBd([...totalImagesSaveDB, ...img])
   }, [productImages])
-
-  let totalImagesSaveDB = [...imagesProducted, ...imagesUploaded];
 
   console.log("Mang hinh load trong DB ra khi co getProductId: ", productImages);
   console.log("Sau khi da xu ly hinh load trong DB ra khi co getProductId: ", imagesProducted);
@@ -116,10 +119,8 @@ const Addproduct = () => {
   console.log("Tong hinh de luu vao db: ", totalImagesSaveDB);
 
 
-  // let imagesArr = imgState?.length !== 0 ? imgState : (imgState?.length === 0 && productImages?.length !== 0) ? productImages : [];
-  // console.log("Mang hinh truoc khi xoa: ", imagesArr);
-
-  const deleteImg = (id) => {
+  // XU LY DELETE ANH 
+  const handleDeleteImage = (id) => {
     console.log("Da xoa anh: ", id);
     // dispatch(delImg(id));
 
@@ -382,7 +383,7 @@ const Addproduct = () => {
                 <div className='position-relative' key={j}>
                   <button
                     type='button'
-                    onClick={() => deleteImg(i.public_id)}
+                    onClick={() => handleDeleteImage(i.public_id)}
                     className='btn-close position-absolute'
                     style={{ top: "10px", right: "10px" }}
                   >
@@ -396,7 +397,7 @@ const Addproduct = () => {
                 <div className='position-relative' key={j}>
                   <button
                     type='button'
-                    onClick={() => deleteImg(i.public_id)}
+                    onClick={() => handleDeleteImage (i.public_id)}
                     className='btn-close position-absolute'
                     style={{ top: "10px", right: "10px" }}
                   >

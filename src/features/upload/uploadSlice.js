@@ -71,7 +71,7 @@ export const uploadSlice = createSlice({
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.deletedImage = action.payload?.message;
+        state.deletedImage = action.payload;
         state.message = "success";
         if (state.isSuccess === true) {
           toast.success("Xóa ảnh thành công")
