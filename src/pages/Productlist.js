@@ -86,9 +86,14 @@ const Productlist = () => {
     let price = productState[i].price;
     let discountPercent = 0;
     for (let j = 0; j < couponState.length; j++) {
-      if (productState[i]._id === couponState[j].product?._id) {
-        discountPercent = couponState[j].discount;
-        price *= (100 - discountPercent) / 100;
+      if (productState[i]._id === couponState[j].product?._id) { // co ma giam gia ko
+        const currentDate = new Date();
+        const startDate = new Date(couponState[j].start);
+        const endDate = new Date(couponState[j].expiry);
+        if (currentDate >= startDate && currentDate <= endDate) {// ma con han su dung ko
+          discountPercent = couponState[j].discount;
+          price *= (100 - discountPercent) / 100;
+        }
         break;
       }
     }

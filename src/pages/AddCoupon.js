@@ -47,7 +47,7 @@ const AddCoupon = () => {
     }
     if (isSuccess && updatedCoupon) {
       toast.success("Cập nhật thành công Mã giảm giá!");
-      navigate("/admin/coupon-list");
+      navigate("/admin/list-product");
     }
     else
       if (isError && productName && couponDiscount && couponExpiry) {
