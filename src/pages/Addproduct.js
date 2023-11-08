@@ -66,14 +66,18 @@ const Addproduct = () => {
   } = newProduct;
   const { productImages } = newProduct; // mang anh minh load trong db ra neu có getProductId, ko co thi []
   const imgState = useSelector((state) => state.upload.images); //mang anh minh up len, ko co thi []
-  // const deletedImageState = useSelector((state) => state.upload.deletedImage); // anh da xoa tren dam may
+
+  const deletedImageState = useSelector((state) => state.upload.deletedImage); // anh da xoa tren dam may
+
+  console.log("deletedImageState", deletedImageState?.deletedImageId);
 
   useEffect(() => {
     if (isSuccess && createdProduct) {
-      toast.success("Product Added Successfully!")
+      setTotalImagesSaveDB([]);
+      toast.success("Thêm thành công sản phẩm!")
     }
     if (isSuccess && updatedProduct) {
-      toast.success("Product Updated Successfully!");
+      toast.success("Cập nhật thành công sản phẩm!");
       navigate("/admin/list-product");
     }
     else
@@ -83,12 +87,12 @@ const Addproduct = () => {
   }, [isSuccess, isError, isLoading,])
 
 
-  // XU LY UPLOAD ANH
-  const [totalImagesSaveDB, setTotalImagesSaveDBd] = useState([]);
+  // XU LY ADD ANH
+  const [totalImagesSaveDB, setTotalImagesSaveDB] = useState([]); // Tong hinh de luu vao db
 
   const [imagesUploaded, setImagesUploaded] = useState([]);
   useEffect(() => {
-    const img = [];
+    const img = []; // Sau khi da xu ly anh minh up len:
     imgState.forEach((i) => {
       img.push({
         public_id: i.public_id,
@@ -96,12 +100,12 @@ const Addproduct = () => {
       })
     })
     setImagesUploaded(img);
-    setTotalImagesSaveDBd([...totalImagesSaveDB, ...img])
+    setTotalImagesSaveDB([...totalImagesSaveDB, ...img])
   }, [imgState])
 
   const [imagesProducted, setImagesProducted] = useState([]);
   useEffect(() => {
-    const img = [];
+    const img = []; // Sau khi da xu ly hinh load trong DB ra khi co getProductId
     productImages.forEach((i) => {
       img.push({
         public_id: i.public_id,
@@ -109,7 +113,7 @@ const Addproduct = () => {
       })
     })
     setImagesProducted(img);
-    setTotalImagesSaveDBd([...totalImagesSaveDB, ...img])
+    setTotalImagesSaveDB([...totalImagesSaveDB, ...img])
   }, [productImages])
 
   console.log("Mang hinh load trong DB ra khi co getProductId: ", productImages);
@@ -120,24 +124,11 @@ const Addproduct = () => {
 
 
   // XU LY DELETE ANH 
-  const handleDeleteImage = (id) => {
-    console.log("Da xoa anh: ", id);
-    // dispatch(delImg(id));
+  useEffect(() => {
+    const imagesArr = totalImagesSaveDB.filter(item => item?.public_id !== deletedImageState?.deletedImageId);
+    setTotalImagesSaveDB(imagesArr); // Mang hinh sau khi xoa:
+  }, [deletedImageState?.deletedImageId])
 
-    // setTimeout(() => {
-    //   console.log("deletedImageState", deletedImageState);
-    //   if (deletedImageState === "Deleted") {
-    //     imagesArr = imagesArr.filter(item => item?.public_id !== id);
-    //     console.log("Mang hinh sau khi xoa: ", imagesArr);
-    //     if (imgState?.length !== 0) {
-    //       imgState = imagesArr;
-    //     }
-    //     else if (imgState?.length === 0 && productImages?.length !== 0) {
-    //       productImages = imagesArr;
-    //     }
-    //   }
-    // }, 10000)
-  }
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -168,7 +159,7 @@ const Addproduct = () => {
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());
-          dispatch(resetStateUpload())
+          dispatch(resetStateUpload());
           dispatch(getBrands());
           dispatch(getCategories());
           dispatch(getColors());
@@ -383,7 +374,7 @@ const Addproduct = () => {
                 <div className='position-relative' key={j}>
                   <button
                     type='button'
-                    onClick={() => handleDeleteImage(i.public_id)}
+                    onClick={() => dispatch(delImg(i.public_id))}
                     className='btn-close position-absolute'
                     style={{ top: "10px", right: "10px" }}
                   >
