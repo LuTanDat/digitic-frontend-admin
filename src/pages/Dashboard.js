@@ -62,8 +62,23 @@ const Dashboard = () => {
     dispatch(getYearlyData(config3));
   }, [])
 
+  const data1 = [];
+  for (let i = 0; i < orderState?.length; i++) {
+    if (i < 10) {
+      data1.push({
+        key: i + 1,
+        name: orderState[i]?.user?.firstName + orderState[i]?.user?.lastName,
+        product: orderState[i]?.orderItems?.length,
+        price: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+        dprice: (orderState[i]?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+        status: orderState[i]?.orderStatus,
+      });
+    }
+  }
+
   useEffect(() => {
-    let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    // let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let monthNames = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'];
     let data = [];
     let monthlyOrderCount = [];
     for (let index = 0; index < monthlyDataState?.length; index++) {
@@ -72,19 +87,6 @@ const Dashboard = () => {
       monthlyOrderCount.push({ type: monthNames[element?._id?.month - 1], sales: element?.count })
     }
 
-    const data1 = [];
-    for (let i = 0; i < orderState?.length; i++) {
-      if (i < 10) {
-        data1.push({
-          key: i + 1,
-          name: orderState[i]?.user?.firstName + orderState[i]?.user?.lastName,
-          product: orderState[i]?.orderItems?.length,
-          price: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
-          dprice: (orderState[i]?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
-          status: orderState[i]?.orderStatus,
-        });
-      }
-    }
     setOrderData(data1);
     setDataMonthly(data);
     setDataMonthlySales(monthlyOrderCount);
@@ -110,6 +112,11 @@ const Dashboard = () => {
       label: {
         autoHide: true,
         autoRotate: false,
+      },
+    },
+    yAxis: {
+      label: {
+        formatter: (v) => (Number(v).toLocaleString("vi-VN", { style: "currency", currency: "VND" })),
       },
     },
     meta: {
@@ -160,7 +167,7 @@ const Dashboard = () => {
         <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3'>
           <div>
             <p className='desc'>Tổng thu nhập</p>
-            <h4 className='mb-0 sub-title'>{yearlyDataState && (yearlyDataState[0]?.amount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</h4>
+            <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? (yearlyDataState[0]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
           </div>
           <div className='d-flex flex-column align-items-end'>
             <p className='mb-0 desc'>Thu nhập trong 1 năm qua</p>
@@ -169,7 +176,7 @@ const Dashboard = () => {
         <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3'>
           <div>
             <p className='desc'>Tổng đơn hàng</p>
-            <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState[0]?.count}</h4>
+            <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? yearlyDataState[0]?.count : 0}</h4>
           </div>
           <div className='d-flex flex-column align-items-end'>
             <p className='mb-0 desc'>Đơn hàng trong 1 năm qua</p>
