@@ -219,7 +219,7 @@ const Orders = () => {
   return (
     <div>
       <h3 className='mb-3 title'>Đơn hàng</h3>
-      <div className='mb-4' style={{ height: 200, width: 200 }}>
+      <div className='mb-4' style={{ height: 240, width: 480 }}>
         <PieChartComponent data={orderState} /> {/*truyen vao danh sach don hang */}
       </div>
       <div>

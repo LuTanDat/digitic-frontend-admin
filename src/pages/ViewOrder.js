@@ -61,7 +61,7 @@ const ViewOrder = () => {
             className='img-fluid mx-auto'
             alt='product image'
             width={160}
-            style={{ width: 96, height: 96 }}
+            style={{ width: 96, height: 96, display: "block", padding: "3px", border: "1px solid #ccc" }}
           />
         </div>
       ),

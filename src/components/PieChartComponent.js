@@ -1,5 +1,5 @@
 import React from 'react'
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend } from 'recharts';
 import { convertDataChart } from '../utils/chart';
 
 const PieChartComponent = (props) => {
@@ -19,6 +19,7 @@ const PieChartComponent = (props) => {
       </text>
     );
   };
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart width={400} height={400}>
@@ -36,6 +37,13 @@ const PieChartComponent = (props) => {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
+        <Legend // hien thi mau và nhan o ben phai bieu do
+          layout="vertical"
+          align="right"
+          verticalAlign="middle"
+          iconType="circle"
+          formatter={(value, entry) => `${entry.value} (${(entry.payload.percent * 100).toFixed(0)}%)`} // hien thi them %
+        />
       </PieChart>
     </ResponsiveContainer>
   );
