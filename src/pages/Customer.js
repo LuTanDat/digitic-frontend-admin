@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../features/customers/customerSlice';
 import { blockUser, unBlockUser } from '../features/auth/authSlice';
 
-
 const columns = [
   {
     title: "SNo",
@@ -64,7 +63,7 @@ const Customer = () => {
         status: (
           <>
             <select name='' defaultValue={customerstate[i]?.isBlocked} onChange={(e) => updateUserStatus(customerstate[i]?._id, e.target.value)} id='' className='form-control form-select'>
-              <option value="false">Đang hoạt động</option>
+              <option value="false">Mở</option>
               <option value="true">Khóa</option>
             </select>
           </>
@@ -81,7 +80,7 @@ const Customer = () => {
     }
   }
   return (
-    <div>
+    <div className='customer'>
       <h3 className='mb-4 title'>Khách hàng</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
