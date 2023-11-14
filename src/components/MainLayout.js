@@ -6,7 +6,6 @@ import {
   // UserOutlined,
   // VideoCameraOutlined,
 } from '@ant-design/icons';
-
 import {
   AiOutlineDashboard,
   AiOutlineShoppingCart,
@@ -25,10 +24,13 @@ import { FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { SiBrandfolder } from "react-icons/si";
 import { BiCategoryAlt, BiUserPin } from "react-icons/bi";
 import { CgMenuGridO } from "react-icons/cg";
-
 import { Layout, Menu, Button, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import logo from '../asset/images/logo.png';
+
 const { Header, Sider, Content } = Layout;
+
+
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -40,9 +42,11 @@ const MainLayout = () => {
     <Layout /*onContextMenu={(e) => e.preventDefault()}*/>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
-          <h2 className='text-white text-center fs-5 py-3 mb-0'>
-            <span className='sm-logo'>Smart</span>
-            <span className='lg-logo'>SmartDevi Homes</span>
+          <h2 className='text-white text-center mb-0'>
+            <span className='fs-5 py-3 sm-logo'>Smart</span>
+            <span className='lg-logo' style={{ lineHeight: "56px" }}>
+              <img src={logo} alt='logo' style={{ width: "100%", height: "48px", maxWidth: "180px" }} />
+            </span>
           </h2>
         </div>
         <Menu

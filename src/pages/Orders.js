@@ -14,7 +14,7 @@ const columns = [
     dataIndex: "key",
   },
   {
-    title: "Tên người nhận",
+    title: "Tên K.Hàng",
     dataIndex: "name",
   },
   {
@@ -78,7 +78,7 @@ const Orders = () => {
   for (let i = 0; i < orderState?.length; i++) {
     data1.push({
       key: i + 1,
-      name: orderState[i]?.user?.firstName,
+      name: orderState[i]?.shippingInfo?.lastName + " " + orderState[i]?.shippingInfo?.firstName,
       product: (
         <Link to={`/admin/order/${orderState[i]?._id}`}>
           View Orders
@@ -101,7 +101,8 @@ const Orders = () => {
       action: (
         <>
           <button
-            className='me-3 fs-3 text-danger bg-transparent border-0'
+            className='fs-4 bg-transparent border-0'
+            style={{ color: "blue" }}
             onClick={() => printOrder(orderState[i])}
           >
             <AiFillPrinter />
@@ -111,7 +112,7 @@ const Orders = () => {
             <BiEdit />
           </Link> */}
           <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            className='fs-4 text-danger bg-transparent border-0'
             onClick={() => showModal(orderState[i]._id)}
           >
             <AiFillDelete />
@@ -217,7 +218,7 @@ const Orders = () => {
 
 
   return (
-    <div>
+    <div className='orders'>
       <h3 className='mb-3 title'>Đơn hàng</h3>
       <div className='mb-4' style={{ height: 240, width: 480 }}>
         <PieChartComponent data={orderState} /> {/*truyen vao danh sach don hang */}
