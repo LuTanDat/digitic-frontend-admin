@@ -79,6 +79,11 @@
 }
 /*Orders end*/
 
+/*viewOrder start */
+.viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2){
+  width: auto;
+}
+/*viewOrder end */
 
 
 /* ----------------------------------RESPONSIVE ---------------------------------------------------*/
@@ -134,6 +139,22 @@
   .orders .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(6){
     display: none;
   }
+
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(1),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(1),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(4),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(4),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(6),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(6){
+    display: none;
+  }
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding: 2px;
+  }
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
 }
 /*RESPONSIVE PARENT END */
 
@@ -162,6 +183,10 @@
   .orders .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
     padding-top: 16px;
     padding-bottom: 16px;
+  }
+
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2){
+    width: 18%;
   }
 }
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -197,6 +222,16 @@
   .orders .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(7) {
     width: 26%;
   }
+
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(4),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(4),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(6),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(6){
+    display: none;
+  }
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2) {
+    width: 25%;
+  }
 }
 @media(min-width: 576px) and (max-width: 767.98px) {
   .customer .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:last-child {
@@ -208,6 +243,10 @@
 
   .orders .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(7) {
     width: 27%;
+  }
+
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2) {
+    width: 29%;
   }
 }
 @media(max-width: 575.98px) {
@@ -235,6 +274,13 @@
   }
   .orders .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(7) {
     width: 48%;
+  }
+
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(2),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(5),
+  .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(5){
+    display: none;
   }
 }
 /*RESPONSIVE CHILDREN END*/

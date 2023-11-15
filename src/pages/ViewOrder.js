@@ -76,7 +76,7 @@ const ViewOrder = () => {
     navigate(-1);
   }
   return (
-    <div>
+    <div className='viewOrder'>
       <div className='d-flex justify-content-between align-items-center'>
         <h3 className='mb-4 title'>Chi tiết đơn hàng</h3>
         <button className='bg-transparent border-0 fs-6 mb-0 d-flex align-items-center gap-1' onClick={goBack}>
