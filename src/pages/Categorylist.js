@@ -51,11 +51,13 @@ const Categorylist = () => {
         <>
           <Link
             to={`/admin/category/${pCatstate[i]._id}`}
-            className='fs-3 text-danger'>
+            className='fs-4'
+            style={{ color: "rgb(47, 34, 34)" }}
+          >
             <BiEdit />
           </Link>
           <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            className='ms-1 fs-4 text-danger bg-transparent border-0'
             onClick={() => showModal(pCatstate[i]._id)}
           >
             <AiFillDelete />
@@ -72,7 +74,7 @@ const Categorylist = () => {
     }, 100);
   }
   return (
-    <div>
+    <div className='productCategories'>
       <h3 className='mb-4 title'>Danh mục Sản phẩm</h3>
       <div>
         <Table columns={columns} dataSource={data1} />

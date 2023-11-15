@@ -51,7 +51,9 @@
 .coupons .ant-table-wrapper .ant-table .ant-table-container .ant-table-content .ant-table-thead th:nth-child(2){
   width: 40%;
 }
-
+.coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:last-child{
+  display: flex;
+}
 /*Coupons End here*/
 
 
@@ -118,6 +120,23 @@
 }
 /*Enquiries end*/
 
+/*Colors start*/
+.colors .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:last-child{
+  display: flex;
+}
+/*colors end*/
+
+/*productCategories start*/
+.productCategories .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:last-child{
+  display: flex;
+}
+/*productCategories end*/
+
+/*brands start*/
+.brands .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:last-child{
+  display: flex;
+}
+/*brands end*/
 
 
 
@@ -226,6 +245,18 @@
     padding-top: 16px;
     padding-bottom: 16px;
   }
+
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(1),
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(1){
+    display: none;
+  }
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding: 2px;
+  }
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
 }
 /*RESPONSIVE PARENT END */
 
@@ -258,6 +289,15 @@
 
   .viewOrder .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2){
     width: 18%;
+  }
+
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell,
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell {
+    padding: 8px;
+  }
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 }
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -317,6 +357,15 @@
     padding: 4px;
   }
   .enquiries .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell,
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell {
+    padding: 2px;
+  }
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
     padding-top: 16px;
     padding-bottom: 16px;
   }
@@ -406,6 +455,29 @@
   .enquiries .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(4),
   .enquiries .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(4){
     display: none;
+  }
+
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(4),
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(4),
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(5),
+  .coupons .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(5){
+    display: none;
+  }
+
+  .productCategories .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding: 2px;
+  }
+  .productCategories .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .brands .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding: 8px;
+  }
+  .brands .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 }
 /*RESPONSIVE CHILDREN END*/

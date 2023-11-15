@@ -67,12 +67,15 @@ const Couponlist = () => {
       expiry: new Date(couponState[i].expiry).toLocaleString(),
       action: (
         <>
-          <Link to={`/admin/coupon/${couponState[i].product?._id}`}
-            className='fs-3 text-danger'>
+          <Link
+            to={`/admin/coupon/${couponState[i].product?._id}`}
+            className='fs-4'
+            style={{ color: "rgb(47, 34, 34)" }}
+          >
             <BiEdit />
           </Link>
           <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            className='ms-1 fs-4 text-danger bg-transparent border-0'
             onClick={() => showModal(couponState[i]?._id)}
           >
             <AiFillDelete />
@@ -89,11 +92,11 @@ const Couponlist = () => {
     }, 100);
   }
   return (
-    <div>
+    <div className='coupons'>
       <h3 className='mb-4 title'>Mã giảm giá</h3>
-      <div className='coupons'>
+      <di4>
         <Table columns={columns} dataSource={data1} />
-      </div>
+      </di4>
       <CustomModal
         hideModal={hideModal}
         open={open}

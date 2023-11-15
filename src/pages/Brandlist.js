@@ -49,12 +49,15 @@ const Brandlist = () => {
       name: brandState[i].title,
       action: (
         <>
-          <Link to={`/admin/brand/${brandState[i]._id}`}
-            className='fs-3 text-danger'>
+          <Link
+            to={`/admin/brand/${brandState[i]._id}`}
+            className='fs-4'
+            style={{ color: "rgb(47, 34, 34)" }}
+          >
             <BiEdit />
           </Link>
           <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            className='ms-1 fs-4 text-danger bg-transparent border-0'
             onClick={() => showModal(brandState[i]._id)}
           >
             <AiFillDelete />
@@ -71,7 +74,7 @@ const Brandlist = () => {
     }, 100);
   }
   return (
-    <div>
+    <div className='brands'>
       <h3 className='mb-4 title'>Thương hiệu</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
