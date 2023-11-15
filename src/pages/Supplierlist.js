@@ -64,12 +64,15 @@ const Supplierlist = () => {
       address: supplierState[i].address,
       action: (
         <>
-          <Link to={`/admin/supplier/${supplierState[i]._id}`}
-            className='fs-3 text-danger'>
+          <Link
+            to={`/admin/supplier/${supplierState[i]._id}`}
+            className='fs-4'
+            style={{ color: "rgb(47, 34, 34)" }}
+          >
             <BiEdit />
           </Link>
           <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            className='fs-4 text-danger bg-transparent border-0'
             onClick={() => showModal(supplierState[i]._id)}
           >
             <AiFillDelete />
@@ -86,7 +89,7 @@ const Supplierlist = () => {
     }, 100);
   }
   return (
-    <div>
+    <div className='suppliers'>
       <h3 className='mb-4 title'>Nhà cung cấp</h3>
       <div>
         <Table columns={columns} dataSource={data1} />

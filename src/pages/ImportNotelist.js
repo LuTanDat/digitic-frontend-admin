@@ -65,26 +65,32 @@ const ImportNotelist = () => {
       nameSupplier: importNoteState[i].nameSupplier?.name,
       brand: importNoteState[i].brand,
       quantity: importNoteState[i].quantity,
-      price: importNoteState[i].price,
+      price: (importNoteState[i].price).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
       date: new Date(importNoteState[i].createdAt).toLocaleString(),
       action: (
         <>
           <button
-            className='me-3 fs-3 text-danger bg-transparent border-0'
+            className='fs-3 bg-transparent border-0'
+            style={{ color: "blue" }}
             onClick={() => printOrder(importNoteState[i])}
           >
             <AiFillPrinter />
           </button>
-          <Link to={`/admin/importNote/${importNoteState[i]._id}`}
-            className='fs-3 text-danger'>
-            <BiEdit />
-          </Link>
-          <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
-            onClick={() => showModal(importNoteState[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
+          <div className='btn-update-action'>
+            <Link
+              to={`/admin/importNote/${importNoteState[i]._id}`}
+              className='fs-3'
+              style={{ color: "rgb(47, 34, 34)" }}
+            >
+              <BiEdit />
+            </Link>
+            <button
+              className='fs-3 text-danger bg-transparent border-0'
+              onClick={() => showModal(importNoteState[i]._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </div>
         </>
       )
     });
@@ -168,7 +174,7 @@ const ImportNotelist = () => {
   };
 
   return (
-    <div>
+    <div className='importNotes'>
       <h3 className='mb-4 title'>Phiếu nhập</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
