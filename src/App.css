@@ -292,6 +292,12 @@
     display: none;
   }
 
+  .dashboard .total-chart-mobile{
+    display: block !important;
+  }
+  .dashboard .total-chart-mobile > div{
+    width: 100% !important;
+  }
 }
 /*RESPONSIVE PARENT END */
 
@@ -429,6 +435,20 @@
   .products .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2) {
     width: 25%;
   }
+
+  .dashboard .total-chart-mobile{
+    display: block !important;
+  }
+  .dashboard .total-chart-mobile > div{
+    width: 100% !important;
+  }
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell {
+    padding: 8px;
+  }
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
 }
 @media(min-width: 576px) and (max-width: 767.98px) {
   .customer .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:last-child {
@@ -455,6 +475,14 @@
   }  
   .products .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(3) {
     width: 30%;
+  }
+
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell {
+    padding: 4px;
+  }
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 }
 @media(max-width: 575.98px) {
@@ -557,6 +585,29 @@
   }
   .products .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(2) {
     width: 20%;
+  }
+
+  .dashboard .total-revenue-mobile{
+    display: block !important;
+  }
+  .dashboard .total-revenue-mobile > div{
+    padding: 8px !important;
+  }
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(1),
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(1),
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(3),
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(3),
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(4),
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(4){
+    display: none;
+  }
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding: 2px;
+    text-align: center;
+  }
+  .dashboard .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell{
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 }
 /*RESPONSIVE CHILDREN END*/

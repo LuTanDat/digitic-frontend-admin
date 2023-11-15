@@ -161,29 +161,29 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div className='dashboard'>
       <h3 className='mb-4 title'>Dashboard</h3>
-      <div className='d-flex justify-content-between align-items-center gap-3'>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3'>
+      <div className='d-flex justify-content-between align-items-center gap-3 total-revenue-mobile'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2'>
           <div>
-            <p className='desc'>Tổng thu nhập</p>
+            <p className='desc'>Tổng thu nhập trong 1 năm qua</p>
             <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? (yearlyDataState[0]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
           </div>
-          <div className='d-flex flex-column align-items-end'>
+          {/* <div className='d-flex flex-column align-items-end'>
             <p className='mb-0 desc'>Thu nhập trong 1 năm qua</p>
-          </div>
+          </div> */}
         </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2'>
           <div>
-            <p className='desc'>Tổng đơn hàng</p>
+            <p className='desc'>Tổng đơn hàng trong 1 năm qua</p>
             <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? yearlyDataState[0]?.count : 0}</h4>
           </div>
-          <div className='d-flex flex-column align-items-end'>
+          {/* <div className='d-flex flex-column align-items-end'>
             <p className='mb-0 desc'>Đơn hàng trong 1 năm qua</p>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className='d-flex justify-content-between gap-3'>
+      <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
           <h3 className='mb-5 title'>Thống kê thu nhập</h3>
           <div>
