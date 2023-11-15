@@ -152,7 +152,7 @@ const Productlist = () => {
     }, 100);
   }
   return (
-    <div>
+    <div className="products">
       <h3 className="mb-4 title">Sản phẩm</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
