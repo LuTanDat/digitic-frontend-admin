@@ -103,6 +103,16 @@
 }
 /*importNotes end */
 
+/*blog start*/
+.bloglist .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:last-child{
+  display: flex;
+}
+.blogcatlist .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:last-child{
+  display: flex;
+}
+/*blog end*/
+
+
 
 
 /* ----------------------------------RESPONSIVE ---------------------------------------------------*/
@@ -352,6 +362,13 @@
   }
   .importNotes .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:last-child{
     display: block;
+  }
+
+  .bloglist .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(1),
+  .bloglist .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(1),
+  .blogcatlist .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-thead .ant-table-cell:nth-child(1),
+  .blogcatlist .ant-table-wrapper .ant-table-container .ant-table-content .ant-table-tbody .ant-table-row .ant-table-cell:nth-child(1){
+    display: none;
   }
 }
 /*RESPONSIVE CHILDREN END*/

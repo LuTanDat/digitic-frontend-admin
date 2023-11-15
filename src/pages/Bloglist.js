@@ -55,12 +55,15 @@ const Bloglist = () => {
       category: blogState[i].category,
       action: (
         <>
-          <Link to={`/admin/blog/${blogState[i]._id}`}
-            className='fs-3 text-danger'>
+          <Link
+            to={`/admin/blog/${blogState[i]._id}`}
+            className='fs-3'
+            style={{ color: "rgb(47, 34, 34)" }}
+          >
             <BiEdit />
           </Link>
           <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            className='fs-3 text-danger bg-transparent border-0'
             onClick={() => showModal(blogState[i]._id)}
           >
             <AiFillDelete />
@@ -77,7 +80,7 @@ const Bloglist = () => {
     }, 100);
   }
   return (
-    <div>
+    <div className='bloglist'>
       <h3 className='mb-4 title'>Bài viết</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
