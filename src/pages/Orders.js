@@ -93,7 +93,7 @@ const Orders = () => {
             <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
             <option value="Đang xử lý">Đang xử lý</option>
             <option value="Đang giao">Đang giao</option>
-            <option value="Giao thành công">Giao thành công</option>
+            <option value="Đã nhận hàng">Đã nhận hàng</option>
             <option value="Đã Hủy" disabled>Hủy</option>
           </select>
         </>
