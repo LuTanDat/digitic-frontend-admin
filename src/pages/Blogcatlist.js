@@ -51,13 +51,13 @@ const Blogcatlist = () => {
         <>
           <Link
             to={`/admin/blog-category/${bCatState[i]._id}`}
-            className='fs-3'
+            className='fs-4'
             style={{ color: "rgb(47, 34, 34)" }}
           >
             <BiEdit />
           </Link>
           <button
-            className='fs-3 text-danger bg-transparent border-0'
+            className='fs-4 text-danger bg-transparent border-0'
             onClick={() => showModal(bCatState[i]._id)}
           >
             <AiFillDelete />

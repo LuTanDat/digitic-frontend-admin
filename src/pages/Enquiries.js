@@ -77,12 +77,15 @@ const Enquiries = () => {
       ),
       action: (
         <>
-          <Link to={`/admin/enquiries/${enqState[i]._id}`}
-            className='ms-3 fs-3 text-danger'>
+          <Link
+            to={`/admin/enquiries/${enqState[i]._id}`}
+            className='fs-4'
+            style={{ color: "green" }}
+          >
             <AiOutlineEye />
           </Link>
           <button
-            className='ms-3 fs-3 text-danger bg-transparent border-0'
+            className='fs-4 text-danger bg-transparent border-0'
             onClick={() => showModal(enqState[i]._id)}
           >
             <AiFillDelete />
@@ -104,7 +107,7 @@ const Enquiries = () => {
     }, 100);
   }
   return (
-    <div>
+    <div className='enquiries'>
       <h3 className='mb-4 title'>Góp ý</h3>
       <div>
         <Table columns={columns} dataSource={data1} />

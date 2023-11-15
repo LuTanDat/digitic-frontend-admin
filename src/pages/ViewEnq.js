@@ -30,12 +30,12 @@ const ViewEnq = () => {
   return (
     <div>
       <div className='d-flex justify-content-between align-items-center'>
-        <h3 className='mb-4 title'>Xem chi tiết Góp ý</h3>
+        <h3 className='title'>Xem chi tiết Góp ý</h3>
         <button className='bg-transparent border-0 fs-6 mb-0 d-flex align-items-center gap-1' onClick={goBack}>
           <BiArrowBack className='fs-5' /> Trở lại
         </button>
       </div>
-      <div className='mt-5 bg-white p-4 rounded-3 d-flex flex-column gap-3'>
+      <div className='mt-1 bg-white p-4 rounded-3 d-flex flex-column gap-3'>
         <div className='d-flex align-items-center gap-3'>
           <h6 className='mb-0'>Tên: </h6>
           <p className='mb-0'>{enqName}</p>
