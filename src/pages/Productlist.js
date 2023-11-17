@@ -233,11 +233,11 @@ const Productlist = () => {
     dispatch(getAllCoupons());
 
   }, []);
-  const productState = useSelector((state) => state.product?.products);
+  const productState = useSelector((state) => state.product?.products?.product);
   const couponState = useSelector((state) => state.coupon?.coupons);
   const data1 = [];
 
-  for (let i = 0; i < productState.length; i++) {
+  for (let i = 0; i < productState?.length; i++) {
     let price = productState[i].price;
     let discountPercent = 0;
     for (let j = 0; j < couponState.length; j++) {
