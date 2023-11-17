@@ -81,7 +81,7 @@ const Orders = () => {
       name: orderState[i]?.shippingInfo?.lastName + " " + orderState[i]?.shippingInfo?.firstName,
       product: (
         <Link to={`/admin/order/${orderState[i]?._id}`}>
-          View Orders
+          Xem chi tiết
         </Link>
       ),
       payment: orderState[i]?.paymentMethod,
