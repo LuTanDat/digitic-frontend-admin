@@ -7,33 +7,34 @@ import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
 import CustomModal from '../components/CustomModal';
 
-const columns = [
-  {
-    title: "SNo",
-    dataIndex: "key",
-  },
-  {
-    title: "Tên",
-    dataIndex: "name",
-    sorter: (a, b) => a.name.length - b.name.length,
-  },
-  {
-    title: "Hành động",
-    dataIndex: "action",
-  },
-];
-
 const Brandlist = () => {
   const [open, setOpen] = useState(false);
   const [brandId, setBrandId] = useState("");
+
   const showModal = (e) => {
     setOpen(true);
     setBrandId(e);
   };
-
   const hideModal = () => {
     setOpen(false);
   };
+
+
+  const columns = [
+    {
+      title: "SNo",
+      dataIndex: "key",
+    },
+    {
+      title: "Tên",
+      dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+    },
+    {
+      title: "Hành động",
+      dataIndex: "action",
+    },
+  ];
 
   const dispatch = useDispatch();
   useEffect(() => {
