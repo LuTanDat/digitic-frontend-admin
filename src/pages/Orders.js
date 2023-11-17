@@ -190,8 +190,7 @@ const Orders = () => {
                 <p>Tên: ${order?.shippingInfo?.lastName} ${order?.shippingInfo?.firstName}</p>
                 <p>SĐT: ${order?.shippingInfo?.mobile}</p>
                 <p>Địa chỉ: ${order?.shippingInfo?.address}</p>
-                <p>Email: ${order?.user?.email}</p>
-                
+                <p>Email: ${order?.user?.email}</p> 
             </div>
             <div style="flex: 1;">
                 <h4>Thông tin hóa đơn:</h4>
