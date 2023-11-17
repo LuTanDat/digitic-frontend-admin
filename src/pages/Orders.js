@@ -85,7 +85,7 @@ const Orders = () => {
         </Link>
       ),
       payment: orderState[i]?.paymentMethod,
-      amount: (orderState[i]?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+      amount: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
       date: new Date(orderState[i]?.createdAt).toLocaleString(),
       status: (
         <>
@@ -188,8 +188,10 @@ const Orders = () => {
             <div style="flex: 1;">
                 <h4>Thông tin khách hàng:</h4>
                 <p>Tên: ${order?.shippingInfo?.lastName} ${order?.shippingInfo?.firstName}</p>
+                <p>SĐT: ${order?.shippingInfo?.mobile}</p>
                 <p>Địa chỉ: ${order?.shippingInfo?.address}</p>
                 <p>Email: ${order?.user?.email}</p>
+                
             </div>
             <div style="flex: 1;">
                 <h4>Thông tin hóa đơn:</h4>
@@ -208,7 +210,7 @@ const Orders = () => {
             ${orderItemsHtmlString}
         </table>
         <div style="margin-top: 20px; text-align: right;">
-            <b>Tổng cộng: ${(order?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</b>
+            <b>Tổng cộng: ${(order?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</b>
         </div>
         <div>Cảm ơn quý khách đã tin tưởng và ủng hộ. Xin cảm ơn!</div>
     </div>
