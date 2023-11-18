@@ -46,6 +46,8 @@ const columns = [
 const Orders = () => {
   const [open, setOpen] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [selectedNavItem, setSelectedNavItem] = useState(null);
+
   const showModal = (e) => {
     setOpen(true);
     setOrderId(e);
@@ -76,50 +78,100 @@ const Orders = () => {
   const orderState = useSelector((state) => state?.auth?.orders?.orders);
   const data1 = [];
   for (let i = 0; i < orderState?.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: orderState[i]?.shippingInfo?.lastName + " " + orderState[i]?.shippingInfo?.firstName,
-      product: (
-        <Link to={`/admin/order/${orderState[i]?._id}`}>
-          Xem chi tiết
-        </Link>
-      ),
-      payment: orderState[i]?.paymentMethod,
-      amount: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
-      date: new Date(orderState[i]?.createdAt).toLocaleString(),
-      status: (
-        <>
-          <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
-            <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
-            <option value="Đang xử lý">Đang xử lý</option>
-            <option value="Đang giao">Đang giao</option>
-            <option value="Đã nhận hàng">Đã nhận hàng</option>
-            <option value="Đã Hủy" disabled>Đã Hủy</option>
-          </select>
-        </>
-      ),
-      action: (
-        <>
-          <button
-            className='fs-4 bg-transparent border-0'
-            style={{ color: "blue" }}
-            onClick={() => printOrder(orderState[i])}
-          >
-            <AiFillPrinter />
-          </button>
-          {/* <Link to={`/admin/order/${orderState[i]._id}`}
+    if (selectedNavItem !== null && orderState[i]?.orderStatus === selectedNavItem) {
+      data1.push({
+        key: i + 1,
+        name: orderState[i]?.shippingInfo?.lastName + " " + orderState[i]?.shippingInfo?.firstName,
+        product: (
+          <Link to={`/admin/order/${orderState[i]?._id}`}>
+            Xem chi tiết
+          </Link>
+        ),
+        payment: orderState[i]?.paymentMethod,
+        amount: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+        date: new Date(orderState[i]?.createdAt).toLocaleString(),
+        status: (
+          <>
+            <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
+              <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
+              <option value="Đang xử lý">Đang xử lý</option>
+              <option value="Đang giao">Đang giao</option>
+              <option value="Đã nhận hàng">Đã nhận hàng</option>
+              <option value="Đã Hủy" disabled>Đã Hủy</option>
+            </select>
+          </>
+        ),
+        action: (
+          <>
+            <button
+              className='fs-4 bg-transparent border-0'
+              style={{ color: "blue" }}
+              onClick={() => printOrder(orderState[i])}
+            >
+              <AiFillPrinter />
+            </button>
+            {/* <Link to={`/admin/order/${orderState[i]._id}`}
+              className='fs-3 text-danger'>
+              <BiEdit />
+            </Link> */}
+            <button
+              className='fs-4 text-danger bg-transparent border-0'
+              onClick={() => showModal(orderState[i]._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </>
+        )
+      });
+    }
+    else
+      if (selectedNavItem === null) {
+        data1.push({
+          key: i + 1,
+          name: orderState[i]?.shippingInfo?.lastName + " " + orderState[i]?.shippingInfo?.firstName,
+          product: (
+            <Link to={`/admin/order/${orderState[i]?._id}`}>
+              Xem chi tiết
+            </Link>
+          ),
+          payment: orderState[i]?.paymentMethod,
+          amount: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+          date: new Date(orderState[i]?.createdAt).toLocaleString(),
+          status: (
+            <>
+              <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
+                <option value="Đã đặt hàng">Đã đặt hàng</option>
+                <option value="Đang xử lý">Đang xử lý</option>
+                <option value="Đang giao">Đang giao</option>
+                <option value="Đã nhận hàng">Đã nhận hàng</option>
+                <option value="Đã Hủy" disabled>Đã Hủy</option>
+              </select>
+            </>
+          ),
+          action: (
+            <>
+              <button
+                className='fs-4 bg-transparent border-0'
+                style={{ color: "blue" }}
+                onClick={() => printOrder(orderState[i])}
+              >
+                <AiFillPrinter />
+              </button>
+              {/* <Link to={`/admin/order/${orderState[i]._id}`}
             className='fs-3 text-danger'>
             <BiEdit />
           </Link> */}
-          <button
-            className='fs-4 text-danger bg-transparent border-0'
-            onClick={() => showModal(orderState[i]._id)}
-          >
-            <AiFillDelete />
-          </button>
-        </>
-      )
-    });
+              <button
+                className='fs-4 text-danger bg-transparent border-0'
+                onClick={() => showModal(orderState[i]._id)}
+              >
+                <AiFillDelete />
+              </button>
+            </>
+          )
+        });
+      }
+
   }
   const updateOrderStatus = (a, b) => {
     dispatch(updateAOrder({ id: a, status: b }))
@@ -221,8 +273,45 @@ const Orders = () => {
   return (
     <div className='orders'>
       <h3 className='mb-3 title'>Đơn hàng</h3>
-      <div className='mb-4' style={{ height: 240, width: 480 }}>
+      <div style={{ height: 240, width: 480 }}>
         <PieChartComponent data={orderState} /> {/*truyen vao danh sach don hang */}
+      </div>
+      <div className="btn-group my-4" role="group" aria-label="Basic radio toggle button group">
+        <button type="button"
+          className={`btn btn-outline-primary ${selectedNavItem === null ? "active" : ""}`}
+          onClick={() => setSelectedNavItem(null)}
+        >
+          Tất Cả
+        </button>
+        <button type="button"
+          className={`btn btn-outline-primary ${selectedNavItem === "Đã đặt hàng" ? "active" : ""}`}
+          onClick={() => setSelectedNavItem("Đã đặt hàng")}
+        >
+          Đã Đặt Hàng
+        </button>
+        <button type="button"
+          className={`btn btn-outline-primary ${selectedNavItem === "Đang xử lý" ? "active" : ""}`}
+          onClick={() => setSelectedNavItem("Đang xử lý")}
+        >
+          Đang Xử Lý
+        </button>
+        <button type="button"
+          className={`btn btn-outline-primary ${selectedNavItem === "Đang giao" ? "active" : ""}`}
+          onClick={() => setSelectedNavItem("Đang giao")}
+        >
+          Đang Giao</button>
+        <button type="button"
+          className={`btn btn-outline-primary ${selectedNavItem === "Đã nhận hàng" ? "active" : ""}`}
+          onClick={() => setSelectedNavItem("Đã nhận hàng")}
+        >
+          Đã Nhận Hàng
+        </button>
+        <button type="button"
+          className={`btn btn-outline-primary ${selectedNavItem === "Đã Hủy" ? "active" : ""}`}
+          onClick={() => setSelectedNavItem("Đã Hủy")}
+        >
+          Đã Hủy
+        </button>
       </div>
       <div>
         <Table columns={columns} dataSource={data1} />
