@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
@@ -70,15 +71,18 @@ const Orders = () => {
   };
 
   const dispatch = useDispatch();
+
+  const orderState = useSelector((state) => state?.auth?.orders?.orders);
+  const updatedOrderState = useSelector((state) => state?.auth?.updatedOrder);
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getOrders(config3));
-  }, [])
+  }, [updatedOrderState])
 
-  const orderState = useSelector((state) => state?.auth?.orders?.orders);
+
   const data1 = [];
   for (let i = 0; i < orderState?.length; i++) {
-
     const statusSelect = orderState[i]?.orderStatus === 'Đã đặt hàng' ? (
       <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
         <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
@@ -100,7 +104,7 @@ const Orders = () => {
         <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
         <option value="Đang xử lý" disabled>Đang xử lý</option>
         <option value="Đang giao" disabled>Đang giao</option>
-        <option value="Đã nhận hàng" disabled>Đã nhận hàng</option>
+        <option value="Đã nhận hàng">Đã nhận hàng</option>
         <option value="Đã Hủy" disabled>Đã Hủy</option>
       </select>
     ) : (
