@@ -78,6 +78,41 @@ const Orders = () => {
   const orderState = useSelector((state) => state?.auth?.orders?.orders);
   const data1 = [];
   for (let i = 0; i < orderState?.length; i++) {
+
+    const statusSelect = orderState[i]?.orderStatus === 'Đã đặt hàng' ? (
+      <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
+        <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
+        <option value="Đang xử lý">Đang xử lý</option>
+        <option value="Đang giao" disabled>Đang giao</option>
+        <option value="Đã nhận hàng" disabled>Đã nhận hàng</option>
+        <option value="Đã Hủy" disabled>Đã Hủy</option>
+      </select>
+    ) : orderState[i]?.orderStatus === 'Đang xử lý' ? (
+      <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
+        <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
+        <option value="Đang xử lý" disabled>Đang xử lý</option>
+        <option value="Đang giao">Đang giao</option>
+        <option value="Đã nhận hàng" disabled>Đã nhận hàng</option>
+        <option value="Đã Hủy" disabled>Đã Hủy</option>
+      </select>
+    ) : orderState[i]?.orderStatus === 'Đang giao' ? (
+      <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
+        <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
+        <option value="Đang xử lý" disabled>Đang xử lý</option>
+        <option value="Đang giao" disabled>Đang giao</option>
+        <option value="Đã nhận hàng" disabled>Đã nhận hàng</option>
+        <option value="Đã Hủy" disabled>Đã Hủy</option>
+      </select>
+    ) : (
+      <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select' disabled>
+        <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
+        <option value="Đang xử lý" disabled>Đang xử lý</option>
+        <option value="Đang giao" disabled>Đang giao</option>
+        <option value="Đã nhận hàng" disabled>Đã nhận hàng</option>
+        <option value="Đã Hủy" disabled>Đã Hủy</option>
+      </select>
+    );
+
     if (selectedNavItem !== null && orderState[i]?.orderStatus === selectedNavItem) {
       data1.push({
         key: i + 1,
@@ -90,17 +125,18 @@ const Orders = () => {
         payment: orderState[i]?.paymentMethod,
         amount: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
         date: new Date(orderState[i]?.createdAt).toLocaleString(),
-        status: (
-          <>
-            <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
-              <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
-              <option value="Đang xử lý">Đang xử lý</option>
-              <option value="Đang giao">Đang giao</option>
-              <option value="Đã nhận hàng">Đã nhận hàng</option>
-              <option value="Đã Hủy" disabled>Đã Hủy</option>
-            </select>
-          </>
-        ),
+        // status: (
+        //   <>
+        //     <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
+        //       <option value="Đã đặt hàng">Đã đặt hàng</option>
+        //       <option value="Đang xử lý">Đang xử lý</option>
+        //       <option value="Đang giao">Đang giao</option>
+        //       <option value="Đã nhận hàng">Đã nhận hàng</option>
+        //       <option value="Đã Hủy" disabled>Đã Hủy</option>
+        //     </select>
+        //   </>
+        // ),
+        status: statusSelect,
         action: (
           <>
             <button
@@ -137,17 +173,18 @@ const Orders = () => {
           payment: orderState[i]?.paymentMethod,
           amount: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
           date: new Date(orderState[i]?.createdAt).toLocaleString(),
-          status: (
-            <>
-              <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
-                <option value="Đã đặt hàng">Đã đặt hàng</option>
-                <option value="Đang xử lý">Đang xử lý</option>
-                <option value="Đang giao">Đang giao</option>
-                <option value="Đã nhận hàng">Đã nhận hàng</option>
-                <option value="Đã Hủy" disabled>Đã Hủy</option>
-              </select>
-            </>
-          ),
+          // status: (
+          //   <>
+          //     <select name='' defaultValue={orderState[i]?.orderStatus} onChange={(e) => updateOrderStatus(orderState[i]?._id, e.target.value)} id='' className='form-control form-select'>
+          //       <option value="Đã đặt hàng">Đã đặt hàng</option>
+          //       <option value="Đang xử lý">Đang xử lý</option>
+          //       <option value="Đang giao">Đang giao</option>
+          //       <option value="Đã nhận hàng">Đã nhận hàng</option>
+          //       <option value="Đã Hủy" disabled>Đã Hủy</option>
+          //     </select>
+          //   </>
+          // ),
+          status: statusSelect,
           action: (
             <>
               <button
