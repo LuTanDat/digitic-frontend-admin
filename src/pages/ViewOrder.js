@@ -135,22 +135,24 @@ const ViewOrder = () => {
       <div className='my-3 text-center'>
         <StepOrderComponent items={itemsOrderStatus} current={orderStatus} />
       </div>
-      <div className="d-flex mb-4 justify-content-around align-items-baseline info-order-detail-mobile">
-        <div style={{ border: "1px solid #857575cc", borderRadius: "10px", padding: "15px", backgroundColor: "white", marginTop: "16px" }}>
-          <h5>Địa chỉ nhận hàng</h5>
-          <p>{`Người nhận: ${aOrderState?.shippingInfo?.lastName} ${aOrderState?.shippingInfo?.firstName}`}</p>
-          <p>{`SĐT: ${aOrderState?.shippingInfo?.mobile}`}</p>
-          <p className='mb-0'>{`Địa chỉ: ${aOrderState?.shippingInfo?.address}`}</p>
-        </div>
-        <div style={{ border: "1px solid #857575cc", borderRadius: "10px", padding: "15px", backgroundColor: "white", marginTop: "16px" }}>
-          <h5>Thông tin đơn hàng</h5>
-          <p>{`Mã đơn hàng: ${aOrderState?._id}`}</p>
-          <p>{`Ngày đặt hàng: ${new Date(aOrderState?.createdAt).toLocaleString()}`}</p>
-          <p>{`Phương thức thanh toán: ${aOrderState?.paymentMethod}`}</p>
-          <p className='mb-0'>{`Thời gian thanh toán: ${aOrderState?.paidAt ? new Date(aOrderState?.paidAt).toLocaleString() : "Chưa Thanh toán"}`}</p>
+      <div className="d-flex mb-4 justify-content-between align-items-center info-order-detail-mobile">
+        <div className='d-flex justify-content-around align-items-baseline w-75 info-order-detail-left'>
+          <div style={{ border: "1px solid #857575cc", borderRadius: "10px", padding: "15px", backgroundColor: "white", marginTop: "16px" }}>
+            <h5>Địa chỉ nhận hàng</h5>
+            <p>{`Người nhận: ${aOrderState?.shippingInfo?.lastName} ${aOrderState?.shippingInfo?.firstName}`}</p>
+            <p>{`SĐT: ${aOrderState?.shippingInfo?.mobile}`}</p>
+            <p className='mb-0'>{`Địa chỉ: ${aOrderState?.shippingInfo?.address}`}</p>
+          </div>
+          <div style={{ border: "1px solid #857575cc", borderRadius: "10px", padding: "15px", backgroundColor: "white", marginTop: "16px" }}>
+            <h5>Thông tin đơn hàng</h5>
+            <p>{`Mã đơn hàng: ${aOrderState?._id}`}</p>
+            <p>{`Ngày đặt hàng: ${new Date(aOrderState?.createdAt).toLocaleString()}`}</p>
+            <p>{`Phương thức thanh toán: ${aOrderState?.paymentMethod}`}</p>
+            <p className='mb-0'>{`Thời gian thanh toán: ${aOrderState?.paidAt ? new Date(aOrderState?.paidAt).toLocaleString() : "Chưa Thanh toán"}`}</p>
+          </div>
         </div>
 
-        <div>
+        <div className='w-25 info-order-detail-right'>
           <h4>Cập nhật trạng thái</h4>
           {
             aOrderState?.orderStatus === 'Đã đặt hàng' ? (
