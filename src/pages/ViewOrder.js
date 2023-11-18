@@ -44,12 +44,15 @@ const ViewOrder = () => {
   const location = useLocation();
   const orderId = location.pathname.split("/")[3];
 
-  useEffect(() => {
-    dispatch(getOrder(orderId));
-  }, [])
-
   const aOrderState = useSelector((state) => state?.auth?.singleOrder);
   const orderItemsState = useSelector((state) => state?.auth?.singleOrder?.orderItems);
+  const updatedOrderState = useSelector((state) => state?.auth?.updatedOrder);
+
+
+  useEffect(() => {
+    dispatch(getOrder(orderId));
+  }, [updatedOrderState])
+
 
   console.log(aOrderState);
   console.log(orderItemsState);
@@ -148,10 +151,10 @@ const ViewOrder = () => {
         </div>
 
         <div>
-          <h3>Cập nhật trạng thái</h3>
+          <h4>Cập nhật trạng thái</h4>
           {
             aOrderState?.orderStatus === 'Đã đặt hàng' ? (
-              <select name='' defaultValue={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select'>
+              <select name='' value={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select'>
                 <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
                 <option value="Đang xử lý">Đang xử lý</option>
                 <option value="Đang giao" disabled>Đang giao</option>
@@ -159,7 +162,7 @@ const ViewOrder = () => {
                 <option value="Đã Hủy" disabled>Đã Hủy</option>
               </select>
             ) : aOrderState?.orderStatus === 'Đang xử lý' ? (
-              <select name='' defaultValue={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select'>
+              <select name='' value={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select'>
                 <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
                 <option value="Đang xử lý" disabled>Đang xử lý</option>
                 <option value="Đang giao">Đang giao</option>
@@ -167,7 +170,7 @@ const ViewOrder = () => {
                 <option value="Đã Hủy" disabled>Đã Hủy</option>
               </select>
             ) : aOrderState?.orderStatus === 'Đang giao' ? (
-              <select name='' defaultValue={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select'>
+              <select name='' value={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select'>
                 <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
                 <option value="Đang xử lý" disabled>Đang xử lý</option>
                 <option value="Đang giao" disabled>Đang giao</option>
@@ -175,7 +178,7 @@ const ViewOrder = () => {
                 <option value="Đã Hủy" disabled>Đã Hủy</option>
               </select>
             ) : (
-              <select name='' defaultValue={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select' disabled>
+              <select name='' value={aOrderState?.orderStatus} onChange={(e) => updateOrderStatus(aOrderState?._id, e.target.value)} id='' className='form-control form-select' disabled>
                 <option value="Đã đặt hàng" disabled>Đã đặt hàng</option>
                 <option value="Đang xử lý" disabled>Đang xử lý</option>
                 <option value="Đang giao" disabled>Đang giao</option>

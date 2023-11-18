@@ -69,8 +69,8 @@ const Dashboard = () => {
         key: i + 1,
         name: orderState[i]?.user?.firstName + orderState[i]?.user?.lastName,
         product: orderState[i]?.orderItems?.length,
-        price: (orderState[i]?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
-        dprice: (orderState[i]?.totalPriceAfterDiscount).toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+        price: (orderState[i]?.totalPrice)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
+        dprice: (orderState[i]?.totalPriceAfterDiscount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }),
         status: orderState[i]?.orderStatus,
       });
     }
