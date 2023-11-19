@@ -241,7 +241,7 @@ const Dashboard = () => {
   return (
     <div className='dashboard'>
       <h3 className='mb-4 title'>Dashboard</h3>
-      <div className='d-flex justify-content-between align-items-center gap-3 total-revenue-mobile'>
+      <div className='d-flex flex-wrap justify-content-between align-items-center gap-3 total-revenue-mobile'>
         <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
             <p className='desc'>Tổng thu nhập trong 1 năm qua</p>
@@ -297,7 +297,7 @@ const Dashboard = () => {
         <div className='mt-4 flex-grow-1 w-50'>
           <h3 className='mb-3 mt-4 title'>Trạng thái đơn hàng</h3>
           <div>
-            <Pie {...config5} />;
+            <Pie {...config5} />
           </div>
         </div>
       </div>
