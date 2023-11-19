@@ -164,6 +164,25 @@ const Productlist = () => {
     {
       title: "Số lượng",
       dataIndex: "quantity",
+      sorter: (a, b) => a.quantity - b.quantity,
+      // Filter of antd start
+      filters: [
+        {
+          text: 'Còn hàng',
+          value: '>',
+        },
+        {
+          text: 'Hết hàng',
+          value: '=',
+        }
+      ],
+      onFilter: (value, record) => {
+        if (value === '>') {
+          return record.quantity > 0;
+        }
+        return record.quantity === 0;
+      }
+      // Filter of antd end
     },
     {
       title: "Giá",
