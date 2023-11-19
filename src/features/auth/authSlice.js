@@ -65,6 +65,17 @@ export const getCategoryRevenueData = createAsyncThunk(
   }
 );
 
+export const getOrderStatusCounts = createAsyncThunk(
+  "orders/orderStatusCounts",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.getOrderStatusCounts(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getOrders = createAsyncThunk(
   "order/get-orders",
   async (data, thunkAPI) => {
@@ -245,6 +256,23 @@ export const authSlice = createSlice({
         state.message = "success";
       })
       .addCase(getCategoryRevenueData.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+
+      .addCase(getOrderStatusCounts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrderStatusCounts.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.orderStatusCountsData = action.payload;
+        state.message = "success";
+      })
+      .addCase(getOrderStatusCounts.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;

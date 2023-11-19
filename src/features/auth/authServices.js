@@ -52,6 +52,12 @@ const getCategoryRevenueData = async (data) => {
   return response.data;
 };
 
+const getOrderStatusCounts = async (data) => {
+  const response = await axios.get(`${base_url}user/getOrderStatusCounts`, data);
+
+  return response.data;
+};
+
 const blockUser = async (id) => {
   const response = await axios.put(`${base_url}user/block-user/${id}`, null, config);
 
@@ -78,6 +84,7 @@ const authService = {
   getMonthlyOrders,
   getYearlyStats,
   getCategoryRevenueData,
+  getOrderStatusCounts,
   updateOrder,
   deleteOrder,
   blockUser,

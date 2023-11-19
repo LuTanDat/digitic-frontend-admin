@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Column, Bar } from '@ant-design/plots'; // chart column
+import { Column, Bar, Pie } from '@ant-design/plots'; // chart column
 import { Table } from "antd"; // Table
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategoryRevenueData, getMonthlyData, getOrders, getYearlyData } from '../features/auth/authSlice';
+import { getCategoryRevenueData, getMonthlyData, getOrderStatusCounts, getOrders, getYearlyData } from '../features/auth/authSlice';
 
 const columns = [
   {
@@ -46,10 +46,12 @@ const Dashboard = () => {
   const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
   const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
   const categoryRevenueDataState = useSelector((state) => state?.auth?.categoryRevenueData);
+  const orderStatusCountsState = useSelector((state) => state?.auth?.orderStatusCountsData);
 
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
   const [datacategoryRevenue, setDatacategoryRevenue] = useState([]);
+  const [orderStatusCounts, setOrderStatusCounts] = useState([]);
 
   const [orderData, setOrderData] = useState([]);
 
@@ -59,6 +61,7 @@ const Dashboard = () => {
     dispatch(getMonthlyData(config3));
     dispatch(getYearlyData(config3));
     dispatch(getCategoryRevenueData(config3));
+    dispatch(getOrderStatusCounts(config3));
   }, [])
 
   useEffect(() => {
@@ -100,6 +103,15 @@ const Dashboard = () => {
     }
     setDatacategoryRevenue(data);
   }, [categoryRevenueDataState])
+
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < orderStatusCountsState?.length; index++) {
+      const element = orderStatusCountsState[index];
+      data.push({ type: element?._id, count: element?.count })
+    }
+    setOrderStatusCounts(data);
+  }, [orderStatusCountsState])
 
 
   const config = {
@@ -175,7 +187,7 @@ const Dashboard = () => {
     yField: 'type',
     seriesField: 'type',
     legend: {
-      position: 'top-left',
+      position: 'top',
     },
     xAxis: {
       label: {
@@ -184,29 +196,69 @@ const Dashboard = () => {
     },
   };
 
+  const config5 = {
+    appendPadding: 10,
+    data: orderStatusCounts,
+    angleField: 'count',
+    colorField: 'type',
+    radius: 1,
+    innerRadius: 0.6,
+    label: {
+      type: 'inner',
+      offset: '-50%',
+      content: '{value}',
+      style: {
+        textAlign: 'center',
+        fontSize: 14,
+      },
+    },
+    interactions: [
+      {
+        type: 'element-selected',
+      },
+      {
+        type: 'element-active',
+      },
+    ],
+    statistic: {
+      title: false,
+      content: {
+        style: {
+          whiteSpace: 'pre-wrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        },
+        content: '',
+      },
+    },
+    legend: {
+      position: 'top',
+    },
+  };
+
   return (
     <div className='dashboard'>
       <h3 className='mb-4 title'>Dashboard</h3>
       <div className='d-flex justify-content-between align-items-center gap-3 total-revenue-mobile'>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
             <p className='desc'>Tổng thu nhập trong 1 năm qua</p>
             <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? (yearlyDataState[yearlyDataState.length - 1]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
           </div>
         </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
             <p className='desc'>Tổng đơn hàng trong 1 năm qua</p>
             <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? yearlyDataState[yearlyDataState.length - 1]?.count : 0}</h4>
           </div>
         </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
             <p className='desc'>Tổng thu nhập trong 1 tháng qua</p>
             <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? (monthlyDataState[monthlyDataState.length - 1]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
           </div>
         </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
             <p className='desc'>Tổng đơn hàng trong 1 tháng qua</p>
             <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? monthlyDataState[monthlyDataState.length - 1]?.count : 0}</h4>
@@ -227,10 +279,18 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className='mt-4'>
-        <h3 className='mb-3 mt-4 title'>Thống kê doanh thu sản phẩm theo danh mục</h3>
-        <div>
-          <Bar {...config4} />
+      <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
+        <div className='mt-4 flex-grow-1 w-50'>
+          <h3 className='mb-3 mt-4 title'>Thống kê doanh thu sản phẩm theo danh mục</h3>
+          <div>
+            <Bar {...config4} />
+          </div>
+        </div>
+        <div className='mt-4 flex-grow-1 w-50'>
+          <h3 className='mb-3 mt-4 title'>Trạng thái đơn hàng</h3>
+          <div>
+            <Pie {...config5} />;
+          </div>
         </div>
       </div>
       {/* <div className='mt-4'>

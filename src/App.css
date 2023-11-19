@@ -40,7 +40,7 @@
 .desc {
   font: 14px;
   font-family: Roboto !important;
-  color: var(--color-828599);
+  color: #3f00a6;
 }
 .error{
   color: red;
