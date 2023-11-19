@@ -317,7 +317,7 @@ export const authSlice = createSlice({
         state.updatedOrder = action.payload;
         state.message = "success";
         if (state.isSuccess === true) {
-          toast.success("Updated Status Order Successfully")
+          toast.success("Cập nhật thành công trạng thái đơn hàng")
         }
       })
       .addCase(updateAOrder.rejected, (state, action) => {

@@ -93,7 +93,7 @@ export const enquirySlice = createSlice({
         state.deletedEnquiry = action.payload;
         state.message = "success";
         if (state.isSuccess === true) {
-          toast.success("Deleted Enquiry Successfully");
+          toast.success("Xóa thành công góp ý");
         }
       })
       .addCase(deleteAEnquiry.rejected, (state, action) => {
@@ -132,7 +132,7 @@ export const enquirySlice = createSlice({
         state.isSuccess = true;
         state.updatedEnquiry = action.payload;
         if (state.isSuccess === true) {
-          toast.success("Updated Status Enquiry Successfully");
+          toast.success("Cập nhật thành công góp ý");
         }
       })
       .addCase(updateAEnquiry.rejected, (state, action) => {

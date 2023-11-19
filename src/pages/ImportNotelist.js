@@ -70,7 +70,7 @@ const ImportNotelist = () => {
       action: (
         <>
           <button
-            className='fs-3 bg-transparent border-0'
+            className='fs-4 bg-transparent border-0'
             style={{ color: "blue" }}
             onClick={() => printOrder(importNoteState[i])}
           >
@@ -79,13 +79,13 @@ const ImportNotelist = () => {
           <div className='btn-update-action'>
             <Link
               to={`/admin/importNote/${importNoteState[i]._id}`}
-              className='fs-3'
+              className='fs-4'
               style={{ color: "rgb(47, 34, 34)" }}
             >
               <BiEdit />
             </Link>
             <button
-              className='fs-3 text-danger bg-transparent border-0'
+              className='fs-4 text-danger bg-transparent border-0'
               onClick={() => showModal(importNoteState[i]._id)}
             >
               <AiFillDelete />
