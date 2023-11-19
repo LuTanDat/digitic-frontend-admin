@@ -37,6 +37,11 @@ body{
   min-width: 80px !important;
   width: 80px !important;
 }
+.ant-layout .ant-layout-sider .ant-layout-sider-children .ant-menu{
+  color: white;
+  background-color: rgb(113 112 112) !important;
+}
+
 .sm-logo{
   display: none;
 }
