@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Column, Bar, Pie } from '@ant-design/plots'; // chart column
 import { Table } from "antd"; // Table
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategoryRevenueData, getMonthlyData, getOrderStatusCounts, getOrders, getYearlyData } from '../features/auth/authSlice';
+import { getCategoryRevenueData, getCountOutOfStockProducts, getMonthlyData, getOrderStatusCounts, getOrders, getYearlyData } from '../features/auth/authSlice';
 
 const columns = [
   {
@@ -47,6 +47,7 @@ const Dashboard = () => {
   const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
   const categoryRevenueDataState = useSelector((state) => state?.auth?.categoryRevenueData);
   const orderStatusCountsState = useSelector((state) => state?.auth?.orderStatusCountsData);
+  const countOutOfStockProductsState = useSelector((state) => state?.auth?.countOutOfStockProducts);
 
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
@@ -62,6 +63,7 @@ const Dashboard = () => {
     dispatch(getYearlyData(config3));
     dispatch(getCategoryRevenueData(config3));
     dispatch(getOrderStatusCounts(config3));
+    dispatch(getCountOutOfStockProducts(config3));
   }, [])
 
   useEffect(() => {
@@ -262,6 +264,12 @@ const Dashboard = () => {
           <div>
             <p className='desc'>Tổng đơn hàng trong 1 tháng qua</p>
             <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? monthlyDataState[monthlyDataState.length - 1]?.count : 0}</h4>
+          </div>
+        </div>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
+          <div>
+            <p className='desc'>Sản phẩm hết hàng</p>
+            <h4 className='mb-0 sub-title'>{countOutOfStockProductsState}</h4>
           </div>
         </div>
       </div>

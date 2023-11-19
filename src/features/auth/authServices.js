@@ -58,6 +58,12 @@ const getOrderStatusCounts = async (data) => {
   return response.data;
 };
 
+const getCountOutOfStockProducts = async (data) => {
+  const response = await axios.get(`${base_url}user/countOutOfStockProducts`, data);
+
+  return response.data;
+};
+
 const blockUser = async (id) => {
   const response = await axios.put(`${base_url}user/block-user/${id}`, null, config);
 
@@ -85,6 +91,7 @@ const authService = {
   getYearlyStats,
   getCategoryRevenueData,
   getOrderStatusCounts,
+  getCountOutOfStockProducts,
   updateOrder,
   deleteOrder,
   blockUser,
