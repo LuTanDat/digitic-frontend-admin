@@ -46,11 +46,6 @@ const Dashboard = () => {
   const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
   const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
 
-  console.log("orderState", orderState);
-  console.log("monthlyDataState", monthlyDataState);
-  console.log("yearlyDataState", yearlyDataState);
-  console.log("-----------------------------------------------------------------------------")
-
 
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
