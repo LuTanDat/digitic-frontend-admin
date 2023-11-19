@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Column } from '@ant-design/plots'; // chart column
+import { Column, Bar } from '@ant-design/plots'; // chart column
 import { Table } from "antd"; // Table
 import { useDispatch, useSelector } from 'react-redux';
-import { getMonthlyData, getOrders, getYearlyData } from '../features/auth/authSlice';
+import { getCategoryRevenueData, getMonthlyData, getOrders, getYearlyData } from '../features/auth/authSlice';
 
 const columns = [
   {
@@ -45,18 +45,21 @@ const Dashboard = () => {
   const orderState = useSelector((state) => state?.auth?.orders?.orders);
   const monthlyDataState = useSelector((state) => state?.auth?.monthlyData);
   const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
-
+  const categoryRevenueDataState = useSelector((state) => state?.auth?.categoryRevenueData);
 
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
+  const [datacategoryRevenue, setDatacategoryRevenue] = useState([]);
+
   const [orderData, setOrderData] = useState([]);
+
 
   useEffect(() => {
     dispatch(getOrders(config3));
     dispatch(getMonthlyData(config3));
     dispatch(getYearlyData(config3));
+    dispatch(getCategoryRevenueData(config3));
   }, [])
-
 
   useEffect(() => {
     const data1 = [];
@@ -89,13 +92,23 @@ const Dashboard = () => {
     setDataMonthlySales(monthlyOrderCount);
   }, [monthlyDataState])
 
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < categoryRevenueDataState?.length; index++) {
+      const element = categoryRevenueDataState[index];
+      data.push({ type: element?._id, income: element?.totalRevenue })
+    }
+    setDatacategoryRevenue(data);
+  }, [categoryRevenueDataState])
+
+
   const config = {
     data: dataMonthly,
     xField: 'type',
     yField: 'income',
     // seriesField: '',
     color: ({ type }) => {
-      return "#ffd333";
+      return "#0ee65f";
     },
     label: {
       position: 'middle',
@@ -131,7 +144,7 @@ const Dashboard = () => {
     yField: 'sales',
     // seriesField: '',
     color: ({ type }) => {
-      return "#ffd333";
+      return "#5a91ff";
     },
     label: {
       position: 'middle',
@@ -156,43 +169,76 @@ const Dashboard = () => {
     },
   };
 
+  const config4 = {
+    data: datacategoryRevenue,
+    xField: 'income',
+    yField: 'type',
+    seriesField: 'type',
+    legend: {
+      position: 'top-left',
+    },
+    xAxis: {
+      label: {
+        formatter: (v) => (Number(v).toLocaleString("vi-VN", { style: "currency", currency: "VND" })),
+      },
+    },
+  };
+
   return (
     <div className='dashboard'>
       <h3 className='mb-4 title'>Dashboard</h3>
       <div className='d-flex justify-content-between align-items-center gap-3 total-revenue-mobile'>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
           <div>
             <p className='desc'>Tổng thu nhập trong 1 năm qua</p>
-            <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? (yearlyDataState[0]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
+            <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? (yearlyDataState[yearlyDataState.length - 1]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
           </div>
         </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2'>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
           <div>
             <p className='desc'>Tổng đơn hàng trong 1 năm qua</p>
-            <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? yearlyDataState[0]?.count : 0}</h4>
+            <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? yearlyDataState[yearlyDataState.length - 1]?.count : 0}</h4>
+          </div>
+        </div>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
+          <div>
+            <p className='desc'>Tổng thu nhập trong 1 tháng qua</p>
+            <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? (monthlyDataState[monthlyDataState.length - 1]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
+          </div>
+        </div>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3 mt-2 border'>
+          <div>
+            <p className='desc'>Tổng đơn hàng trong 1 tháng qua</p>
+            <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? monthlyDataState[monthlyDataState.length - 1]?.count : 0}</h4>
           </div>
         </div>
       </div>
       <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-5 title'>Thống kê thu nhập</h3>
+          <h3 className='mb-3 title'>Thống kê thu nhập theo tháng</h3>
           <div>
             <Column {...config} />
           </div>
         </div>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-5 title'>Thống kê đơn hàng</h3>
+          <h3 className='mb-3 title'>Thống kê đơn hàng theo tháng</h3>
           <div>
             <Column {...config2} />
           </div>
         </div>
       </div>
       <div className='mt-4'>
+        <h3 className='mb-3 mt-4 title'>Thống kê doanh thu sản phẩm theo danh mục</h3>
+        <div>
+          <Bar {...config4} />
+        </div>
+      </div>
+      {/* <div className='mt-4'>
         <h3 className='mb-5 title'>Đơn hàng gần đây</h3>
         <div>
           <Table columns={columns} dataSource={orderData} />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

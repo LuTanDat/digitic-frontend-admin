@@ -54,6 +54,17 @@ export const getYearlyData = createAsyncThunk(
   }
 );
 
+export const getCategoryRevenueData = createAsyncThunk(
+  "orders/categoryRevenueData",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.getCategoryRevenueData(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getOrders = createAsyncThunk(
   "order/get-orders",
   async (data, thunkAPI) => {
@@ -217,6 +228,23 @@ export const authSlice = createSlice({
         state.message = "success";
       })
       .addCase(getYearlyData.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+
+      .addCase(getCategoryRevenueData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getCategoryRevenueData.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.categoryRevenueData = action.payload;
+        state.message = "success";
+      })
+      .addCase(getCategoryRevenueData.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
