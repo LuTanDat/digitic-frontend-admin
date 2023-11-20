@@ -314,7 +314,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='text'
-            label='Trọng lượng (Kg)'
+            label='Trọng lượng'
             name='weight'
             onChng={formik.handleChange('weight')}
             onBlr={formik.handleBlur('weight')}
@@ -362,7 +362,7 @@ const Addproduct = () => {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p className='mb-0 p-4'>Chọn 1 hoặc nhiều ảnh muốn tải lên</p>
+                    <p className='mb-0 p-4'>Chọn 1 hoặc nhiều ảnh muốn tải lên (sẽ tốn một ít thời gian)</p>
                   </div>
                 </section>
               )}
