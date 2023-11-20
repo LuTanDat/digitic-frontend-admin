@@ -261,9 +261,9 @@ const Addproduct = () => {
             id=''
           >
             <option value=''>Chọn Tags</option>
-            <option value='featured'>Nổi bật</option>
-            <option value='popular'>Phổ biến</option>
-            <option value='special'>Đặc biệt</option>
+            <option value='Nổi bật'>Nổi bật</option>
+            <option value='Phổ biến'>Phổ biến</option>
+            <option value='Đặc biệt'>Đặc biệt</option>
           </select>
           <div className="error">
             {formik.touched.tags && formik.errors.tags}
