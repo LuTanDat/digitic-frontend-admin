@@ -266,30 +266,26 @@ const Dashboard = () => {
       <div className='d-flex flex-wrap justify-content-between align-items-center gap-3 total-revenue-mobile'>
         <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
-            <p className='desc'>Tổng thu nhập trong 1 năm qua</p>
+            <p className='desc'>Tổng doanh thu trong 1 năm qua</p>
             <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? (yearlyDataState[yearlyDataState.length - 1]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
           </div>
-        </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
-            <p className='desc'>Tổng đơn hàng trong 1 năm qua</p>
+            <p className='desc'>Đơn hàng</p>
             <h4 className='mb-0 sub-title'>{yearlyDataState && yearlyDataState?.length !== 0 ? yearlyDataState[yearlyDataState.length - 1]?.count : 0}</h4>
           </div>
         </div>
         <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
-            <p className='desc'>Tổng thu nhập trong 1 tháng qua</p>
+            <p className='desc'>Tổng doanh thu trong 1 tháng qua</p>
             <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? (monthlyDataState[monthlyDataState.length - 1]?.amount)?.toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</h4>
           </div>
-        </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
           <div>
-            <p className='desc'>Tổng đơn hàng trong 1 tháng qua</p>
+            <p className='desc'>Đơn hàng</p>
             <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? monthlyDataState[monthlyDataState.length - 1]?.count : 0}</h4>
           </div>
         </div>
         <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "red" }}>
-          <Link to="/admin/list-product" className='text-decoration-none'>
+          <Link to="/admin/list-product" className='text-decoration-none w-100'>
             <p className='desc text-white'>Sản phẩm sắp hết hàng</p>
             <h4 className='mb-0 sub-title text-white'>{countLowStockProductsState}</h4>
           </Link>
@@ -297,7 +293,7 @@ const Dashboard = () => {
       </div>
       <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 title'>Thống kê thu nhập theo tháng</h3>
+          <h3 className='mb-3 title'>Thống kê doanh thu theo tháng</h3>
           <div>
             <Column {...config} />
           </div>

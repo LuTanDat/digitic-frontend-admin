@@ -169,16 +169,23 @@ const Productlist = () => {
       filters: [
         {
           text: 'Còn hàng',
-          value: '>',
+          value: '>15',
+        },
+        {
+          text: 'Sắp hết hàng',
+          value: '<=15',
         },
         {
           text: 'Hết hàng',
-          value: '=',
+          value: '=0',
         }
       ],
       onFilter: (value, record) => {
-        if (value === '>') {
-          return record.quantity > 0;
+        if (value === '>15') {
+          return record.quantity > 15;
+        }
+        else if (value === '<=15') {
+          return record.quantity <= 15;
         }
         return record.quantity === 0;
       }
