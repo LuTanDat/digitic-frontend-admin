@@ -76,11 +76,11 @@ export const getOrderStatusCounts = createAsyncThunk(
   }
 );
 
-export const getCountOutOfStockProducts = createAsyncThunk(
+export const getCountLowStockProducts = createAsyncThunk(
   "orders/countOutOfStockProducts",
   async (data, thunkAPI) => {
     try {
-      return await authService.getCountOutOfStockProducts(data);
+      return await authService.getCountLowStockProducts(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -290,17 +290,17 @@ export const authSlice = createSlice({
         state.isLoading = false;
       })
 
-      .addCase(getCountOutOfStockProducts.pending, (state) => {
+      .addCase(getCountLowStockProducts.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getCountOutOfStockProducts.fulfilled, (state, action) => {
+      .addCase(getCountLowStockProducts.fulfilled, (state, action) => {
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.countOutOfStockProducts = action.payload;
+        state.countLowStockProducts = action.payload;
         state.message = "success";
       })
-      .addCase(getCountOutOfStockProducts.rejected, (state, action) => {
+      .addCase(getCountLowStockProducts.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
