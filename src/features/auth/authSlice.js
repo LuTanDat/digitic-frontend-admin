@@ -87,6 +87,17 @@ export const getCountLowStockProducts = createAsyncThunk(
   }
 );
 
+export const getInventoryStatsByCategory = createAsyncThunk(
+  "orders/inventoryStatsByCategory",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.getInventoryStatsByCategory(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getOrders = createAsyncThunk(
   "order/get-orders",
   async (data, thunkAPI) => {
@@ -301,6 +312,23 @@ export const authSlice = createSlice({
         state.message = "success";
       })
       .addCase(getCountLowStockProducts.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+
+      .addCase(getInventoryStatsByCategory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getInventoryStatsByCategory.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.inventoryStatsByCategory = action.payload;
+        state.message = "success";
+      })
+      .addCase(getInventoryStatsByCategory.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Column, Bar, Pie } from '@ant-design/plots'; // chart column
 import { Table } from "antd"; // Table
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategoryRevenueData, getCountLowStockProducts, getMonthlyData, getOrderStatusCounts, getOrders, getYearlyData } from '../features/auth/authSlice';
+import { getCategoryRevenueData, getCountLowStockProducts, getInventoryStatsByCategory, getMonthlyData, getOrderStatusCounts, getOrders, getYearlyData } from '../features/auth/authSlice';
+import { Link } from 'react-router-dom';
 
 const columns = [
   {
@@ -48,12 +49,13 @@ const Dashboard = () => {
   const categoryRevenueDataState = useSelector((state) => state?.auth?.categoryRevenueData);
   const orderStatusCountsState = useSelector((state) => state?.auth?.orderStatusCountsData);
   const countLowStockProductsState = useSelector((state) => state?.auth?.countLowStockProducts);
+  const inventoryStatsByCategoryState = useSelector((state) => state?.auth?.inventoryStatsByCategory);
 
   const [dataMonthly, setDataMonthly] = useState([]);
   const [dataMonthlySales, setDataMonthlySales] = useState([]);
   const [datacategoryRevenue, setDatacategoryRevenue] = useState([]);
+  const [inventoryStatsByCategory, setInventoryStatsByCategory] = useState([]);
   const [orderStatusCounts, setOrderStatusCounts] = useState([]);
-
   const [orderData, setOrderData] = useState([]);
 
 
@@ -64,6 +66,7 @@ const Dashboard = () => {
     dispatch(getCategoryRevenueData(config3));
     dispatch(getOrderStatusCounts(config3));
     dispatch(getCountLowStockProducts(config3));
+    dispatch(getInventoryStatsByCategory(config3));
   }, [])
 
   useEffect(() => {
@@ -105,6 +108,15 @@ const Dashboard = () => {
     }
     setDatacategoryRevenue(data);
   }, [categoryRevenueDataState])
+
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < inventoryStatsByCategoryState?.length; index++) {
+      const element = inventoryStatsByCategoryState[index];
+      data.push({ type: element?._id, income: element?.totalQuantity })
+    }
+    setInventoryStatsByCategory(data);
+  }, [inventoryStatsByCategoryState])
 
   useEffect(() => {
     let data = [];
@@ -198,6 +210,16 @@ const Dashboard = () => {
     },
   };
 
+  const config6 = {
+    data: inventoryStatsByCategory,
+    xField: 'income',
+    yField: 'type',
+    seriesField: 'type',
+    legend: {
+      position: 'top',
+    }
+  };
+
   const config5 = {
     appendPadding: 10,
     data: orderStatusCounts,
@@ -266,11 +288,11 @@ const Dashboard = () => {
             <h4 className='mb-0 sub-title'>{monthlyDataState && monthlyDataState?.length !== 0 ? monthlyDataState[monthlyDataState.length - 1]?.count : 0}</h4>
           </div>
         </div>
-        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "#62d9aa" }}>
-          <div>
-            <p className='desc'>Sản phẩm sắp hết hàng</p>
-            <h4 className='mb-0 sub-title'>{countLowStockProductsState}</h4>
-          </div>
+        <div className='d-flex justify-content-between align-items-end flex-grow-1 p-3 rounded-3 mt-2 border' style={{ backgroundColor: "red" }}>
+          <Link to="/admin/list-product" className='text-decoration-none'>
+            <p className='desc text-white'>Sản phẩm sắp hết hàng</p>
+            <h4 className='mb-0 sub-title text-white'>{countLowStockProductsState}</h4>
+          </Link>
         </div>
       </div>
       <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
@@ -289,16 +311,22 @@ const Dashboard = () => {
       </div>
       <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 mt-4 title'>Thống kê doanh thu sản phẩm theo danh mục</h3>
+          <h3 className='mb-3 title'>Thống kê doanh thu</h3>
           <div>
             <Bar {...config4} />
           </div>
         </div>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 mt-4 title'>Trạng thái đơn hàng</h3>
+          <h3 className='mb-3 title'>Thống kê hàng tồn</h3>
           <div>
-            <Pie {...config5} />
+            <Bar {...config6} />
           </div>
+        </div>
+      </div>
+      <div className='mt-4'>
+        <h3 className='mb-3 mt-4 title'>Trạng thái đơn hàng</h3>
+        <div>
+          <Pie {...config5} />
         </div>
       </div>
       {/* <div className='mt-4'>
