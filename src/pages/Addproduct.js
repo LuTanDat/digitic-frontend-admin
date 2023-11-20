@@ -303,7 +303,7 @@ const Addproduct = () => {
           </div>
           <CustomInput
             type='text'
-            label='Kích thước (Cm)'
+            label='Kích thước'
             name='size'
             onChng={formik.handleChange('size')}
             onBlr={formik.handleBlur('size')}
