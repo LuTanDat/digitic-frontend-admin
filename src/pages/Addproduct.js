@@ -82,7 +82,7 @@ const Addproduct = () => {
     }
     else
       if (isError) {
-        toast.error("Something went wrong!")
+        toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])
 
@@ -383,20 +383,6 @@ const Addproduct = () => {
                 </div>
               )
             })}
-            {/* {imgState?.length === 0 && productImages?.length !== 0 && productImages?.map((i, j) => {
-              return (
-                <div className='position-relative' key={j}>
-                  <button
-                    type='button'
-                    onClick={() => handleDeleteImage (i.public_id)}
-                    className='btn-close position-absolute'
-                    style={{ top: "10px", right: "10px" }}
-                  >
-                  </button>
-                  <img src={i.url} alt='' width={200} height={200} />
-                </div>
-              )
-            })} */}
           </div>
 
           <button

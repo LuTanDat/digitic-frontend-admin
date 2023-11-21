@@ -62,6 +62,7 @@ export const resetState = createAction("RevertAll");
 
 const initialState = {
   pCategories: [], // pCategories
+  productImages: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -149,6 +150,7 @@ export const pCategorySlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.categoryName = action.payload.title;
+        state.productImages = action.payload.images;
       })
       .addCase(getAProductCategory.rejected, (state, action) => {
         state.isLoading = false;
