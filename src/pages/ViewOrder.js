@@ -136,7 +136,7 @@ const ViewOrder = () => {
         <StepOrderComponent items={itemsOrderStatus} current={orderStatus} />
       </div>
       <div className="d-flex mb-4 justify-content-between align-items-center info-order-detail-mobile">
-        <div className='d-flex justify-content-around align-items-baseline w-75 info-order-detail-left'>
+        <div className='d-flex justify-content-around align-items-center w-75 info-order-detail-left'>
           <div style={{ border: "1px solid #857575cc", borderRadius: "10px", padding: "15px", backgroundColor: "white", marginTop: "16px" }}>
             <h5>Địa chỉ nhận hàng</h5>
             <p>{`Người nhận: ${aOrderState?.shippingInfo?.lastName} ${aOrderState?.shippingInfo?.firstName}`}</p>
@@ -195,10 +195,19 @@ const ViewOrder = () => {
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
-      <div className='m-3 text-end'>
-        <p>{`Tổng tiền hàng: ${aOrderState?.itemsPrice ? (aOrderState?.itemsPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}`}</p>
-        <p>{`Phí vận chuyển: ${aOrderState?.shippingPrice ? (aOrderState?.shippingPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}`}</p>
-        <b>{`Thành tiền: ${aOrderState?.totalPrice ? (aOrderState?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}`}</b>
+      <div className='m-3 text-end px-3'>
+        <div className='d-flex justify-content-end gap-3'>
+          <p>Tổng tiền hàng:</p>
+          <p style={{ minWidth: 60 }}>{aOrderState?.itemsPrice ? (aOrderState?.itemsPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</p>
+        </div>
+        <div className='d-flex justify-content-end gap-3'>
+          <p>Phí vận chuyển:</p>
+          <p style={{ minWidth: 60 }}>{aOrderState?.shippingPrice ? (aOrderState?.shippingPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</p>
+        </div>
+        <div className='d-flex justify-content-end gap-3'>
+          <b>Thành tiền:</b>
+          <b style={{ minWidth: 60 }}>{aOrderState?.totalPrice ? (aOrderState?.totalPrice).toLocaleString("vi-VN", { style: "currency", currency: "VND" }) : "0 đ"}</b>
+        </div>
       </div>
     </div>
   )

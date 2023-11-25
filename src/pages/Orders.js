@@ -314,9 +314,9 @@ const Orders = () => {
   return (
     <div className='orders'>
       <h3 className='mb-3 title'>Đơn hàng</h3>
-      <div style={{ height: 240, width: 480 }}>
-        <PieChartComponent data={orderState} /> {/*truyen vao danh sach don hang */}
-      </div>
+      {/* <div style={{ height: 240, width: 480 }}>
+        <PieChartComponent data={orderState} /> truyen vao danh sach don hang
+      </div> */}
       <div className="btn-group my-4" role="group" aria-label="Basic radio toggle button group">
         <button type="button"
           className={`btn btn-outline-primary ${selectedNavItem === null ? "active" : ""}`}

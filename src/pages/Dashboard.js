@@ -4,6 +4,7 @@ import { Table } from "antd"; // Table
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategoryRevenueData, getCountLowStockProducts, getInventoryStatsByCategory, getMonthlyData, getOrderStatusCounts, getOrders, getYearlyData } from '../features/auth/authSlice';
 import { Link } from 'react-router-dom';
+import PieChartComponent from '../components/PieChartComponent';
 
 const columns = [
   {
@@ -69,6 +70,7 @@ const Dashboard = () => {
     dispatch(getInventoryStatsByCategory(config3));
   }, [])
 
+
   useEffect(() => {
     const data1 = [];
     for (let i = 0; i < orderState?.length; i++) {
@@ -84,7 +86,6 @@ const Dashboard = () => {
     }
     setOrderData(data1);
   }, [orderState])
-
 
   useEffect(() => {
     // let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -260,6 +261,7 @@ const Dashboard = () => {
     },
   };
 
+
   return (
     <div className='dashboard'>
       <h3 className='mb-4 title'>Dashboard</h3>
@@ -293,13 +295,13 @@ const Dashboard = () => {
       </div>
       <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 title'>Thống kê doanh thu theo tháng</h3>
+          <h3 className='mb-3 title'>Doanh thu theo tháng</h3>
           <div>
             <Column {...config} />
           </div>
         </div>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 title'>Thống kê đơn hàng theo tháng</h3>
+          <h3 className='mb-3 title'>Đơn hàng theo tháng</h3>
           <div>
             <Column {...config2} />
           </div>
@@ -307,24 +309,36 @@ const Dashboard = () => {
       </div>
       <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 title'>Thống kê doanh thu</h3>
+          <h3 className='mb-3 title'>Doanh thu theo Danh mục</h3>
           <div>
             <Bar {...config4} />
           </div>
         </div>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 title'>Thống kê hàng tồn</h3>
+          <h3 className='mb-3 title'>Hàng tồn theo Danh mục</h3>
           <div>
             <Bar {...config6} />
           </div>
         </div>
       </div>
-      <div className='mt-4'>
-        <h3 className='mb-3 mt-4 title'>Trạng thái đơn hàng</h3>
-        <div>
-          <Pie {...config5} />
+      <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
+        <div className='mt-4 flex-grow-1 w-50'>
+          <h3 className='mb-3 mt-4 title'>Trạng thái đơn hàng</h3>
+          <div style={{ height: "300px" }}>
+            <Pie {...config5} />
+          </div>
+        </div>
+        <div className='mt-4 flex-grow-1 w-50'>
+          <h3 className='mb-3 mt-4 title'>Phương thức thanh toán</h3>
+          <div style={{ height: 300, width: 480 }}>
+            <PieChartComponent data={orderState} /> {/*truyen vao danh sach don hang */}
+          </div>
+          {/* <div>
+            <Pie {...config5} />
+          </div> */}
         </div>
       </div>
+
       {/* <div className='mt-4'>
         <h3 className='mb-5 title'>Đơn hàng gần đây</h3>
         <div>
