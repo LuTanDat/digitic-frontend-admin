@@ -161,33 +161,33 @@ const MainLayout = () => {
                 },
               ]
             },
-            {
-              key: 'blogs',
-              icon: <FaBloggerB className='fs-4' />,
-              label: 'Bài viết',
-              children: [
-                {
-                  key: 'blog',
-                  icon: <ImBlog className='fs-4' />,
-                  label: 'Thêm Bài viết',
-                },
-                {
-                  key: 'blog-list',
-                  icon: <FaBloggerB className='fs-4' />,
-                  label: 'Bài viết',
-                },
-                {
-                  key: 'blog-category',
-                  icon: <ImBlog className='fs-4' />,
-                  label: 'Thêm Danh mục',
-                },
-                {
-                  key: 'blog-category-list',
-                  icon: <FaBloggerB className='fs-4' />,
-                  label: 'Danh mục',
-                },
-              ]
-            },
+            // {
+            //   key: 'blogs',
+            //   icon: <FaBloggerB className='fs-4' />,
+            //   label: 'Bài viết',
+            //   children: [
+            //     {
+            //       key: 'blog',
+            //       icon: <ImBlog className='fs-4' />,
+            //       label: 'Thêm Bài viết',
+            //     },
+            //     {
+            //       key: 'blog-list',
+            //       icon: <FaBloggerB className='fs-4' />,
+            //       label: 'Bài viết',
+            //     },
+            //     {
+            //       key: 'blog-category',
+            //       icon: <ImBlog className='fs-4' />,
+            //       label: 'Thêm Danh mục',
+            //     },
+            //     {
+            //       key: 'blog-category-list',
+            //       icon: <FaBloggerB className='fs-4' />,
+            //       label: 'Danh mục',
+            //     },
+            //   ]
+            // },
             {
               key: 'enquiries',
               icon: <FaClipboardList className='fs-4' />,

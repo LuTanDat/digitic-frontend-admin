@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Column, Bar, Pie } from '@ant-design/plots'; // chart column
 import { Table } from "antd"; // Table
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategoryRevenueData, getCountLowStockProducts, getInventoryStatsByCategory, getMonthlyData, getOrderStatusCounts, getOrders, getYearlyData } from '../features/auth/authSlice';
+import { getCategoryRevenueData, getCountLowStockProducts, getInventoryStatsByCategory, getMonthlyData, getOrderStatusCounts, getOrders, getPaymentMethodCounts, getYearlyData } from '../features/auth/authSlice';
 import { Link } from 'react-router-dom';
 import PieChartComponent from '../components/PieChartComponent';
 
@@ -49,6 +49,7 @@ const Dashboard = () => {
   const yearlyDataState = useSelector((state) => state?.auth?.yearlyData);
   const categoryRevenueDataState = useSelector((state) => state?.auth?.categoryRevenueData);
   const orderStatusCountsState = useSelector((state) => state?.auth?.orderStatusCountsData);
+  const paymentMethodCountsState = useSelector((state) => state?.auth?.paymentMethodCountsData);
   const countLowStockProductsState = useSelector((state) => state?.auth?.countLowStockProducts);
   const inventoryStatsByCategoryState = useSelector((state) => state?.auth?.inventoryStatsByCategory);
 
@@ -57,6 +58,7 @@ const Dashboard = () => {
   const [datacategoryRevenue, setDatacategoryRevenue] = useState([]);
   const [inventoryStatsByCategory, setInventoryStatsByCategory] = useState([]);
   const [orderStatusCounts, setOrderStatusCounts] = useState([]);
+  const [paymentMethodCounts, setPaymentMethodCounts] = useState([]);
   const [orderData, setOrderData] = useState([]);
 
 
@@ -66,6 +68,7 @@ const Dashboard = () => {
     dispatch(getYearlyData(config3));
     dispatch(getCategoryRevenueData(config3));
     dispatch(getOrderStatusCounts(config3));
+    dispatch(getPaymentMethodCounts(config3));
     dispatch(getCountLowStockProducts(config3));
     dispatch(getInventoryStatsByCategory(config3));
   }, [])
@@ -127,6 +130,15 @@ const Dashboard = () => {
     }
     setOrderStatusCounts(data);
   }, [orderStatusCountsState])
+
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < paymentMethodCountsState?.length; index++) {
+      const element = paymentMethodCountsState[index];
+      data.push({ type: element?._id, count: element?.count })
+    }
+    setPaymentMethodCounts(data);
+  }, [paymentMethodCountsState])
 
 
   const config = {
@@ -261,6 +273,46 @@ const Dashboard = () => {
     },
   };
 
+  const config7 = {
+    appendPadding: 10,
+    data: paymentMethodCounts,
+    angleField: 'count',
+    colorField: 'type',
+    radius: 1,
+    innerRadius: 0.6,
+    label: {
+      type: 'inner',
+      offset: '-50%',
+      content: '{value}',
+      style: {
+        textAlign: 'center',
+        fontSize: 14,
+      },
+    },
+    interactions: [
+      {
+        type: 'element-selected',
+      },
+      {
+        type: 'element-active',
+      },
+    ],
+    statistic: {
+      title: false,
+      content: {
+        style: {
+          whiteSpace: 'pre-wrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        },
+        content: '',
+      },
+    },
+    legend: {
+      position: 'top',
+    },
+  };
+
 
   return (
     <div className='dashboard'>
@@ -330,12 +382,9 @@ const Dashboard = () => {
         </div>
         <div className='mt-4 flex-grow-1 w-50'>
           <h3 className='mb-3 mt-4 title'>Phương thức thanh toán</h3>
-          <div style={{ height: 300, width: 480 }}>
-            <PieChartComponent data={orderState} /> {/*truyen vao danh sach don hang */}
+          <div style={{ height: "300px" }}>
+            <Pie {...config7} />
           </div>
-          {/* <div>
-            <Pie {...config5} />
-          </div> */}
         </div>
       </div>
 

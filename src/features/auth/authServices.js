@@ -58,6 +58,12 @@ const getOrderStatusCounts = async (data) => {
   return response.data;
 };
 
+const getPaymentMethodCounts = async (data) => {
+  const response = await axios.get(`${base_url}user/getPaymentMethodCounts`, data);
+
+  return response.data;
+};
+
 const getCountLowStockProducts = async (data) => {
   const response = await axios.get(`${base_url}user/countLowStockProducts`, data);
 
@@ -97,6 +103,7 @@ const authService = {
   getYearlyStats,
   getCategoryRevenueData,
   getOrderStatusCounts,
+  getPaymentMethodCounts,
   getCountLowStockProducts,
   getInventoryStatsByCategory,
   updateOrder,
