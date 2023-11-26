@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import CustomInput from '../components/CustomInput';
 import { useFormik } from 'formik'; ////////////////////////////////// xu ly su kien tren form
@@ -19,6 +20,7 @@ const AddCoupon = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const getProductId = location.pathname.split("/")[3];
+
   const newCoupon = useSelector((state) => state.coupon);
   const { isSuccess, isError, isLoading, createdCoupon, productName, couponDiscount, couponStart, couponExpiry, updatedCoupon } = newCoupon;
   const productName1 = useSelector((state) => state.product.productName);
@@ -42,7 +44,7 @@ const AddCoupon = () => {
 
   useEffect(() => {
     if (isSuccess && createdCoupon) {
-      toast.success("Thêm Mã giảm giá thành công!")
+      toast.success("Thêm thành công Mã giảm giá!")
       navigate("/admin/list-product")
     }
     if (isSuccess && updatedCoupon) {
@@ -50,7 +52,7 @@ const AddCoupon = () => {
       navigate("/admin/list-product");
     }
     else
-      if (isError && productName && couponDiscount && couponExpiry) {
+      if (isError && productName && couponDiscount && couponStart && couponExpiry) {
         toast.error("Có lỗi xảy ra!")
       }
   }, [isSuccess, isError, isLoading,])

@@ -12,6 +12,8 @@ import { getAllCoupons } from "../features/coupon/couponSlice";
 import { SearchOutlined } from '@ant-design/icons';
 
 const Productlist = () => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
   const [productId, setProductId] = useState("");
 
@@ -22,6 +24,16 @@ const Productlist = () => {
   const hideModal = () => {
     setOpen(false);
   };
+
+  const productState = useSelector((state) => state.product?.products?.product);
+  const couponState = useSelector((state) => state.coupon?.coupons);
+
+
+  useEffect(() => {
+    dispatch(resetState());
+    dispatch(getProducts());
+    dispatch(getAllCoupons());
+  }, []);
 
 
   // Search input of antd start
@@ -131,7 +143,6 @@ const Productlist = () => {
     //     text
     //   ),
   });
-  // Search input of antd end
 
   const columns = [
     {
@@ -251,18 +262,10 @@ const Productlist = () => {
       dataIndex: "action",
     },
   ];
+  // Search input of antd end
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(resetState());
-    dispatch(getProducts());
-    dispatch(getAllCoupons());
 
-  }, []);
-  const productState = useSelector((state) => state.product?.products?.product);
-  const couponState = useSelector((state) => state.coupon?.coupons);
   const data1 = [];
-
   for (let i = 0; i < productState?.length; i++) {
     let price = productState[i].price;
     let discountPercent = 0;
@@ -320,6 +323,7 @@ const Productlist = () => {
       ),
     });
   }
+
   const deleteProduct = (e) => {
     dispatch(deleteAProduct(e));
     setOpen(false);
@@ -327,6 +331,7 @@ const Productlist = () => {
       dispatch(getProducts());
     }, 100);
   }
+
   return (
     <div className="products">
       <h3 className="mb-4 title">Sản phẩm</h3>

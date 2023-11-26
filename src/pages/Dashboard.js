@@ -345,7 +345,7 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
-      <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
+      <div className='d-flex justify-content-between gap-3 mt-1 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
           <h3 className='mb-3 title'>Doanh thu theo tháng</h3>
           <div>
@@ -359,7 +359,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
+      <div className='d-flex justify-content-between gap-3 mt-1 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
           <h3 className='mb-3 title'>Doanh thu theo Danh mục</h3>
           <div>
@@ -373,15 +373,15 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className='d-flex justify-content-between gap-3 total-chart-mobile'>
+      <div className='d-flex justify-content-between gap-3 mt-2 total-chart-mobile'>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 mt-4 title'>Trạng thái đơn hàng</h3>
+          <h3 className='mb-3 title'>Trạng thái đơn hàng</h3>
           <div style={{ height: "300px" }}>
             <Pie {...config5} />
           </div>
         </div>
         <div className='mt-4 flex-grow-1 w-50'>
-          <h3 className='mb-3 mt-4 title'>Phương thức thanh toán</h3>
+          <h3 className='mb-3 title'>Phương thức thanh toán</h3>
           <div style={{ height: "300px" }}>
             <Pie {...config7} />
           </div>
