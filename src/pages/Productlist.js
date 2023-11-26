@@ -329,8 +329,13 @@ const Productlist = () => {
     setOpen(false);
     setTimeout(() => {
       dispatch(getProducts());
-    }, 100);
+    }, 300);
   }
+  // const deleteProduct = async (e) => {
+  //   await dispatch(deleteAProduct(e));
+  //   await dispatch(getProducts());
+  //   setOpen(false);
+  // };
 
   return (
     <div className="products">
