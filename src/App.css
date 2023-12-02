@@ -47,6 +47,17 @@
   font-size: 12px;
 }
 
+.custom-input-password {
+  position: relative;
+}
+.custom-input-password span {
+  position: absolute;
+  font-size: 22px;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+}
+
 /*Coupons*/
 .coupons .ant-table-wrapper .ant-table .ant-table-container .ant-table-content .ant-table-thead th:nth-child(2){
   width: 40%;

@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useFormik } from 'formik'; // xu ly su kien tren form
 import * as Yup from 'yup'; // validate field on form
-
 import { useDispatch, useSelector } from "react-redux"; // push actions to Redux Store, get State from Redux Store
 import { login } from '../features/auth/authSlice';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+
 
 let schema = Yup.object().shape({
   email: Yup.string()
@@ -18,6 +18,8 @@ let schema = Yup.object().shape({
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -64,19 +66,31 @@ const Login = () => {
               <div>{formik.errors.email}</div>
             ) : null}
           </div>
-          <CustomInput
-            type="password"
-            name='password'
-            label="Nhập mật khẩu"
-            id="pass"
-            val={formik.values.password}
-            onChng={formik.handleChange("password")}
-          />
-          <div className="error">
-            {formik.touched.password && formik.errors.password ? (
-              <div>{formik.errors.password}</div>
-            ) : null}
+          <div className='custom-input-password'>
+            <CustomInput
+              type={isShowPassword ? "text" : "password"}
+              name='password'
+              label="Nhập mật khẩu"
+              id="pass"
+              val={formik.values.password}
+              onChng={formik.handleChange("password")}
+            />
+            <div className="error">
+              {formik.touched.password && formik.errors.password ? (
+                <div>{formik.errors.password}</div>
+              ) : null}
+            </div>
+            <span
+              onClick={() => setIsShowPassword(!isShowPassword)}
+            >
+              {
+                isShowPassword
+                  ? <FaRegEye />
+                  : <FaRegEyeSlash />
+              }
+            </span>
           </div>
+
           <button
             className="border-0 px-3 py-2 text-white fw-bold w-100 text-center text-decoration-none fs-5 mt-3"
             style={{ background: "#ffd333" }}
