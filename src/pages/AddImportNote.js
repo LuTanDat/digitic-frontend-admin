@@ -41,7 +41,7 @@ const AddimportNote = () => {
 
   useEffect(() => {
     if (isSuccess && createdImportNote) {
-      toast.success("Thêm phiếu nhập thành công!")
+      toast.success("Lập phiếu nhập thành công!")
     }
     if (isSuccess && updatedImportNote) {
       toast.success("Cập nhật thành công phiếu nhập!");
@@ -80,7 +80,7 @@ const AddimportNote = () => {
   return (
     <div>
       <h3 className='mb-4 title'>
-        {getImportNoteId !== undefined ? "Sửa" : "Thêm"} Phiếu nhập
+        {getImportNoteId !== undefined ? "Sửa" : "Lập"} Phiếu nhập
       </h3>
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
@@ -156,7 +156,7 @@ const AddimportNote = () => {
             className='btn btn-success border-0 rounded-3 my-5'
             type="submit"
           >
-            {getImportNoteId !== undefined ? "Sửa" : "Thêm"} Phiếu nhập
+            {getImportNoteId !== undefined ? "Sửa" : "Lập"} Phiếu nhập
           </button>
         </form>
       </div>
