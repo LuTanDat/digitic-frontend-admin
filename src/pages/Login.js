@@ -12,7 +12,12 @@ let schema = Yup.object().shape({
   email: Yup.string()
     .email("Email không khả dụng")
     .required("Email không được để trống"),
-  password: Yup.string().required("Mật khẩu không được để trống"),
+  password: Yup.string()
+    .required("Mật khẩu không được để trống")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Mật khẩu phải có ít nhất 8 ký tự, bao gồm ký tự hoa, ký tự thường, số và ký tự đặc biệt"
+    ),
 });
 
 const Login = () => {
@@ -46,15 +51,14 @@ const Login = () => {
   }, [user, isLoading, isSuccess, isError, message])
   return (
     <div className="py-5" style={{ background: "#7985c9", minHeight: "100vh" }}>
-      <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
+      <div className="auth-card my-5 bg-white mx-auto p-4">
         <h3 className="text-center title">Đăng nhập</h3>
-        <p className="text-center">Đăng nhập để tiếp tục.</p>
         <div className="error text-center">
-          {message.message === 'Rejected' ? 'Bạn không phải Admin' : ''}
+          {message.message === 'Rejected' ? 'BẠN KHÔNG PHẢI ADMIN' : ''}
         </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
-            type="text"
+            type="email"
             name='email'
             label="Nhập email"
             id="email"

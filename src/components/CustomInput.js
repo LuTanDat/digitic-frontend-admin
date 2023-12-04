@@ -4,7 +4,7 @@ const CustomInput = (props) => {
   // name, val, onChng, onBlr
   const { type, label, i_id, i_class, name, val, onChng, onBlr, disabled } = props;
   return (
-    <div className="form-floating mt-3">
+    <div className="form-floating mt-3 mb-2">
       <input
         style={{ borderColor: "#777777" }}
         type={type}
