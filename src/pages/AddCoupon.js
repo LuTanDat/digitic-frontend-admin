@@ -31,20 +31,19 @@ const AddCoupon = () => {
 
   // CONVERT DAY
   const changeDateFormet = (date) => {
+    if (!date) {
+      return ""; // Hoặc giá trị mặc định khác nếu bạn muốn
+    }
+
     const newDate = new Date(date).toLocaleDateString(); // convert to  format beatiful day
     const [month, day, year] = newDate.split('/');
     return `${year}-${month?.padStart(2, "0")}-${day?.padStart(2, "0")}`
     // return [year, month, day].join('-');
   }
-  const isStartDateValid = (startDate) => {
-    const currentDate = format(new Date(), 'yyyy-MM-dd', { timeZone: 'Asia/Ho_Chi_Minh' });
-    const selectedStartDate = new Date(startDate);
-    return selectedStartDate >= currentDate;
-  };
   const isEndDateValid = (startDate, endDate) => {
     const selectedStartDate = new Date(startDate);
     const selectedEndDate = new Date(endDate);
-    return selectedEndDate > selectedStartDate;
+    return selectedEndDate >= selectedStartDate;
   };
 
   useEffect(() => {
@@ -84,11 +83,7 @@ const AddCoupon = () => {
     },
     validationSchema: schema,
     onSubmit: values => {
-      // Xác minh ngày bắt đầu
-      if (!isStartDateValid(values.start)) {
-        toast.error("Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại");
-        return;
-      }
+
       // Xác minh ngày kết thúc
       if (!isEndDateValid(values.start, values.expiry)) {
         toast.error("Ngày kết thúc phải lớn hơn ngày bắt đầu");
