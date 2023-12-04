@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomInput from '../components/CustomInput';
 import { useFormik } from 'formik'; ////////////////////////////////// xu ly su kien tren form
 import * as Yup from 'yup'; ////////////////////////////////////////// validate field on form
@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createCoupon, getACoupon, resetState, updateACoupon } from '../features/coupon/couponSlice';
 import { json, useLocation, useNavigate } from 'react-router-dom';
 import { getAProduct } from './../features/product/productSlice';
+import { format } from 'date-fns-tz';
+
 
 let schema = Yup.object().shape({
   start: Yup.date().required("Ngày bắt đầu không được trống"),
@@ -21,9 +23,12 @@ const AddCoupon = () => {
   const location = useLocation();
   const getProductId = location.pathname.split("/")[3];
 
+
   const newCoupon = useSelector((state) => state.coupon);
   const { isSuccess, isError, isLoading, createdCoupon, productName, couponDiscount, couponStart, couponExpiry, updatedCoupon } = newCoupon;
   const productName1 = useSelector((state) => state.product.productName);
+
+
   // CONVERT DAY
   const changeDateFormet = (date) => {
     const newDate = new Date(date).toLocaleDateString(); // convert to  format beatiful day
@@ -31,6 +36,16 @@ const AddCoupon = () => {
     return `${year}-${month?.padStart(2, "0")}-${day?.padStart(2, "0")}`
     // return [year, month, day].join('-');
   }
+  const isStartDateValid = (startDate) => {
+    const currentDate = format(new Date(), 'yyyy-MM-dd', { timeZone: 'Asia/Ho_Chi_Minh' });
+    const selectedStartDate = new Date(startDate);
+    return selectedStartDate >= currentDate;
+  };
+  const isEndDateValid = (startDate, endDate) => {
+    const selectedStartDate = new Date(startDate);
+    const selectedEndDate = new Date(endDate);
+    return selectedEndDate > selectedStartDate;
+  };
 
   useEffect(() => {
     if (getProductId !== undefined) {
@@ -69,6 +84,17 @@ const AddCoupon = () => {
     },
     validationSchema: schema,
     onSubmit: values => {
+      // Xác minh ngày bắt đầu
+      if (!isStartDateValid(values.start)) {
+        toast.error("Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại");
+        return;
+      }
+      // Xác minh ngày kết thúc
+      if (!isEndDateValid(values.start, values.expiry)) {
+        toast.error("Ngày kết thúc phải lớn hơn ngày bắt đầu");
+        return;
+      }
+
       delete values.name;
       if (productName !== undefined) {
         const data = { id: getProductId, couponData: values };
@@ -80,6 +106,8 @@ const AddCoupon = () => {
       }
     },
   });
+
+
   return (
     <div>
       <h3 className='mb-4 title'>
@@ -117,6 +145,7 @@ const AddCoupon = () => {
             val={formik.values.start}
             label="Nhập ngày bắt đầu"
             id="date"
+            min={format(new Date(), 'yyyy-MM-dd', { timeZone: 'Asia/Ho_Chi_Minh' })}
           />
           <div className="error">
             {formik.touched.start && formik.errors.start}
@@ -129,6 +158,7 @@ const AddCoupon = () => {
             val={formik.values.expiry}
             label="Nhập ngày kết thúc"
             id="date"
+            min={format(new Date(), 'yyyy-MM-dd', { timeZone: 'Asia/Ho_Chi_Minh' })}
           />
           <div className="error">
             {formik.touched.expiry && formik.errors.expiry}
