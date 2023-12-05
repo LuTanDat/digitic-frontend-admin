@@ -10,7 +10,7 @@ import { getBrands } from '../features/brand/brandSlice';
 import { getSuppliers } from '../features/supplier/supplierSlice'
 
 let schema = Yup.object().shape({
-  nameSupplier: Yup.string().required("Tên không được để trống"),
+  supplierID: Yup.string().required("Tên không được để trống"),
   brand: Yup.string().required("Thương hiệu không được để trống"),
   quantity: Yup.number().required("Số lượng không được để trống"),
   price: Yup.number().required("Giá không được để trống"),
@@ -22,7 +22,7 @@ const AddimportNote = () => {
   const location = useLocation();
   const getImportNoteId = location.pathname.split("/")[3];
   const newImportNote = useSelector((state) => state.importNote);
-  const { isSuccess, isError, isLoading, createdImportNote, importNoteNameSupplier, importNoteBrand, importNoteQuantity, importNotePrice, updatedImportNote } = newImportNote;
+  const { isSuccess, isError, isLoading, createdImportNote, supplierID, importNoteBrand, importNoteQuantity, importNotePrice, updatedImportNote } = newImportNote;
   useEffect(() => {
     if (getImportNoteId !== undefined) {
       dispatch(getAImportNote(getImportNoteId));
@@ -56,7 +56,7 @@ const AddimportNote = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      nameSupplier: importNoteNameSupplier || "",
+      supplierID: supplierID || "",
       brand: importNoteBrand || "",
       quantity: importNoteQuantity || "",
       price: importNotePrice || "",
@@ -85,10 +85,10 @@ const AddimportNote = () => {
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
           <select
-            name='nameSupplier'
-            onChange={formik.handleChange('nameSupplier')}
-            onBlur={formik.handleBlur('nameSupplier')}
-            value={formik.values.nameSupplier}
+            name='supplierID'
+            onChange={formik.handleChange('supplierID')}
+            onBlur={formik.handleBlur('supplierID')}
+            value={formik.values.supplierID}
             className='form-control py-3 mt-3 form-select'
             id=''
           >
@@ -104,7 +104,7 @@ const AddimportNote = () => {
             }
           </select>
           <div className="error">
-            {formik.touched.nameSupplier && formik.errors.nameSupplier}
+            {formik.touched.supplierID && formik.errors.supplierID}
           </div>
           <select
             name='brand'

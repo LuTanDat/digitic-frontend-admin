@@ -152,7 +152,7 @@ const MainLayout = () => {
                 {
                   key: 'importNote',
                   icon: <RiMenuAddLine className='fs-4' />,
-                  label: 'Thêm Phiếu nhập',
+                  label: 'Lập Phiếu nhập',
                 },
                 {
                   key: 'list-importNote',
