@@ -11,6 +11,7 @@ import CustomModal from '../components/CustomModal';
 import { getAllCoupons } from "../features/coupon/couponSlice";
 import { SearchOutlined } from '@ant-design/icons';
 
+
 const Productlist = () => {
   const dispatch = useDispatch();
 
@@ -274,6 +275,11 @@ const Productlist = () => {
         const currentDate = new Date();
         const startDate = new Date(couponState[j].start);
         const endDate = new Date(couponState[j].expiry);
+
+        console.log(productState[i].title, ": currentDate: ", currentDate);
+        console.log(productState[i].title, ": startDate  : ", startDate);
+        console.log(productState[i].title, ": endDate    : ", endDate);
+
         if (currentDate >= startDate && currentDate <= endDate) {// ma con han su dung ko
           discountPercent = couponState[j].discount;
           price *= (100 - discountPercent) / 100;

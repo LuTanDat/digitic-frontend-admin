@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createCoupon, getACoupon, resetState, updateACoupon } from '../features/coupon/couponSlice';
 import { json, useLocation, useNavigate } from 'react-router-dom';
 import { getAProduct } from './../features/product/productSlice';
-import { format } from 'date-fns-tz';
+import { format, parse } from 'date-fns';
 
 
 let schema = Yup.object().shape({
@@ -83,20 +83,31 @@ const AddCoupon = () => {
     },
     validationSchema: schema,
     onSubmit: values => {
-
       // Xác minh ngày kết thúc
       if (!isEndDateValid(values.start, values.expiry)) {
         toast.error("Ngày kết thúc phải lớn hơn ngày bắt đầu");
         return;
       }
 
-      delete values.name;
+      // Định dạng ngày và giờ với múi giờ Việt Nam (+07:00)
+      const startDateTime = format(parse(`${values.start} 00:00:00`, 'yyyy-MM-dd HH:mm:ss', new Date()), 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: 'Asia/Ho_Chi_Minh' });
+      const expiryDateTime = format(parse(`${values.expiry} 23:59:59`, 'yyyy-MM-dd HH:mm:ss', new Date()), 'yyyy-MM-dd HH:mm:ssXXX', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+      const formattedValues = {
+        ...values,
+        start: startDateTime,
+        expiry: expiryDateTime
+      };
+
+      console.log("formattedValues:", formattedValues);
+
+      delete formattedValues.name;
       if (productName !== undefined) {
-        const data = { id: getProductId, couponData: values };
+        const data = { id: getProductId, couponData: formattedValues };
         dispatch(updateACoupon(data));
       }
       else if (productName === undefined) {
-        dispatch(createCoupon(values));
+        dispatch(createCoupon(formattedValues));
         formik.resetForm();
       }
     },
