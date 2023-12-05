@@ -130,6 +130,7 @@ export const productSlice = createSlice({
         state.productPower = action.payload.power;
         state.productLifespan = action.payload.lifespan;
         state.productWarranty = action.payload.warranty;
+        state.supplierID = action.payload.supplierID;
         state.productImages = action.payload.images;
       })
       .addCase(getAProduct.rejected, (state, action) => {

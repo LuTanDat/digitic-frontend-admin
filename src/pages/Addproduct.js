@@ -15,6 +15,7 @@ import Dropzone from 'react-dropzone'; /////////////////////////////// chon 1 or
 import { delImg, resetStateUpload, uploadImg } from '../features/upload/uploadSlice';
 import { createProducts, getAProduct, resetState, updateAProduct } from '../features/product/productSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getSuppliers } from '../features/supplier/supplierSlice';
 
 let schema = Yup.object().shape({
   title: Yup.string().required("Tên không được để trống"),
@@ -30,6 +31,7 @@ let schema = Yup.object().shape({
   power: Yup.string(),
   lifespan: Yup.string().required("Tổi thọ không được để trống"),
   warranty: Yup.string().required("Bảo hành không được để trống"),
+  supplierID: Yup.string().required("Tên không được để trống"),
 });
 
 const Addproduct = () => {
@@ -53,16 +55,18 @@ const Addproduct = () => {
     dispatch(getBrands());
     dispatch(getCategories());
     dispatch(getColors());
+    dispatch(getSuppliers());
   }, [])
 
   const brandState = useSelector((state) => state.brand.brands);
   const catState = useSelector((state) => state.pCategory.pCategories);
   const colorState = useSelector((state) => state.color.colors);
+  const supplierState = useSelector((state) => state.supplier.suppliers);
   const newProduct = useSelector((state) => state.product);
   const { isSuccess, isError, isLoading, createdProduct, updatedProduct,
     productName, productDesc, productPrice, productBrand, productCategory,
     productTags, productColor, productQuantity, productSize, productWeight,
-    productPower, productLifespan, productWarranty
+    productPower, productLifespan, productWarranty, supplierID
   } = newProduct;
   const { productImages } = newProduct; // mang anh minh load trong db ra neu có getProductId, ko co thi []
   const imgState = useSelector((state) => state.upload.images); //mang anh minh up len, ko co thi []
@@ -146,6 +150,7 @@ const Addproduct = () => {
       power: productPower || '',
       lifespan: productLifespan || '',
       warranty: productWarranty || '',
+      supplierID: supplierID || "",
       images: ""
     },
     validationSchema: schema,
@@ -355,6 +360,28 @@ const Addproduct = () => {
           />
           <div className="error">
             {formik.touched.warranty && formik.errors.warranty}
+          </div>
+          <select
+            name='supplierID'
+            onChange={formik.handleChange('supplierID')}
+            onBlur={formik.handleBlur('supplierID')}
+            value={formik.values.supplierID}
+            className='form-control py-3 mt-3 form-select'
+            id=''
+          >
+            <option value=''>Chọn Nhà cung cấp</option>
+            {
+              supplierState.map((i, j) => {
+                return (
+                  <option key={j} value={i._id}>
+                    {i.name}
+                  </option>
+                )
+              })
+            }
+          </select>
+          <div className="error">
+            {formik.touched.supplierID && formik.errors.supplierID}
           </div>
           <div className='bg-white border-1 p-1 text-center'>
             <Dropzone onDrop={acceptedFiles => dispatch(uploadImg(acceptedFiles))}>
