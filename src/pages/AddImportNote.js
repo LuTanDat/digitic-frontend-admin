@@ -10,7 +10,7 @@ import { getBrands } from '../features/brand/brandSlice';
 import { getSuppliers } from '../features/supplier/supplierSlice'
 
 let schema = Yup.object().shape({
-  supplierID: Yup.string().required("Tên không được để trống"),
+  nameSupplier: Yup.string().required("Tên không được để trống"),
   brand: Yup.string().required("Thương hiệu không được để trống"),
   quantity: Yup.number().required("Số lượng không được để trống"),
   price: Yup.number().required("Giá không được để trống"),
@@ -56,7 +56,7 @@ const AddimportNote = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      supplierID: supplierID || "",
+      nameSupplier: supplierID || "",
       brand: importNoteBrand || "",
       quantity: importNoteQuantity || "",
       price: importNotePrice || "",
@@ -85,10 +85,10 @@ const AddimportNote = () => {
       <div>
         <form action='' onSubmit={formik.handleSubmit}>
           <select
-            name='supplierID'
-            onChange={formik.handleChange('supplierID')}
-            onBlur={formik.handleBlur('supplierID')}
-            value={formik.values.supplierID}
+            name='nameSupplier'
+            onChange={formik.handleChange('nameSupplier')}
+            onBlur={formik.handleBlur('nameSupplier')}
+            value={formik.values.nameSupplier}
             className='form-control py-3 mt-3 form-select'
             id=''
           >
@@ -104,7 +104,7 @@ const AddimportNote = () => {
             }
           </select>
           <div className="error">
-            {formik.touched.supplierID && formik.errors.supplierID}
+            {formik.touched.nameSupplier && formik.errors.nameSupplier}
           </div>
           <select
             name='brand'
