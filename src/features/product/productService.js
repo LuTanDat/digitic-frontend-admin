@@ -18,6 +18,12 @@ const getProduct = async (id) => {
   return response.data;
 };
 
+const getProductBySupplier = async (supplierId) => {
+  const response = await axios.get(`${base_url}product/supplier/${supplierId}`, config);
+
+  return response.data;
+};
+
 const updateProduct = async (product) => {
   const response = await axios.put(
     `${base_url}product/${product.id}`, product.productData,
@@ -45,5 +51,6 @@ const productService = {
   getProduct,
   updateProduct,
   deleteProduct,
+  getProductBySupplier
 }
 export default productService;
