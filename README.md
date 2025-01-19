@@ -1,4 +1,4 @@
-## XÂY DỰNG WEBSITE KINH DOANH THIT BỊ GIA DỤNG THÔNG MINH (luận văn tốt nghiệp)
+## XÂY DỰNG WEBSITE KINH DOANH THIẾT BỊ GIA DỤNG THÔNG MINH (luận văn tốt nghiệp)
 
 # Getting Started with Create React App
 
